@@ -7,9 +7,34 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		457F27B3248534AB01A2055B /* Pods_MiniDOMTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C417B24BBFE812C2A3607E0C /* Pods_MiniDOMTests.framework */; };
+		C5202D2B1E76460800C2B35C /* Visitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5202D2A1E76460800C2B35C /* Visitor.swift */; };
+		C5202D2D1E7647D200C2B35C /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5202D2C1E7647D200C2B35C /* Formatter.swift */; };
+		C5202D321E76548400C2B35C /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5202D311E76548400C2B35C /* Search.swift */; };
+		C532F9BA1E82128E00FEAD1A /* ParserCreationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C532F9B91E82128E00FEAD1A /* ParserCreationTests.swift */; };
+		C532F9BD1E82325900FEAD1A /* RSSTestsSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C532F9BB1E8231FA00FEAD1A /* RSSTestsSource.swift */; };
+		C532F9C01E82333900FEAD1A /* ContentsTestsSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C532F9BE1E8232BB00FEAD1A /* ContentsTestsSource.swift */; };
 		C54FA8CC1E759BBE009EEA73 /* MiniDOM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C54FA8C21E759BBE009EEA73 /* MiniDOM.framework */; };
-		C54FA8D11E759BBE009EEA73 /* MiniDOMTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54FA8D01E759BBE009EEA73 /* MiniDOMTests.swift */; };
-		C54FA8D31E759BBE009EEA73 /* MiniDOM.h in Headers */ = {isa = PBXBuildFile; fileRef = C54FA8C51E759BBE009EEA73 /* MiniDOM.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C54FA8EA1E763CE6009EEA73 /* MiniDOM.h in Headers */ = {isa = PBXBuildFile; fileRef = C54FA8E61E763CE6009EEA73 /* MiniDOM.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C54FA8EB1E763CE6009EEA73 /* MiniDOM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54FA8E71E763CE6009EEA73 /* MiniDOM.swift */; };
+		C54FA8EC1E763CE6009EEA73 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54FA8E81E763CE6009EEA73 /* Parser.swift */; };
+		C5C88DD21E7C28C700CEDDA8 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C88DD11E7C28C700CEDDA8 /* Log.swift */; };
+		C5C88DD41E7C861E00CEDDA8 /* FormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C88DD31E7C861E00CEDDA8 /* FormatterTests.swift */; };
+		C5C88DD71E7C869500CEDDA8 /* XCTestCase+ParseUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C88DD51E7C867900CEDDA8 /* XCTestCase+ParseUtil.swift */; };
+		C5C88DD91E7C889200CEDDA8 /* ParserSimpleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C88DD81E7C889200CEDDA8 /* ParserSimpleTests.swift */; };
+		C5C88DDB1E7C89BD00CEDDA8 /* ParserPlistTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C88DDA1E7C89BD00CEDDA8 /* ParserPlistTests.swift */; };
+		C5D2BCFA1E77562D001FF7E8 /* String+Whitespace.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D2BCF91E77562D001FF7E8 /* String+Whitespace.swift */; };
+		C5D2BD051E779465001FF7E8 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D2BD031E7793E3001FF7E8 /* Path.swift */; };
+		C5EA38521E78E29E0000D01B /* NodeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EA38511E78E29E0000D01B /* NodeList.swift */; };
+		C5EB9CE41E7CC85700198F5F /* PathSimpleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB9CE31E7CC85700198F5F /* PathSimpleTests.swift */; };
+		C5EB9CE61E7CC94600198F5F /* StringWhitespaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB9CE51E7CC94600198F5F /* StringWhitespaceTests.swift */; };
+		C5EB9CE81E7CCA1E00198F5F /* ContentsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB9CE71E7CCA1E00198F5F /* ContentsTests.swift */; };
+		C5EB9CEA1E7CCB1300198F5F /* RSSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB9CE91E7CCB1300198F5F /* RSSTests.swift */; };
+		C5EB9CEC1E7CEE0B00198F5F /* LogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB9CEB1E7CEE0B00198F5F /* LogTests.swift */; };
+		C5EB9CEE1E7CF12D00198F5F /* ParserResultTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB9CED1E7CF12D00198F5F /* ParserResultTests.swift */; };
+		C5EB9CF01E7CF46800198F5F /* ParserErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB9CEF1E7CF46800198F5F /* ParserErrorTests.swift */; };
+		C5EB9CF21E7CF5B900198F5F /* VisitorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB9CF11E7CF5B900198F5F /* VisitorTests.swift */; };
+		DF76322F08E91CF898242959 /* Pods_MiniDOM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1C512F3574C721AA341F6A2 /* Pods_MiniDOM.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -23,12 +48,45 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		46224ACBC27433D4DF8A5CDF /* Pods-MiniDOM.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MiniDOM.release.xcconfig"; path = "Pods/Target Support Files/Pods-MiniDOM/Pods-MiniDOM.release.xcconfig"; sourceTree = "<group>"; };
+		7F1B01602358E7C4E452F3A7 /* Pods-MiniDOMTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MiniDOMTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MiniDOMTests/Pods-MiniDOMTests.release.xcconfig"; sourceTree = "<group>"; };
+		979C38CB508ADA5EFB46B286 /* Pods-MiniDOMTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MiniDOMTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MiniDOMTests/Pods-MiniDOMTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C1C512F3574C721AA341F6A2 /* Pods_MiniDOM.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MiniDOM.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C417B24BBFE812C2A3607E0C /* Pods_MiniDOMTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MiniDOMTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C5202D2A1E76460800C2B35C /* Visitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Visitor.swift; sourceTree = "<group>"; };
+		C5202D2C1E7647D200C2B35C /* Formatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
+		C5202D311E76548400C2B35C /* Search.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
+		C532F9B91E82128E00FEAD1A /* ParserCreationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParserCreationTests.swift; sourceTree = "<group>"; };
+		C532F9BB1E8231FA00FEAD1A /* RSSTestsSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSSTestsSource.swift; sourceTree = "<group>"; };
+		C532F9BE1E8232BB00FEAD1A /* ContentsTestsSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentsTestsSource.swift; sourceTree = "<group>"; };
 		C54FA8C21E759BBE009EEA73 /* MiniDOM.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MiniDOM.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C54FA8C51E759BBE009EEA73 /* MiniDOM.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MiniDOM.h; sourceTree = "<group>"; };
-		C54FA8C61E759BBE009EEA73 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C54FA8CB1E759BBE009EEA73 /* MiniDOMTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MiniDOMTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		C54FA8D01E759BBE009EEA73 /* MiniDOMTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniDOMTests.swift; sourceTree = "<group>"; };
-		C54FA8D21E759BBE009EEA73 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C54FA8E51E763CE6009EEA73 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C54FA8E61E763CE6009EEA73 /* MiniDOM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MiniDOM.h; sourceTree = "<group>"; };
+		C54FA8E71E763CE6009EEA73 /* MiniDOM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniDOM.swift; sourceTree = "<group>"; };
+		C54FA8E81E763CE6009EEA73 /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
+		C54FA8EF1E763CEE009EEA73 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C54FA8F41E763D42009EEA73 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+		C5C88DD11E7C28C700CEDDA8 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
+		C5C88DD31E7C861E00CEDDA8 /* FormatterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormatterTests.swift; sourceTree = "<group>"; };
+		C5C88DD51E7C867900CEDDA8 /* XCTestCase+ParseUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCTestCase+ParseUtil.swift"; sourceTree = "<group>"; };
+		C5C88DD81E7C889200CEDDA8 /* ParserSimpleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParserSimpleTests.swift; sourceTree = "<group>"; };
+		C5C88DDA1E7C89BD00CEDDA8 /* ParserPlistTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParserPlistTests.swift; sourceTree = "<group>"; };
+		C5D2BCF11E773C26001FF7E8 /* ContentsTestsSource.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ContentsTestsSource.xml; sourceTree = "<group>"; };
+		C5D2BCF21E773C26001FF7E8 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		C5D2BCF91E77562D001FF7E8 /* String+Whitespace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Whitespace.swift"; sourceTree = "<group>"; };
+		C5D2BCFD1E775BAB001FF7E8 /* RSSTestsSource.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = RSSTestsSource.xml; sourceTree = "<group>"; };
+		C5D2BD031E7793E3001FF7E8 /* Path.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
+		C5EA38511E78E29E0000D01B /* NodeList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeList.swift; sourceTree = "<group>"; };
+		C5EB9CE31E7CC85700198F5F /* PathSimpleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PathSimpleTests.swift; sourceTree = "<group>"; };
+		C5EB9CE51E7CC94600198F5F /* StringWhitespaceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringWhitespaceTests.swift; sourceTree = "<group>"; };
+		C5EB9CE71E7CCA1E00198F5F /* ContentsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentsTests.swift; sourceTree = "<group>"; };
+		C5EB9CE91E7CCB1300198F5F /* RSSTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSSTests.swift; sourceTree = "<group>"; };
+		C5EB9CEB1E7CEE0B00198F5F /* LogTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogTests.swift; sourceTree = "<group>"; };
+		C5EB9CED1E7CF12D00198F5F /* ParserResultTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParserResultTests.swift; sourceTree = "<group>"; };
+		C5EB9CEF1E7CF46800198F5F /* ParserErrorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParserErrorTests.swift; sourceTree = "<group>"; };
+		C5EB9CF11E7CF5B900198F5F /* VisitorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisitorTests.swift; sourceTree = "<group>"; };
+		E2C07698CC069903105E29D7 /* Pods-MiniDOM.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MiniDOM.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MiniDOM/Pods-MiniDOM.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +94,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF76322F08E91CF898242959 /* Pods_MiniDOM.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,18 +103,33 @@
 			buildActionMask = 2147483647;
 			files = (
 				C54FA8CC1E759BBE009EEA73 /* MiniDOM.framework in Frameworks */,
+				457F27B3248534AB01A2055B /* Pods_MiniDOMTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		49BD50AD448773A768CF045D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E2C07698CC069903105E29D7 /* Pods-MiniDOM.debug.xcconfig */,
+				46224ACBC27433D4DF8A5CDF /* Pods-MiniDOM.release.xcconfig */,
+				979C38CB508ADA5EFB46B286 /* Pods-MiniDOMTests.debug.xcconfig */,
+				7F1B01602358E7C4E452F3A7 /* Pods-MiniDOMTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		C54FA8B81E759BBE009EEA73 = {
 			isa = PBXGroup;
 			children = (
-				C54FA8C41E759BBE009EEA73 /* MiniDOM */,
-				C54FA8CF1E759BBE009EEA73 /* MiniDOMTests */,
+				C54FA8F41E763D42009EEA73 /* Package.swift */,
+				C54FA8E41E763CE6009EEA73 /* Sources */,
+				C54FA8ED1E763CEE009EEA73 /* Tests */,
 				C54FA8C31E759BBE009EEA73 /* Products */,
+				49BD50AD448773A768CF045D /* Pods */,
+				EA7F13FF60B5068457D7DAD6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -68,22 +142,73 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		C54FA8C41E759BBE009EEA73 /* MiniDOM */ = {
+		C54FA8E41E763CE6009EEA73 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				C54FA8C51E759BBE009EEA73 /* MiniDOM.h */,
-				C54FA8C61E759BBE009EEA73 /* Info.plist */,
+				C5202D2C1E7647D200C2B35C /* Formatter.swift */,
+				C54FA8E51E763CE6009EEA73 /* Info.plist */,
+				C5C88DD11E7C28C700CEDDA8 /* Log.swift */,
+				C54FA8E61E763CE6009EEA73 /* MiniDOM.h */,
+				C54FA8E71E763CE6009EEA73 /* MiniDOM.swift */,
+				C5EA38511E78E29E0000D01B /* NodeList.swift */,
+				C54FA8E81E763CE6009EEA73 /* Parser.swift */,
+				C5D2BD031E7793E3001FF7E8 /* Path.swift */,
+				C5202D311E76548400C2B35C /* Search.swift */,
+				C5D2BCF91E77562D001FF7E8 /* String+Whitespace.swift */,
+				C5202D2A1E76460800C2B35C /* Visitor.swift */,
 			);
-			path = MiniDOM;
+			path = Sources;
 			sourceTree = "<group>";
 		};
-		C54FA8CF1E759BBE009EEA73 /* MiniDOMTests */ = {
+		C54FA8ED1E763CEE009EEA73 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				C54FA8D01E759BBE009EEA73 /* MiniDOMTests.swift */,
-				C54FA8D21E759BBE009EEA73 /* Info.plist */,
+				C54FA8EE1E763CEE009EEA73 /* MiniDOMTests */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		C54FA8EE1E763CEE009EEA73 /* MiniDOMTests */ = {
+			isa = PBXGroup;
+			children = (
+				C5C88DD31E7C861E00CEDDA8 /* FormatterTests.swift */,
+				C54FA8EF1E763CEE009EEA73 /* Info.plist */,
+				C5EB9CEB1E7CEE0B00198F5F /* LogTests.swift */,
+				C5EB9CEF1E7CF46800198F5F /* ParserErrorTests.swift */,
+				C5C88DDA1E7C89BD00CEDDA8 /* ParserPlistTests.swift */,
+				C5EB9CED1E7CF12D00198F5F /* ParserResultTests.swift */,
+				C5C88DD81E7C889200CEDDA8 /* ParserSimpleTests.swift */,
+				C532F9B91E82128E00FEAD1A /* ParserCreationTests.swift */,
+				C5EB9CE31E7CC85700198F5F /* PathSimpleTests.swift */,
+				C5EB9CE51E7CC94600198F5F /* StringWhitespaceTests.swift */,
+				C5D2BCF01E773C26001FF7E8 /* TestData */,
+				C5EB9CF11E7CF5B900198F5F /* VisitorTests.swift */,
+				C5C88DD51E7C867900CEDDA8 /* XCTestCase+ParseUtil.swift */,
 			);
 			path = MiniDOMTests;
+			sourceTree = "<group>";
+		};
+		C5D2BCF01E773C26001FF7E8 /* TestData */ = {
+			isa = PBXGroup;
+			children = (
+				C5EB9CE71E7CCA1E00198F5F /* ContentsTests.swift */,
+				C532F9BE1E8232BB00FEAD1A /* ContentsTestsSource.swift */,
+				C5D2BCF11E773C26001FF7E8 /* ContentsTestsSource.xml */,
+				C5D2BCF21E773C26001FF7E8 /* README.md */,
+				C5EB9CE91E7CCB1300198F5F /* RSSTests.swift */,
+				C532F9BB1E8231FA00FEAD1A /* RSSTestsSource.swift */,
+				C5D2BCFD1E775BAB001FF7E8 /* RSSTestsSource.xml */,
+			);
+			path = TestData;
+			sourceTree = "<group>";
+		};
+		EA7F13FF60B5068457D7DAD6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C1C512F3574C721AA341F6A2 /* Pods_MiniDOM.framework */,
+				C417B24BBFE812C2A3607E0C /* Pods_MiniDOMTests.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -93,7 +218,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C54FA8D31E759BBE009EEA73 /* MiniDOM.h in Headers */,
+				C54FA8EA1E763CE6009EEA73 /* MiniDOM.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -104,10 +229,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C54FA8D61E759BBE009EEA73 /* Build configuration list for PBXNativeTarget "MiniDOM" */;
 			buildPhases = (
+				E6C762A6BA7E4BB520F4B081 /* [CP] Check Pods Manifest.lock */,
 				C54FA8BD1E759BBE009EEA73 /* Sources */,
 				C54FA8BE1E759BBE009EEA73 /* Frameworks */,
 				C54FA8BF1E759BBE009EEA73 /* Headers */,
 				C54FA8C01E759BBE009EEA73 /* Resources */,
+				4DA0A321BC9E1EE54094773B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -122,9 +249,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C54FA8D91E759BBE009EEA73 /* Build configuration list for PBXNativeTarget "MiniDOMTests" */;
 			buildPhases = (
+				18BE655774C01224680A67A1 /* [CP] Check Pods Manifest.lock */,
 				C54FA8C71E759BBE009EEA73 /* Sources */,
 				C54FA8C81E759BBE009EEA73 /* Frameworks */,
 				C54FA8C91E759BBE009EEA73 /* Resources */,
+				515AC81B1D4F983C4638274E /* [CP] Embed Pods Frameworks */,
+				D4B9B3CD35D040C2122F3E0F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -148,10 +278,12 @@
 				TargetAttributes = {
 					C54FA8C11E759BBE009EEA73 = {
 						CreatedOnToolsVersion = 8.2.1;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
 					C54FA8CA1E759BBE009EEA73 = {
 						CreatedOnToolsVersion = 8.2.1;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -191,11 +323,98 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		18BE655774C01224680A67A1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		4DA0A321BC9E1EE54094773B /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MiniDOM/Pods-MiniDOM-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		515AC81B1D4F983C4638274E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MiniDOMTests/Pods-MiniDOMTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D4B9B3CD35D040C2122F3E0F /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MiniDOMTests/Pods-MiniDOMTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E6C762A6BA7E4BB520F4B081 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		C54FA8BD1E759BBE009EEA73 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C54FA8EC1E763CE6009EEA73 /* Parser.swift in Sources */,
+				C5D2BD051E779465001FF7E8 /* Path.swift in Sources */,
+				C5202D2B1E76460800C2B35C /* Visitor.swift in Sources */,
+				C5EA38521E78E29E0000D01B /* NodeList.swift in Sources */,
+				C5202D321E76548400C2B35C /* Search.swift in Sources */,
+				C5D2BCFA1E77562D001FF7E8 /* String+Whitespace.swift in Sources */,
+				C5202D2D1E7647D200C2B35C /* Formatter.swift in Sources */,
+				C54FA8EB1E763CE6009EEA73 /* MiniDOM.swift in Sources */,
+				C5C88DD21E7C28C700CEDDA8 /* Log.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -203,7 +422,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C54FA8D11E759BBE009EEA73 /* MiniDOMTests.swift in Sources */,
+				C5EB9CF21E7CF5B900198F5F /* VisitorTests.swift in Sources */,
+				C5EB9CF01E7CF46800198F5F /* ParserErrorTests.swift in Sources */,
+				C5C88DD91E7C889200CEDDA8 /* ParserSimpleTests.swift in Sources */,
+				C5EB9CEE1E7CF12D00198F5F /* ParserResultTests.swift in Sources */,
+				C5EB9CEA1E7CCB1300198F5F /* RSSTests.swift in Sources */,
+				C5EB9CEC1E7CEE0B00198F5F /* LogTests.swift in Sources */,
+				C5EB9CE81E7CCA1E00198F5F /* ContentsTests.swift in Sources */,
+				C532F9C01E82333900FEAD1A /* ContentsTestsSource.swift in Sources */,
+				C5C88DDB1E7C89BD00CEDDA8 /* ParserPlistTests.swift in Sources */,
+				C5EB9CE61E7CC94600198F5F /* StringWhitespaceTests.swift in Sources */,
+				C532F9BD1E82325900FEAD1A /* RSSTestsSource.swift in Sources */,
+				C5C88DD41E7C861E00CEDDA8 /* FormatterTests.swift in Sources */,
+				C5C88DD71E7C869500CEDDA8 /* XCTestCase+ParseUtil.swift in Sources */,
+				C5EB9CE41E7CC85700198F5F /* PathSimpleTests.swift in Sources */,
+				C532F9BA1E82128E00FEAD1A /* ParserCreationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,31 +552,36 @@
 		};
 		C54FA8D71E759BBE009EEA73 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E2C07698CC069903105E29D7 /* Pods-MiniDOM.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = MiniDOM/Info.plist;
+				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.anodizedsoftware.MiniDOM;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		C54FA8D81E759BBE009EEA73 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 46224ACBC27433D4DF8A5CDF /* Pods-MiniDOM.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = MiniDOM/Info.plist;
+				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.anodizedsoftware.MiniDOM;
@@ -355,19 +593,26 @@
 		};
 		C54FA8DA1E759BBE009EEA73 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 979C38CB508ADA5EFB46B286 /* Pods-MiniDOMTests.debug.xcconfig */;
 			buildSettings = {
-				INFOPLIST_FILE = MiniDOMTests/Info.plist;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
+				CLANG_ENABLE_MODULES = YES;
+				INFOPLIST_FILE = Tests/MiniDOMTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.anodizedsoftware.MiniDOMTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		C54FA8DB1E759BBE009EEA73 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7F1B01602358E7C4E452F3A7 /* Pods-MiniDOMTests.release.xcconfig */;
 			buildSettings = {
-				INFOPLIST_FILE = MiniDOMTests/Info.plist;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
+				CLANG_ENABLE_MODULES = YES;
+				INFOPLIST_FILE = Tests/MiniDOMTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.anodizedsoftware.MiniDOMTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -394,6 +639,7 @@
 				C54FA8D81E759BBE009EEA73 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C54FA8D91E759BBE009EEA73 /* Build configuration list for PBXNativeTarget "MiniDOMTests" */ = {
 			isa = XCConfigurationList;
@@ -402,6 +648,7 @@
 				C54FA8DB1E759BBE009EEA73 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

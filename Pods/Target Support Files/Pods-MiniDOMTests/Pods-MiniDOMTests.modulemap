@@ -1,0 +1,6 @@
+framework module Pods_MiniDOMTests {
+  umbrella header "Pods-MiniDOMTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
