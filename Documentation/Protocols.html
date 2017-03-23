@@ -13,7 +13,7 @@
     <a title="Protocols  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">MiniDOM Docs</a> (0% documented)</p>
+        <p><a href="index.html">MiniDOM Docs</a> (100% documented)</p>
         <p class="header-right"><a href="https://github.com/MiniDOM/MiniDOM"><img src="img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -41,9 +41,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="Classes/Element.html">Element</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/Formatter.html">Formatter</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/Parser.html">Parser</a>
@@ -82,9 +79,6 @@
             <a href="Functions.html">Functions</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Functions.html#/s:F7MiniDOM7convertuRxS_4NoderFTGSaPS0___2toMx_GSax_">convert(_:to:)</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Functions.html#/s:F7MiniDOM5firstuRxS_4NoderFT2inGSaPS0___6ofTypeMx_GSqx_">first(in:ofType:)</a>
               </li>
               <li class="nav-group-task">
@@ -96,7 +90,13 @@
             <a href="Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="Protocols/LeafNode.html">LeafNode</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Protocols/Node.html">Node</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/ParentNode.html">ParentNode</a>
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/TextNode.html">TextNode</a>
@@ -141,9 +141,39 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The <code>Node</code> protocol is the primary data type for the entire Document Object
+Model. It represents a single node in the document tree. While all objects
+implementing the <code>Node</code> protocol expose functionality related to children, not
+all objects implementing the <code>Node</code> protocol may have children. There are two
+additional protocols implemented by node types:</p>
+
+<ul>
+<li><code><a href="Protocols/ParentNode.html">ParentNode</a></code> provides a getter and setter on the <code>children</code> property</li>
+<li><code><a href="Protocols/LeafNode.html">LeafNode</a></code> provides a getter on the <code>children</code> property that always returns
+an empty array.</li>
+</ul>
+
+<p>This is a departure from the standard DOM which would throw an error when
+attempting to modify the <code>children</code> array of a leaf node.</p>
+
+<p>The attributes <code>nodeName</code>, <code>nodeValue</code>, and <code>attributes</code> are included as a
+mechanism to get at node information without casting down to the specific
+derived type. In cases where there is no obvious mapping of these attributes
+for a specific <code>nodeType</code> e.g., <code>nodeValue</code> for an Element or <code>attributes</code> for
+a Comment), this returns <code>nil</code>.</p>
+
+<p>The values of <code>nodeName</code>, <code>nodeValue</code>, and <code>attributes</code> vary according to the
+node type.</p>
 
                         <a href="Protocols/Node.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">Node</span><span class="p">:</span> <span class="kt"><a href="Protocols/Visitable.html">Visitable</a></span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -172,9 +202,34 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The <a href="https://en.wikipedia.org/wiki/Visitor_pattern">Visitor Design Pattern</a> is
+used throughout the MiniDOM library to implement algorithms that involve 
+traversing the DOM tree. It provides a convenient mechanism to separate an 
+algorithm from the object structure on which it operates. It allows operations
+to be added to the DOM structure without modifying the structures themselves.</p>
+
+<p>A <code>Visitor</code> object is provided to the <code>Node.accept(_:)</code> to start the traversal.
+The <code><a href="Protocols/Node.html">Node</a></code> object calls the appropriate methods on the <code>Visitor</code> object before
+traversing recursively through the child nodes.</p>
+
+<p>The <code>Visitor</code> protocol defines methods that correspond to each of the <code><a href="Protocols/Node.html">Node</a></code>
+types in the DOM. Types implementing the <code>Visitor</code> protocol do not need to
+deal with the actual traversal; its methods are called by the traversal 
+algorithm provided by the DOM classes.</p>
+
+<p>For a simple example of a visitor, see the <code>ElementSearch</code> class in 
+<code>Search.swift</code>. For a more complex example of a visitor, see the <code>Formatter</code>
+class in <code>Formatter.swift</code>.</p>
 
                         <a href="Protocols/Visitor.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">Visitor</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -203,9 +258,95 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The <code>Visitable</code> protocol is used to indicate a node can accept a visitor.</p>
 
                         <a href="Protocols/Visitable.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">Visitable</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Leaf%20Protocol"></a>
+                <a name="//apple_ref/swift/Section/Leaf Protocol" class="dashAnchor"></a>
+                <a href="#/Leaf%20Protocol">
+                  <h3 class="section-name">Leaf Protocol</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:P7MiniDOM8LeafNode"></a>
+                    <a name="//apple_ref/swift/Protocol/LeafNode" class="dashAnchor"></a>
+                    <a class="token" href="#/s:P7MiniDOM8LeafNode">LeafNode</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Represents a node that cannot have child nodes.</p>
+
+                        <a href="Protocols/LeafNode.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">LeafNode</span><span class="p">:</span> <span class="kt"><a href="Protocols/Node.html">Node</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Parent%20Protocol"></a>
+                <a name="//apple_ref/swift/Section/Parent Protocol" class="dashAnchor"></a>
+                <a href="#/Parent%20Protocol">
+                  <h3 class="section-name">Parent Protocol</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:P7MiniDOM10ParentNode"></a>
+                    <a name="//apple_ref/swift/Protocol/ParentNode" class="dashAnchor"></a>
+                    <a class="token" href="#/s:P7MiniDOM10ParentNode">ParentNode</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Represents a node that can have child nodes.</p>
+
+                        <a href="Protocols/ParentNode.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">ParentNode</span><span class="p">:</span> <span class="kt"><a href="Protocols/Node.html">Node</a></span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -234,9 +375,17 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Represents a node with a text value.</p>
 
                         <a href="Protocols/TextNode.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">TextNode</span><span class="p">:</span> <span class="kt"><a href="Protocols/LeafNode.html">LeafNode</a></span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -246,7 +395,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2017 <a class="link" href="https://github.com/MiniDOM/MiniDOM" target="_blank" rel="external">MiniDOM</a>. All rights reserved. (Last updated: 2017-03-22)</p>
+          <p>&copy; 2017 <a class="link" href="https://github.com/MiniDOM/MiniDOM" target="_blank" rel="external">MiniDOM</a>. All rights reserved. (Last updated: 2017-03-25)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.5</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

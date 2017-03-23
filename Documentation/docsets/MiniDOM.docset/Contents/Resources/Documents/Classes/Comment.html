@@ -14,7 +14,7 @@
     <a title="Comment Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">MiniDOM Docs</a> (0% documented)</p>
+        <p><a href="../index.html">MiniDOM Docs</a> (100% documented)</p>
         <p class="header-right"><a href="https://github.com/MiniDOM/MiniDOM"><img src="../img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -42,9 +42,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/Element.html">Element</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Classes/Formatter.html">Formatter</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/Parser.html">Parser</a>
@@ -83,9 +80,6 @@
             <a href="../Functions.html">Functions</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="../Functions.html#/s:F7MiniDOM7convertuRxS_4NoderFTGSaPS0___2toMx_GSax_">convert(_:to:)</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Functions.html#/s:F7MiniDOM5firstuRxS_4NoderFT2inGSaPS0___6ofTypeMx_GSqx_">first(in:ofType:)</a>
               </li>
               <li class="nav-group-task">
@@ -97,7 +91,13 @@
             <a href="../Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="../Protocols/LeafNode.html">LeafNode</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols/Node.html">Node</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/ParentNode.html">ParentNode</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/TextNode.html">TextNode</a>
@@ -116,7 +116,14 @@
         <section>
           <section class="section">
             <h1>Comment</h1>
-            <p>Undocumented</p>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">Comment</span><span class="p">:</span> <span class="kt"><a href="../Protocols/TextNode.html">TextNode</a></span></code></pre>
+
+                </div>
+              </div>
+            <p>This represents the content of a comment, i.e., all the characters between the
+starting <code>&lt;!--</code> and ending <code>--&gt;</code>.</p>
 
           </section>
           <section class="section task-group-section">
@@ -142,8 +149,16 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The <code>nodeType</code> of a <code>Comment</code> is <code>.comment</code>.</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">nodeType</span><span class="p">:</span> <span class="kt"><a href="../Enums/NodeType.html">NodeType</a></span> <span class="o">=</span> <span class="o">.</span><span class="n">comment</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -161,8 +176,16 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The <code>nodeName</code> of a <code>Comment</code> is <code>#comment</code>.</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">nodeName</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">"#comment"</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -170,9 +193,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vC7MiniDOM7Comment8childrenGSaPS_4Node__"></a>
-                    <a name="//apple_ref/swift/Property/children" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vC7MiniDOM7Comment8childrenGSaPS_4Node__">children</a>
+                    <a name="/s:vC7MiniDOM7Comment10attributesGSqGVs10DictionarySSSS__"></a>
+                    <a name="//apple_ref/swift/Property/attributes" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC7MiniDOM7Comment10attributesGSqGVs10DictionarySSSS__">attributes</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -180,8 +203,16 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The <code>attributes</code> dictionary of a <code>Comment</code> is <code>nil</code>.</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">attributes</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">String</span><span class="p">]?</span> <span class="o">=</span> <span class="kc">nil</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -210,8 +241,16 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The string contents of this comment.</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">text</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -240,8 +279,36 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Creates a new <code>Comment</code> node.</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">text</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>text</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The string contents of this comment.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -263,8 +330,16 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>A comment node calls <code>visit(self)</code> on the visitor.</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">accept</span><span class="p">(</span><span class="n">_</span> <span class="nv">visitor</span><span class="p">:</span> <span class="kt"><a href="../Protocols/Visitor.html">Visitor</a></span><span class="p">)</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -274,7 +349,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2017 <a class="link" href="https://github.com/MiniDOM/MiniDOM" target="_blank" rel="external">MiniDOM</a>. All rights reserved. (Last updated: 2017-03-22)</p>
+          <p>&copy; 2017 <a class="link" href="https://github.com/MiniDOM/MiniDOM" target="_blank" rel="external">MiniDOM</a>. All rights reserved. (Last updated: 2017-03-25)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.5</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

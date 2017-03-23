@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>String Extension Reference</title>
+    <title>LeafNode Protocol Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Extension/String" class="dashAnchor"></a>
-    <a title="String Extension Reference"></a>
+    <a name="//apple_ref/swift/Protocol/LeafNode" class="dashAnchor"></a>
+    <a title="LeafNode Protocol Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">MiniDOM Docs</a> (100% documented)</p>
@@ -22,7 +22,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">MiniDOM Reference</a>
         <img id="carat" src="../img/carat.png" />
-        String Extension Reference
+        LeafNode Protocol Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -115,14 +115,15 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>String</h1>
+            <h1>LeafNode</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight"><code><span class="kd">struct</span> <span class="kt">String</span></code></pre>
+                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">LeafNode</span><span class="p">:</span> <span class="kt"><a href="../Protocols/Node.html">Node</a></span></code></pre>
 
                 </div>
               </div>
-            
+            <p>Represents a node that cannot have child nodes.</p>
+
           </section>
           <section class="section task-group-section">
             <div class="task-group">
@@ -130,84 +131,34 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FE7MiniDOMSS7trimmedFT_SS"></a>
-                    <a name="//apple_ref/swift/Method/trimmed()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FE7MiniDOMSS7trimmedFT_SS">trimmed()</a>
+                    <a name="/s:vP7MiniDOM8LeafNode8childrenGSaPS_4Node__"></a>
+                    <a name="//apple_ref/swift/Property/children" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vP7MiniDOM8LeafNode8childrenGSaPS_4Node__">children</a>
                     </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
                   </div>
                   <div class="height-container">
                     <div class="pointer-container"></div>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Returns a new string made by removing whitespace and newline characters 
-from both ends of the receiver.</p>
+                        <p>A leaf node does not have children. The value of this property is always
+an empty array.</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        <p>A leaf node does not have children. The value of this property is always
+an empty array.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">trimmed</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FE7MiniDOMSS9collapsedFT_SS"></a>
-                    <a name="//apple_ref/swift/Method/collapsed()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FE7MiniDOMSS9collapsedFT_SS">collapsed()</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Returns a new string made by replacing multiple space whitespace characters
-(matching the <code>\\s</code> regular expression character class) with a single space
-character.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">collapsed</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FE7MiniDOMSS10normalizedFT_SS"></a>
-                    <a name="//apple_ref/swift/Method/normalized()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FE7MiniDOMSS10normalizedFT_SS">normalized()</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Returns a new string made by normalizing the whitespace characters in the
-receiver. Leading and trailing whitespace characters are trimmed (via the
-<code><a href="../Extensions/String.html#/s:FE7MiniDOMSS7trimmedFT_SS">trimmed()</a></code> function), then newlines are replaced with spaces, finally
-whitespace is collapsed (via the <code><a href="../Extensions/String.html#/s:FE7MiniDOMSS9collapsedFT_SS">collapsed()</a></code> function).</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">normalized</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">children</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols/Node.html">Node</a></span><span class="p">]</span></code></pre>
 
                         </div>
                       </div>

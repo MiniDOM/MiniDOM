@@ -14,7 +14,7 @@
     <a title="String Extension Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">MiniDOM Docs</a> (0% documented)</p>
+        <p><a href="../index.html">MiniDOM Docs</a> (100% documented)</p>
         <p class="header-right"><a href="https://github.com/MiniDOM/MiniDOM"><img src="../img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -42,9 +42,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/Element.html">Element</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Classes/Formatter.html">Formatter</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/Parser.html">Parser</a>
@@ -83,9 +80,6 @@
             <a href="../Functions.html">Functions</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="../Functions.html#/s:F7MiniDOM7convertuRxS_4NoderFTGSaPS0___2toMx_GSax_">convert(_:to:)</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Functions.html#/s:F7MiniDOM5firstuRxS_4NoderFT2inGSaPS0___6ofTypeMx_GSqx_">first(in:ofType:)</a>
               </li>
               <li class="nav-group-task">
@@ -97,7 +91,13 @@
             <a href="../Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="../Protocols/LeafNode.html">LeafNode</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols/Node.html">Node</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/ParentNode.html">ParentNode</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/TextNode.html">TextNode</a>
@@ -140,14 +140,15 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Returns a new string made by removing whitespace and newline characters 
+from both ends of the receiver.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">struct</span> <span class="kt">String</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">trimmed</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
 
                         </div>
                       </div>
@@ -167,14 +168,16 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Returns a new string made by replacing multiple space whitespace characters
+(matching the <code>\\s</code> regular expression character class) with a single space
+character.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">struct</span> <span class="kt">String</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">collapsed</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
 
                         </div>
                       </div>
@@ -194,14 +197,17 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Returns a new string made by normalizing the whitespace characters in the
+receiver. Leading and trailing whitespace characters are trimmed (via the
+<code><a href="../Extensions/String.html#/s:FE7MiniDOMSS7trimmedFT_SS">trimmed()</a></code> function), then newlines are replaced with spaces, finally
+whitespace is collapsed (via the <code><a href="../Extensions/String.html#/s:FE7MiniDOMSS9collapsedFT_SS">collapsed()</a></code> function).</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">struct</span> <span class="kt">String</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">normalized</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
 
                         </div>
                       </div>
@@ -213,7 +219,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2017 <a class="link" href="https://github.com/MiniDOM/MiniDOM" target="_blank" rel="external">MiniDOM</a>. All rights reserved. (Last updated: 2017-03-22)</p>
+          <p>&copy; 2017 <a class="link" href="https://github.com/MiniDOM/MiniDOM" target="_blank" rel="external">MiniDOM</a>. All rights reserved. (Last updated: 2017-03-25)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.5</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

@@ -52,9 +52,7 @@ class FormatterTests: XCTestCase {
     }
 
     func testReproduceSourceString() {
-        let formatter = MiniDOM.Formatter(indentWith: "  ")
-        let formatted = formatter.format(document: document)
-
+        let formatted = document.format(indentWith: "  ")
         expect(formatted).notTo(beNil())
         expect(formatted) == source
     }

@@ -19,10 +19,41 @@
 
 import Foundation
 
+/**
+ Used to represent whether the parsing operation was successful or encountered 
+ an error.
+ */
 public enum Result<SuccessType> {
+    /**
+     Indicates the parsing operation was successful and resulted in the
+     provided associated value.
+     */
     case success(SuccessType)
+
+    /**
+     Indicates the parsing operation failed and resulted in the provided
+     associated error value.
+     */
     case failure(Error)
 
+    /// Returns `true` if the result is a success, `false` otherwise.
+    public var isSuccess: Bool {
+        switch self {
+        case .success:
+            return true
+        case .failure:
+            return false
+        }
+    }
+
+    /// Returns `true` if the result is a failure, `false` otherwise.
+    public var isFailure: Bool {
+        return !isSuccess
+    }
+
+    /**
+     Returns the assoicated value if the result is a success, `nil` otherwise.
+     */
     public var value: SuccessType? {
         if case let .success(value) = self {
             return value
@@ -31,6 +62,10 @@ public enum Result<SuccessType> {
         return nil
     }
 
+    /**
+     Returns the associated error value if the result is a failure, `nil` 
+     otherwise.
+     */
     public var error: Error? {
         if case let .failure(error) = self {
             return error
@@ -40,16 +75,37 @@ public enum Result<SuccessType> {
     }
 }
 
+/**
+ Instances of this class parse XML documents into a tree of DOM objects.
+ */
 public class Parser {
     private let parser: XMLParser
 
     private let log = Log(level: .all)
 
+    /**
+     Used to represent a parser error.
+     */
     public enum Error: Swift.Error {
-        case invalidXML
+        /**
+         Indicates that the parser terminated abnormally resulting in the 
+         associated error value
+         */
+        case parserError(Swift.Error)
+
+        /**
+         Indicates that the parser terminated abnormally but did not report an 
+         error.
+         */
         case unspecifiedError
     }
 
+    /**
+     Initializes a parser with the XML content referenced by the given URL.
+     
+     - parameter url: A `URL` object specifying a URL. The URL must be fully qualified and refer to a scheme that is supported by the `URL` type.
+     - returns: An initialized `Parser` object or `nil` if an error occurs.
+     */
     public convenience init?(contentsOf url: URL) {
         guard let parser = XMLParser(contentsOf: url) else {
             return nil
@@ -58,6 +114,13 @@ public class Parser {
         self.init(parser: parser)
     }
 
+    /**
+     Initializes a parser with the XML contents encapsulated in a given string object.
+     
+     - parameter string: A `String` object containing XML markup.
+     - parameter encoding: The encoding of the `String` object.
+     - returns: An initialized `Parser` object or `nil` if an error occurs.
+     */
     public convenience init?(string: String, encoding: String.Encoding = .utf8) {
         guard let data = string.data(using: encoding) else {
             return nil
@@ -66,10 +129,22 @@ public class Parser {
         self.init(data: data)
     }
 
+    /**
+     Initializes a parsewr with the XML contents encapsulated in a given data object.
+
+     - parameter data: A `Data` object containing XML markup.
+     - returns: An initialized `Parser` object.
+     */
     public convenience init(data: Data) {
         self.init(parser: XMLParser(data: data))
     }
 
+    /**
+     Initializes a parser with the XML contents from the specified stream.
+     
+     - parameter stream: The input stream. The content is incrementally loaded from the specified stream and parsed. The `Parser` will open the stream, and synchronously read from it without scheduling it.
+     - returns: An initialized `Parser` object.
+     */
     public convenience init(stream: InputStream) {
         self.init(parser: XMLParser(stream: stream))
     }
@@ -78,6 +153,11 @@ public class Parser {
         self.parser = parser
     }
 
+    /**
+     Performs the parsing operation.
+     
+     - returns: The result of the parsing operation.
+     */
     public func parse() -> Result<Document> {
         let stack = NodeStack()
         parser.delegate = stack
@@ -105,9 +185,9 @@ fileprivate class NodeStack: NSObject, XMLParserDelegate {
     }
 
     private func appendToTopOfStack(child: Node) {
-        if var node = stack.popLast() {
-            node.append(child: child)
-            stack.append(node)
+        if var parent = stack.popLast() as? ParentNode {
+            parent.append(child: child)
+            stack.append(parent)
         }
     }
 

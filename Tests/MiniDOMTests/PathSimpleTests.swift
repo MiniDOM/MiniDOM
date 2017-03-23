@@ -69,7 +69,7 @@ class PathSimpleTests: XCTestCase {
 
         let e0 = r0 as? Element
         expect(e0).notTo(beNil())
-        expect(e0?.attributes["id"]) == "2"
+        expect(e0?.attributes?["id"]) == "2"
 
         let r1 = result[1]
         expect(r1.nodeName) == "b"
@@ -77,6 +77,6 @@ class PathSimpleTests: XCTestCase {
 
         let e1 = r1 as? Element
         expect(e1).notTo(beNil())
-        expect(e1?.attributes["id"]) == "10"
+        expect(e1?.attributes?["id"]) == "10"
     }
 }

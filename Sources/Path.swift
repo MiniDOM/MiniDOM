@@ -81,6 +81,31 @@ class PathSearch: Visitor {
 }
 
 public extension Node {
+    /**
+     Selects nodes based on a path relative to this node. For example, in the
+     following document:
+
+     ```xml
+     <a id="1">
+       <b id="2">
+         <c id="3"/>
+       </b>
+       <c id="4">
+         <d id="5"/>
+       </c>
+     </a>
+     ```
+
+     evaluating the path `["a", "b", "c"]` would select the `<c>` element with
+     `id="3"` but not the `<c>` element with `id="4"`.
+
+     - parameter path: An array of strings, each representing a `nodeName` in
+     the path.
+
+     - returns: An array of nodes corresponding to the specified path, relative
+     to this node.
+     */
+
     func evaluate(path: [String]) -> [Node] {
         let visitor = PathSearch(path: path)
 

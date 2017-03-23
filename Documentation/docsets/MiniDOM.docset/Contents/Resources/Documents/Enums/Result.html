@@ -14,7 +14,7 @@
     <a title="Result Enum Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">MiniDOM Docs</a> (0% documented)</p>
+        <p><a href="../index.html">MiniDOM Docs</a> (100% documented)</p>
         <p class="header-right"><a href="https://github.com/MiniDOM/MiniDOM"><img src="../img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -42,9 +42,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/Element.html">Element</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Classes/Formatter.html">Formatter</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/Parser.html">Parser</a>
@@ -83,9 +80,6 @@
             <a href="../Functions.html">Functions</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="../Functions.html#/s:F7MiniDOM7convertuRxS_4NoderFTGSaPS0___2toMx_GSax_">convert(_:to:)</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Functions.html#/s:F7MiniDOM5firstuRxS_4NoderFT2inGSaPS0___6ofTypeMx_GSqx_">first(in:ofType:)</a>
               </li>
               <li class="nav-group-task">
@@ -97,7 +91,13 @@
             <a href="../Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="../Protocols/LeafNode.html">LeafNode</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols/Node.html">Node</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/ParentNode.html">ParentNode</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/TextNode.html">TextNode</a>
@@ -116,7 +116,14 @@
         <section>
           <section class="section">
             <h1>Result</h1>
-            <p>Undocumented</p>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">Result</span><span class="o">&lt;</span><span class="kt">SuccessType</span><span class="o">&gt;</span></code></pre>
+
+                </div>
+              </div>
+            <p>Used to represent whether the parsing operation was successful or encountered 
+an error.</p>
 
           </section>
           <section class="section task-group-section">
@@ -135,8 +142,17 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Indicates the parsing operation was successful and resulted in the
+provided associated value.</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">case</span> <span class="nf">success</span><span class="p">(</span><span class="kt">SuccessType</span><span class="p">)</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -158,8 +174,17 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Indicates the parsing operation failed and resulted in the provided
+associated error value.</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">case</span> <span class="nf">failure</span><span class="p">(</span><span class="kt">Error</span><span class="p">)</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -168,6 +193,60 @@
             </div>
             <div class="task-group">
               <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vO7MiniDOM6Result9isSuccessSb"></a>
+                    <a name="//apple_ref/swift/Property/isSuccess" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vO7MiniDOM6Result9isSuccessSb">isSuccess</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns <code>true</code> if the result is a success, <code>false</code> otherwise.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">isSuccess</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vO7MiniDOM6Result9isFailureSb"></a>
+                    <a name="//apple_ref/swift/Property/isFailure" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vO7MiniDOM6Result9isFailureSb">isFailure</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns <code>true</code> if the result is a failure, <code>false</code> otherwise.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">isFailure</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
                 <li class="item">
                   <div>
                     <code>
@@ -181,8 +260,16 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Returns the assoicated value if the result is a success, <code>nil</code> otherwise.</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">SuccessType</span><span class="p">?</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -200,8 +287,17 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Returns the associated error value if the result is a failure, <code>nil</code> 
+otherwise.</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">Error</span><span class="p">?</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -211,7 +307,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2017 <a class="link" href="https://github.com/MiniDOM/MiniDOM" target="_blank" rel="external">MiniDOM</a>. All rights reserved. (Last updated: 2017-03-22)</p>
+          <p>&copy; 2017 <a class="link" href="https://github.com/MiniDOM/MiniDOM" target="_blank" rel="external">MiniDOM</a>. All rights reserved. (Last updated: 2017-03-25)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.5</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

@@ -14,7 +14,7 @@
     <a title="Visitor Protocol Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">MiniDOM Docs</a> (0% documented)</p>
+        <p><a href="../index.html">MiniDOM Docs</a> (100% documented)</p>
         <p class="header-right"><a href="https://github.com/MiniDOM/MiniDOM"><img src="../img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -42,9 +42,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/Element.html">Element</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Classes/Formatter.html">Formatter</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/Parser.html">Parser</a>
@@ -83,9 +80,6 @@
             <a href="../Functions.html">Functions</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="../Functions.html#/s:F7MiniDOM7convertuRxS_4NoderFTGSaPS0___2toMx_GSax_">convert(_:to:)</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Functions.html#/s:F7MiniDOM5firstuRxS_4NoderFT2inGSaPS0___6ofTypeMx_GSqx_">first(in:ofType:)</a>
               </li>
               <li class="nav-group-task">
@@ -97,7 +91,13 @@
             <a href="../Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="../Protocols/LeafNode.html">LeafNode</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols/Node.html">Node</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/ParentNode.html">ParentNode</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/TextNode.html">TextNode</a>
@@ -116,7 +116,30 @@
         <section>
           <section class="section">
             <h1>Visitor</h1>
-            <p>Undocumented</p>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">Visitor</span></code></pre>
+
+                </div>
+              </div>
+            <p>The <a href="https://en.wikipedia.org/wiki/Visitor_pattern">Visitor Design Pattern</a> is
+used throughout the MiniDOM library to implement algorithms that involve 
+traversing the DOM tree. It provides a convenient mechanism to separate an 
+algorithm from the object structure on which it operates. It allows operations
+to be added to the DOM structure without modifying the structures themselves.</p>
+
+<p>A <code>Visitor</code> object is provided to the <code>Node.accept(_:)</code> to start the traversal.
+The <code><a href="../Protocols/Node.html">Node</a></code> object calls the appropriate methods on the <code>Visitor</code> object before
+traversing recursively through the child nodes.</p>
+
+<p>The <code>Visitor</code> protocol defines methods that correspond to each of the <code><a href="../Protocols/Node.html">Node</a></code>
+types in the DOM. Types implementing the <code>Visitor</code> protocol do not need to
+deal with the actual traversal; its methods are called by the traversal 
+algorithm provided by the DOM classes.</p>
+
+<p>For a simple example of a visitor, see the <code>ElementSearch</code> class in 
+<code>Search.swift</code>. For a more complex example of a visitor, see the <code>Formatter</code>
+class in <code>Formatter.swift</code>.</p>
 
           </section>
           <section class="section task-group-section">
@@ -138,15 +161,28 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Called when the traversal algorithm encounters a <code><a href="../Classes/Document.html">Document</a></code> object before 
+the <code>children</code> are traversed.</p>
+
+<p>Visiting a <code><a href="../Classes/Document.html">Document</a></code> object is split into a begin and end method to
+allow implementing operations before and after the <code>children</code> of the 
+<code><a href="../Classes/Document.html">Document</a></code> object are visited.</p>
 
                       </div>
                       <h4>Default Implementation</h4>
                       <div class="default_impl abstract">
-                        <p>Undocumented</p>
+                        <p>Default implementation does nothing.</p>
 
-<p>Undocumented</p>
+<p>Default implementation does nothing.</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">beginVisit</span><span class="p">(</span><span class="n">_</span> <span class="nv">document</span><span class="p">:</span> <span class="kt"><a href="../Classes/Document.html">Document</a></span><span class="p">)</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -167,15 +203,28 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Called when the traversal algorithm encounters a <code><a href="../Classes/Document.html">Document</a></code> object after
+the <code>children</code> are traversed.</p>
+
+<p>Visiting a <code><a href="../Classes/Document.html">Document</a></code> object is split into a begin and end method to
+allow implementing operations before and after the <code>children</code> of the
+<code><a href="../Classes/Document.html">Document</a></code> object are visited.</p>
 
                       </div>
                       <h4>Default Implementation</h4>
                       <div class="default_impl abstract">
-                        <p>Undocumented</p>
+                        <p>Default implementation does nothing.</p>
 
-<p>Undocumented</p>
+<p>Default implementation does nothing.</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">endVisit</span><span class="p">(</span><span class="n">_</span> <span class="nv">document</span><span class="p">:</span> <span class="kt"><a href="../Classes/Document.html">Document</a></span><span class="p">)</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -193,8 +242,21 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Called when the traversal algorithm encounters an <code><a href="../Classes/Element.html">Element</a></code> object before
+the <code>children</code> are traversed.</p>
 
+<p>Visiting an <code><a href="../Classes/Element.html">Element</a></code> object is split into a begin and end method to
+allow implementing operations before and after the <code>children</code> of the
+<code><a href="../Classes/Element.html">Element</a></code> object are visited.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">beginVisit</span><span class="p">(</span><span class="n">_</span> <span class="nv">element</span><span class="p">:</span> <span class="kt"><a href="../Classes/Element.html">Element</a></span><span class="p">)</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -212,8 +274,21 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Called when the traversal algorithm encounters an <code><a href="../Classes/Element.html">Element</a></code> object after
+the <code>children</code> are traversed.</p>
 
+<p>Visiting an <code><a href="../Classes/Element.html">Element</a></code> object is split into a begin and end method to
+allow implementing operations before and after the <code>children</code> of the
+<code><a href="../Classes/Element.html">Element</a></code> object are visited.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">endVisit</span><span class="p">(</span><span class="n">_</span> <span class="nv">element</span><span class="p">:</span> <span class="kt"><a href="../Classes/Element.html">Element</a></span><span class="p">)</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -234,19 +309,27 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Called when the traversal algorithm encounters a <code><a href="../Classes/Text.html">Text</a></code> object.</p>
 
                       </div>
                       <h4>Default Implementation</h4>
                       <div class="default_impl abstract">
-                        <p>Undocumented</p>
+                        <p>Default implementation does nothing.</p>
 
-<p>Undocumented</p>
+<p>Default implementation does nothing.</p>
 
-<p>Undocumented</p>
+<p>Default implementation does nothing.</p>
 
-<p>Undocumented</p>
+<p>Default implementation does nothing.</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">visit</span><span class="p">(</span><span class="n">_</span> <span class="nv">text</span><span class="p">:</span> <span class="kt"><a href="../Classes/Text.html">Text</a></span><span class="p">)</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -264,8 +347,17 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Called when the traversal algorithm encounters a <code><a href="../Classes/ProcessingInstruction.html">ProcessingInstruction</a></code> 
+object.</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">visit</span><span class="p">(</span><span class="n">_</span> <span class="nv">processingInstruction</span><span class="p">:</span> <span class="kt"><a href="../Classes/ProcessingInstruction.html">ProcessingInstruction</a></span><span class="p">)</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -283,8 +375,16 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Called when the traversal algorithm encounters a <code><a href="../Classes/Comment.html">Comment</a></code> object.</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">visit</span><span class="p">(</span><span class="n">_</span> <span class="nv">comment</span><span class="p">:</span> <span class="kt"><a href="../Classes/Comment.html">Comment</a></span><span class="p">)</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -302,8 +402,16 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Called when the traversal algorithm encounters an <code><a href="../Classes/CDATASection.html">CDATASection</a></code> object.</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">visit</span><span class="p">(</span><span class="n">_</span> <span class="nv">cdataSection</span><span class="p">:</span> <span class="kt"><a href="../Classes/CDATASection.html">CDATASection</a></span><span class="p">)</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -313,7 +421,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2017 <a class="link" href="https://github.com/MiniDOM/MiniDOM" target="_blank" rel="external">MiniDOM</a>. All rights reserved. (Last updated: 2017-03-22)</p>
+          <p>&copy; 2017 <a class="link" href="https://github.com/MiniDOM/MiniDOM" target="_blank" rel="external">MiniDOM</a>. All rights reserved. (Last updated: 2017-03-25)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.5</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

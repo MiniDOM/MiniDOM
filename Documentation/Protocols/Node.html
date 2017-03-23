@@ -14,7 +14,7 @@
     <a title="Node Protocol Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">MiniDOM Docs</a> (0% documented)</p>
+        <p><a href="../index.html">MiniDOM Docs</a> (100% documented)</p>
         <p class="header-right"><a href="https://github.com/MiniDOM/MiniDOM"><img src="../img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -42,9 +42,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/Element.html">Element</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Classes/Formatter.html">Formatter</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/Parser.html">Parser</a>
@@ -83,9 +80,6 @@
             <a href="../Functions.html">Functions</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="../Functions.html#/s:F7MiniDOM7convertuRxS_4NoderFTGSaPS0___2toMx_GSax_">convert(_:to:)</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Functions.html#/s:F7MiniDOM5firstuRxS_4NoderFT2inGSaPS0___6ofTypeMx_GSqx_">first(in:ofType:)</a>
               </li>
               <li class="nav-group-task">
@@ -97,7 +91,13 @@
             <a href="../Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="../Protocols/LeafNode.html">LeafNode</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols/Node.html">Node</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/ParentNode.html">ParentNode</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/TextNode.html">TextNode</a>
@@ -116,7 +116,35 @@
         <section>
           <section class="section">
             <h1>Node</h1>
-            <p>Undocumented</p>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">Node</span><span class="p">:</span> <span class="kt"><a href="../Protocols/Visitable.html">Visitable</a></span></code></pre>
+
+                </div>
+              </div>
+            <p>The <code>Node</code> protocol is the primary data type for the entire Document Object
+Model. It represents a single node in the document tree. While all objects
+implementing the <code>Node</code> protocol expose functionality related to children, not
+all objects implementing the <code>Node</code> protocol may have children. There are two
+additional protocols implemented by node types:</p>
+
+<ul>
+<li><code><a href="../Protocols/ParentNode.html">ParentNode</a></code> provides a getter and setter on the <code>children</code> property</li>
+<li><code><a href="../Protocols/LeafNode.html">LeafNode</a></code> provides a getter on the <code>children</code> property that always returns
+an empty array.</li>
+</ul>
+
+<p>This is a departure from the standard DOM which would throw an error when
+attempting to modify the <code>children</code> array of a leaf node.</p>
+
+<p>The attributes <code>nodeName</code>, <code>nodeValue</code>, and <code>attributes</code> are included as a
+mechanism to get at node information without casting down to the specific
+derived type. In cases where there is no obvious mapping of these attributes
+for a specific <code>nodeType</code> e.g., <code>nodeValue</code> for an Element or <code>attributes</code> for
+a Comment), this returns <code>nil</code>.</p>
+
+<p>The values of <code>nodeName</code>, <code>nodeValue</code>, and <code>attributes</code> vary according to the
+node type.</p>
 
           </section>
           <section class="section task-group-section">
@@ -138,13 +166,57 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Indicates which type of node this is.</p>
+
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <a href="Document.html#//apple_ref/swift/Property/nodeType"><code><a href="../Classes/Document.html#/s:ZvC7MiniDOM8Document8nodeTypeOS_8NodeType">Document.nodeType</a></code></a>
+
+</div>
+
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <a href="Element.html#//apple_ref/swift/Property/nodeType"><code><a href="../Classes/Element.html#/s:ZvC7MiniDOM7Element8nodeTypeOS_8NodeType">Element.nodeType</a></code></a>
+
+</div>
+
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <a href="Element.html#//apple_ref/swift/Property/nodeType"><code><a href="../Classes/Text.html#/s:ZvC7MiniDOM4Text8nodeTypeOS_8NodeType">Text.nodeType</a></code></a>
+
+</div>
+
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <a href="Element.html#//apple_ref/swift/Property/nodeType"><code><a href="../Classes/ProcessingInstruction.html#/s:ZvC7MiniDOM21ProcessingInstruction8nodeTypeOS_8NodeType">ProcessingInstruction.nodeType</a></code></a>
+
+</div>
+
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <a href="Element.html#//apple_ref/swift/Property/nodeType"><code><a href="../Classes/Comment.html#/s:ZvC7MiniDOM7Comment8nodeTypeOS_8NodeType">Comment.nodeType</a></code></a>
+
+</div>
+
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <a href="Element.html#//apple_ref/swift/Property/nodeType"><code><a href="../Classes/CDATASection.html#/s:ZvC7MiniDOM12CDATASection8nodeTypeOS_8NodeType">CDATASection.nodeType</a></code></a>
+
+</div>
 
                       </div>
                       <h4>Default Implementation</h4>
                       <div class="default_impl abstract">
-                        <p>Undocumented</p>
+                        <p>Convenience accessor for the static <code>nodeType</code> property.</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">static</span> <span class="k">var</span> <span class="nv">nodeType</span><span class="p">:</span> <span class="kt"><a href="../Enums/NodeType.html">NodeType</a></span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -162,8 +234,52 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The name of this node, depending on its type.</p>
 
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <a href="Document.html#//apple_ref/swift/Property/nodeName"><code><a href="../Classes/Document.html#/s:vC7MiniDOM8Document8nodeNameSS">Document.nodeName</a></code></a>
+
+</div>
+
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <a href="Element.html#//apple_ref/swift/Property/nodeName"><code><a href="../Classes/Element.html#/s:vC7MiniDOM7Element8nodeNameSS">Element.nodeName</a></code></a>
+
+</div>
+
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <a href="Element.html#//apple_ref/swift/Property/nodeName"><code><a href="../Classes/Text.html#/s:vC7MiniDOM4Text8nodeNameSS">Text.nodeName</a></code></a>
+
+</div>
+
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <a href="Element.html#//apple_ref/swift/Property/nodeName"><code><a href="../Classes/ProcessingInstruction.html#/s:vC7MiniDOM21ProcessingInstruction8nodeNameSS">ProcessingInstruction.nodeName</a></code></a>
+
+</div>
+
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <a href="Element.html#//apple_ref/swift/Property/nodeName"><code><a href="../Classes/Comment.html#/s:vC7MiniDOM7Comment8nodeNameSS">Comment.nodeName</a></code></a>
+
+</div>
+
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <a href="Element.html#//apple_ref/swift/Property/nodeName"><code><a href="../Classes/CDATASection.html#/s:vC7MiniDOM12CDATASection8nodeNameSS">CDATASection.nodeName</a></code></a>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">nodeName</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -181,8 +297,115 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The value of this node, depending on its type.</p>
 
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <a href="Document.html#//apple_ref/swift/Property/nodeValue"><code><a href="../Classes/Document.html#/s:vC7MiniDOM8Document9nodeValueGSqSS_">Document.nodeValue</a></code></a>
+
+</div>
+
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <a href="Element.html#//apple_ref/swift/Property/nodeValue"><code><a href="../Classes/Element.html#/s:vC7MiniDOM7Element9nodeValueGSqSS_">Element.nodeValue</a></code></a>
+
+</div>
+
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <a href="Element.html#//apple_ref/swift/Property/nodeValue"><code>Text.nodeValue</code></a>
+
+</div>
+
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <a href="Element.html#//apple_ref/swift/Property/nodeValue"><code><a href="../Classes/ProcessingInstruction.html#/s:vC7MiniDOM21ProcessingInstruction9nodeValueGSqSS_">ProcessingInstruction.nodeValue</a></code></a>
+
+</div>
+
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <a href="Element.html#//apple_ref/swift/Property/nodeValue"><code>Comment.nodeValue</code></a>
+
+</div>
+
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <a href="Element.html#//apple_ref/swift/Property/nodeValue"><code>CDATASection.nodeValue</code></a>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">nodeValue</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vP7MiniDOM4Node10attributesGSqGVs10DictionarySSSS__"></a>
+                    <a name="//apple_ref/swift/Property/attributes" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vP7MiniDOM4Node10attributesGSqGVs10DictionarySSSS__">attributes</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The attributes of this node, depending on its type.</p>
+
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <a href="Document.html#//apple_ref/swift/Property/attributes"><code><a href="../Classes/Document.html#/s:vC7MiniDOM8Document10attributesGSqGVs10DictionarySSSS__">Document.attributes</a></code></a>
+
+</div>
+
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <a href="Element.html#//apple_ref/swift/Property/attributes"><code><a href="../Classes/Element.html#/s:vC7MiniDOM7Element10attributesGSqGVs10DictionarySSSS__">Element.attributes</a></code></a>
+
+</div>
+
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <a href="Element.html#//apple_ref/swift/Property/attributes"><code><a href="../Classes/Text.html#/s:vC7MiniDOM4Text10attributesGSqGVs10DictionarySSSS__">Text.attributes</a></code></a>
+
+</div>
+
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <a href="Element.html#//apple_ref/swift/Property/attributes"><code><a href="../Classes/ProcessingInstruction.html#/s:vC7MiniDOM21ProcessingInstruction10attributesGSqGVs10DictionarySSSS__">ProcessingInstruction.attributes</a></code></a>
+
+</div>
+
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <a href="Element.html#//apple_ref/swift/Property/attributes"><code><a href="../Classes/Comment.html#/s:vC7MiniDOM7Comment10attributesGSqGVs10DictionarySSSS__">Comment.attributes</a></code></a>
+
+</div>
+
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <a href="Element.html#//apple_ref/swift/Property/attributes"><code><a href="../Classes/CDATASection.html#/s:vC7MiniDOM12CDATASection10attributesGSqGVs10DictionarySSSS__">CDATASection.attributes</a></code></a>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">attributes</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">String</span><span class="p">]?</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -200,8 +423,52 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The children of this node.</p>
 
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <a href="Document.html#//apple_ref/swift/Property/children"><code><a href="../Classes/Document.html#/s:vC7MiniDOM8Document8childrenGSaPS_4Node__">Document.children</a></code></a>
+
+</div>
+
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <a href="Element.html#//apple_ref/swift/Property/children"><code><a href="../Classes/Element.html#/s:vC7MiniDOM7Element8childrenGSaPS_4Node__">Element.children</a></code></a>
+
+</div>
+
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <a href="Element.html#//apple_ref/swift/Property/children"><code>Text.children</code></a>
+
+</div>
+
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <a href="Element.html#//apple_ref/swift/Property/children"><code>ProcessingInstruction.children</code></a>
+
+</div>
+
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <a href="Element.html#//apple_ref/swift/Property/children"><code>Comment.children</code></a>
+
+</div>
+
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <a href="Element.html#//apple_ref/swift/Property/children"><code>CDATASection.children</code></a>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">children</span><span class="p">:</span> <span class="p">[</span><span class="kt">Node</span><span class="p">]</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -226,7 +493,54 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Selects nodes based on a path relative to this node. For example, in the
+following document:</p>
+
+<pre class="highlight xml"><code><span class="nt">&lt;a</span> <span class="na">id=</span><span class="s">"1"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;b</span> <span class="na">id=</span><span class="s">"2"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;c</span> <span class="na">id=</span><span class="s">"3"</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/b&gt;</span>
+  <span class="nt">&lt;c</span> <span class="na">id=</span><span class="s">"4"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;d</span> <span class="na">id=</span><span class="s">"5"</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/c&gt;</span>
+<span class="nt">&lt;/a&gt;</span>
+</code></pre>
+
+<p>evaluating the path <code>[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]</code> would select the <code>&lt;c&gt;</code> element with
+<code>id=&quot;3&quot;</code> but not the <code>&lt;c&gt;</code> element with <code>id=&quot;4&quot;</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">evaluate</span><span class="p">(</span><span class="nv">path</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">Node</span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>path</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An array of strings, each representing a <code>nodeName</code> in the path.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An array of nodes corresponding to the specified path, relative to this node.</p>
 
                       </div>
                     </section>
@@ -239,9 +553,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FE7MiniDOMPS_4Node6appendFT5childPS0___T_"></a>
-                    <a name="//apple_ref/swift/Method/append(child:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FE7MiniDOMPS_4Node6appendFT5childPS0___T_">append(child:)</a>
+                    <a name="/s:FE7MiniDOMPS_4Node6formatFT10indentWithSS_GSqSS_"></a>
+                    <a name="//apple_ref/swift/Method/format(indentWith:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FE7MiniDOMPS_4Node6formatFT10indentWithSS_GSqSS_">format(indentWith:)</a>
                     </code>
                       <span class="declaration-note">
                         Extension method
@@ -252,12 +566,49 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Generates and XML string representation of this node and its descendants.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">format</span><span class="p">(</span><span class="nv">indentWith</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">"</span><span class="se">\t</span><span class="s">"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>indentWith</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The string used to indent the formatted string.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A formatted XML string representation of this node and its descendants.</p>
 
                       </div>
                     </section>
                   </div>
                 </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
                 <li class="item">
                   <div>
                     <code>
@@ -274,7 +625,41 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Filters the <code><a href="../Protocols/Node.html#/s:vP7MiniDOM4Node8childrenGSaPS0___">children</a></code> array, keeping only nodes of the specified type.
+Casts the nodes in the resulting array to the specified type.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">func</span> <span class="n"><a href="../Protocols/Node.html#/s:vP7MiniDOM4Node8childrenGSaPS0___">children</a></span><span class="o">&lt;</span><span class="kt">T</span><span class="p">:</span> <span class="kt">Node</span><span class="o">&gt;</span><span class="p">(</span><span class="n">ofType</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">T</span><span class="o">.</span><span class="k">Type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">T</span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>type</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Include children of this type in the resulting array</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The elements of the <code><a href="../Protocols/Node.html#/s:vP7MiniDOM4Node8childrenGSaPS0___">children</a></code> array of the specified type</p>
 
                       </div>
                     </section>
@@ -296,8 +681,16 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>A Boolean value indicating whether the <code><a href="../Protocols/Node.html#/s:vP7MiniDOM4Node8childrenGSaPS0___">children</a></code> array has elements.</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">final</span> <span class="k">var</span> <span class="nv">hasChildren</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -318,8 +711,16 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The first element in the <code><a href="../Protocols/Node.html#/s:vP7MiniDOM4Node8childrenGSaPS0___">children</a></code> array.</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">final</span> <span class="k">var</span> <span class="nv">firstChild</span><span class="p">:</span> <span class="kt">Node</span><span class="p">?</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -340,8 +741,16 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The last element in the <code><a href="../Protocols/Node.html#/s:vP7MiniDOM4Node8childrenGSaPS0___">children</a></code> array.</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">final</span> <span class="k">var</span> <span class="nv">lastChild</span><span class="p">:</span> <span class="kt">Node</span><span class="p">?</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -351,7 +760,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2017 <a class="link" href="https://github.com/MiniDOM/MiniDOM" target="_blank" rel="external">MiniDOM</a>. All rights reserved. (Last updated: 2017-03-22)</p>
+          <p>&copy; 2017 <a class="link" href="https://github.com/MiniDOM/MiniDOM" target="_blank" rel="external">MiniDOM</a>. All rights reserved. (Last updated: 2017-03-25)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.5</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
