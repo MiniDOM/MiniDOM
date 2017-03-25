@@ -224,14 +224,14 @@ document:</p>
 <span class="nt">&lt;/elementExample&gt;</span>
 </code></pre>
 
-<p>When represented using DOM, the top node is an <code>Element</code> node for
+<p>When represented using the DOM, the top node is an <code>Element</code> node for
 <code>elementExample</code>, which contains two child <code>Element</code> nodes, one for
 <code>subelement1</code> and one for <code>subelement2</code>. <code>subelement1</code> contains no child
 nodes.</p>
 
 <p>Elements may have attributes associated with them; since the <code>Element</code> class
 implements the <code><a href="Protocols/Node.html">Node</a></code> protocol, the <code>attributes</code> property of the <code><a href="Protocols/Node.html">Node</a></code>
-protocol may be used to retrieve the set of all attributes for an element.</p>
+protocol may be used to retrieve a dictionary of the attributes for an element.</p>
 
                         <a href="Classes/Element.html" class="slightly-smaller">See more</a>
                       </div>
@@ -271,10 +271,10 @@ protocol may be used to retrieve the set of all attributes for an element.</p>
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>The <code>Text</code> class represents the textual content (termed character data in XML)
-of an Element. If there is no markup inside an element&rsquo;s content, the text is
+of an <code><a href="Classes/Element.html">Element</a></code>. If there is no markup inside an element&rsquo;s content, the text is
 contained in a single object implementing the <code>Text</code> protocol that is the only
-child of the element. If there is markup, it is parsed into a list of elements
-and <code>Text</code> nodes that form the list of children of the element.</p>
+child of the element. If there is markup, it is parsed into a sequence of 
+elements and <code>Text</code> nodes that form the array of children of the element.</p>
 
                         <a href="Classes/Text.html" class="slightly-smaller">See more</a>
                       </div>
@@ -402,9 +402,7 @@ as XML fragments, without needing to escape all the delimiters.</p>
 
 <p>The <code>text</code> property holds the text that is contained by the CDATA section.
 Note that this may contain characters that need to be escaped outside of CDATA
-sections and that, depending on the character encoding (<q>charset</q>) chosen for
-serialization, it may be impossible to write out some characters as part of a
-CDATA section.</p>
+sections.</p>
 
                         <a href="Classes/CDATASection.html" class="slightly-smaller">See more</a>
                       </div>

@@ -313,6 +313,33 @@ that is the root element of the document.</p>
                     </section>
                   </div>
                 </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC7MiniDOM8DocumentcFT_S0_"></a>
+                    <a name="//apple_ref/swift/Method/init()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC7MiniDOM8DocumentcFT_S0_">init()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates a new <code>Document</code> node.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
               </ul>
             </div>
             <div class="task-group">
@@ -330,8 +357,8 @@ that is the root element of the document.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>A document node first calls <code>beginVisit(self)</code> on the visitor. It then 
-calls <code>accept</code> on each of the nodes in the <code><a href="../Classes/Document.html#/s:vC7MiniDOM8Document8childrenGSaPS_4Node__">children</a></code> array, passing the 
+                        <p>A document node first calls <code>beginVisit(self)</code> on the visitor. It then
+calls <code>accept</code> on each of the nodes in the <code><a href="../Classes/Document.html#/s:vC7MiniDOM8Document8childrenGSaPS_4Node__">children</a></code> array, passing the
 visitor object. Finally, it calls <code>endVisit(self)</code> on the visitor.</p>
 
                       </div>
@@ -363,8 +390,8 @@ visitor object. Finally, it calls <code>endVisit(self)</code> on the visitor.</p
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Traverses the document tree, collecting element nodes with the specified
-tag name.</p>
+                        <p>Traverses the document tree, collecting <code><a href="../Classes/Element.html">Element</a></code> nodes with the specified
+tag name from anywhere in the document.</p>
 
                       </div>
                       <div class="declaration">
@@ -416,8 +443,8 @@ tag name.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Traverses the document tree, collecting element nodes that satisfy the 
-given predicate.</p>
+                        <p>Traverses the document tree, collecting <code><a href="../Classes/Element.html">Element</a></code> nodes that satisfy the
+given predicate from anywhere in the document.</p>
 
                       </div>
                       <div class="declaration">

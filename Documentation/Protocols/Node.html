@@ -125,8 +125,8 @@
             <p>The <code>Node</code> protocol is the primary data type for the entire Document Object
 Model. It represents a single node in the document tree. While all objects
 implementing the <code>Node</code> protocol expose functionality related to children, not
-all objects implementing the <code>Node</code> protocol may have children. There are two
-additional protocols implemented by node types:</p>
+all objects implementing the <code>Node</code> protocol may have children. To address this
+distinction, there are two additional protocols implemented by node types:</p>
 
 <ul>
 <li><code><a href="../Protocols/ParentNode.html">ParentNode</a></code> provides a getter and setter on the <code>children</code> property</li>
@@ -140,7 +140,7 @@ attempting to modify the <code>children</code> array of a leaf node.</p>
 <p>The attributes <code>nodeName</code>, <code>nodeValue</code>, and <code>attributes</code> are included as a
 mechanism to get at node information without casting down to the specific
 derived type. In cases where there is no obvious mapping of these attributes
-for a specific <code>nodeType</code> e.g., <code>nodeValue</code> for an Element or <code>attributes</code> for
+for a specific <code>nodeType</code> (e.g., <code>nodeValue</code> for an Element or <code>attributes</code> for
 a Comment), this returns <code>nil</code>.</p>
 
 <p>The values of <code>nodeName</code>, <code>nodeValue</code>, and <code>attributes</code> vary according to the
@@ -182,25 +182,25 @@ node type.</p>
 
 <div class="aside aside-see-also">
     <p class="aside-title">See also</p>
-    <a href="Element.html#//apple_ref/swift/Property/nodeType"><code><a href="../Classes/Text.html#/s:ZvC7MiniDOM4Text8nodeTypeOS_8NodeType">Text.nodeType</a></code></a>
+    <a href="Text.html#//apple_ref/swift/Property/nodeType"><code><a href="../Classes/Text.html#/s:ZvC7MiniDOM4Text8nodeTypeOS_8NodeType">Text.nodeType</a></code></a>
 
 </div>
 
 <div class="aside aside-see-also">
     <p class="aside-title">See also</p>
-    <a href="Element.html#//apple_ref/swift/Property/nodeType"><code><a href="../Classes/ProcessingInstruction.html#/s:ZvC7MiniDOM21ProcessingInstruction8nodeTypeOS_8NodeType">ProcessingInstruction.nodeType</a></code></a>
+    <a href="ProcessingInstruction.html#//apple_ref/swift/Property/nodeType"><code><a href="../Classes/ProcessingInstruction.html#/s:ZvC7MiniDOM21ProcessingInstruction8nodeTypeOS_8NodeType">ProcessingInstruction.nodeType</a></code></a>
 
 </div>
 
 <div class="aside aside-see-also">
     <p class="aside-title">See also</p>
-    <a href="Element.html#//apple_ref/swift/Property/nodeType"><code><a href="../Classes/Comment.html#/s:ZvC7MiniDOM7Comment8nodeTypeOS_8NodeType">Comment.nodeType</a></code></a>
+    <a href="Comment.html#//apple_ref/swift/Property/nodeType"><code><a href="../Classes/Comment.html#/s:ZvC7MiniDOM7Comment8nodeTypeOS_8NodeType">Comment.nodeType</a></code></a>
 
 </div>
 
 <div class="aside aside-see-also">
     <p class="aside-title">See also</p>
-    <a href="Element.html#//apple_ref/swift/Property/nodeType"><code><a href="../Classes/CDATASection.html#/s:ZvC7MiniDOM12CDATASection8nodeTypeOS_8NodeType">CDATASection.nodeType</a></code></a>
+    <a href="CDATASection.html#//apple_ref/swift/Property/nodeType"><code><a href="../Classes/CDATASection.html#/s:ZvC7MiniDOM12CDATASection8nodeTypeOS_8NodeType">CDATASection.nodeType</a></code></a>
 
 </div>
 
@@ -250,25 +250,25 @@ node type.</p>
 
 <div class="aside aside-see-also">
     <p class="aside-title">See also</p>
-    <a href="Element.html#//apple_ref/swift/Property/nodeName"><code><a href="../Classes/Text.html#/s:vC7MiniDOM4Text8nodeNameSS">Text.nodeName</a></code></a>
+    <a href="Text.html#//apple_ref/swift/Property/nodeName"><code><a href="../Classes/Text.html#/s:vC7MiniDOM4Text8nodeNameSS">Text.nodeName</a></code></a>
 
 </div>
 
 <div class="aside aside-see-also">
     <p class="aside-title">See also</p>
-    <a href="Element.html#//apple_ref/swift/Property/nodeName"><code><a href="../Classes/ProcessingInstruction.html#/s:vC7MiniDOM21ProcessingInstruction8nodeNameSS">ProcessingInstruction.nodeName</a></code></a>
+    <a href="ProcessingInstruction.html#//apple_ref/swift/Property/nodeName"><code><a href="../Classes/ProcessingInstruction.html#/s:vC7MiniDOM21ProcessingInstruction8nodeNameSS">ProcessingInstruction.nodeName</a></code></a>
 
 </div>
 
 <div class="aside aside-see-also">
     <p class="aside-title">See also</p>
-    <a href="Element.html#//apple_ref/swift/Property/nodeName"><code><a href="../Classes/Comment.html#/s:vC7MiniDOM7Comment8nodeNameSS">Comment.nodeName</a></code></a>
+    <a href="Comment.html#//apple_ref/swift/Property/nodeName"><code><a href="../Classes/Comment.html#/s:vC7MiniDOM7Comment8nodeNameSS">Comment.nodeName</a></code></a>
 
 </div>
 
 <div class="aside aside-see-also">
     <p class="aside-title">See also</p>
-    <a href="Element.html#//apple_ref/swift/Property/nodeName"><code><a href="../Classes/CDATASection.html#/s:vC7MiniDOM12CDATASection8nodeNameSS">CDATASection.nodeName</a></code></a>
+    <a href="CDATASection.html#//apple_ref/swift/Property/nodeName"><code><a href="../Classes/CDATASection.html#/s:vC7MiniDOM12CDATASection8nodeNameSS">CDATASection.nodeName</a></code></a>
 
 </div>
 
@@ -313,25 +313,25 @@ node type.</p>
 
 <div class="aside aside-see-also">
     <p class="aside-title">See also</p>
-    <a href="Element.html#//apple_ref/swift/Property/nodeValue"><code>Text.nodeValue</code></a>
+    <a href="Text.html#//apple_ref/swift/Property/nodeValue"><code>Text.nodeValue</code></a>
 
 </div>
 
 <div class="aside aside-see-also">
     <p class="aside-title">See also</p>
-    <a href="Element.html#//apple_ref/swift/Property/nodeValue"><code><a href="../Classes/ProcessingInstruction.html#/s:vC7MiniDOM21ProcessingInstruction9nodeValueGSqSS_">ProcessingInstruction.nodeValue</a></code></a>
+    <a href="ProcessingInstruction.html#//apple_ref/swift/Property/nodeValue"><code><a href="../Classes/ProcessingInstruction.html#/s:vC7MiniDOM21ProcessingInstruction9nodeValueGSqSS_">ProcessingInstruction.nodeValue</a></code></a>
 
 </div>
 
 <div class="aside aside-see-also">
     <p class="aside-title">See also</p>
-    <a href="Element.html#//apple_ref/swift/Property/nodeValue"><code>Comment.nodeValue</code></a>
+    <a href="Comment.html#//apple_ref/swift/Property/nodeValue"><code>Comment.nodeValue</code></a>
 
 </div>
 
 <div class="aside aside-see-also">
     <p class="aside-title">See also</p>
-    <a href="Element.html#//apple_ref/swift/Property/nodeValue"><code>CDATASection.nodeValue</code></a>
+    <a href="CDATASection.html#//apple_ref/swift/Property/nodeValue"><code>CDATASection.nodeValue</code></a>
 
 </div>
 
@@ -376,25 +376,25 @@ node type.</p>
 
 <div class="aside aside-see-also">
     <p class="aside-title">See also</p>
-    <a href="Element.html#//apple_ref/swift/Property/attributes"><code><a href="../Classes/Text.html#/s:vC7MiniDOM4Text10attributesGSqGVs10DictionarySSSS__">Text.attributes</a></code></a>
+    <a href="Text.html#//apple_ref/swift/Property/attributes"><code><a href="../Classes/Text.html#/s:vC7MiniDOM4Text10attributesGSqGVs10DictionarySSSS__">Text.attributes</a></code></a>
 
 </div>
 
 <div class="aside aside-see-also">
     <p class="aside-title">See also</p>
-    <a href="Element.html#//apple_ref/swift/Property/attributes"><code><a href="../Classes/ProcessingInstruction.html#/s:vC7MiniDOM21ProcessingInstruction10attributesGSqGVs10DictionarySSSS__">ProcessingInstruction.attributes</a></code></a>
+    <a href="ProcessingInstruction.html#//apple_ref/swift/Property/attributes"><code><a href="../Classes/ProcessingInstruction.html#/s:vC7MiniDOM21ProcessingInstruction10attributesGSqGVs10DictionarySSSS__">ProcessingInstruction.attributes</a></code></a>
 
 </div>
 
 <div class="aside aside-see-also">
     <p class="aside-title">See also</p>
-    <a href="Element.html#//apple_ref/swift/Property/attributes"><code><a href="../Classes/Comment.html#/s:vC7MiniDOM7Comment10attributesGSqGVs10DictionarySSSS__">Comment.attributes</a></code></a>
+    <a href="Comment.html#//apple_ref/swift/Property/attributes"><code><a href="../Classes/Comment.html#/s:vC7MiniDOM7Comment10attributesGSqGVs10DictionarySSSS__">Comment.attributes</a></code></a>
 
 </div>
 
 <div class="aside aside-see-also">
     <p class="aside-title">See also</p>
-    <a href="Element.html#//apple_ref/swift/Property/attributes"><code><a href="../Classes/CDATASection.html#/s:vC7MiniDOM12CDATASection10attributesGSqGVs10DictionarySSSS__">CDATASection.attributes</a></code></a>
+    <a href="CDATASection.html#//apple_ref/swift/Property/attributes"><code><a href="../Classes/CDATASection.html#/s:vC7MiniDOM12CDATASection10attributesGSqGVs10DictionarySSSS__">CDATASection.attributes</a></code></a>
 
 </div>
 
@@ -439,25 +439,25 @@ node type.</p>
 
 <div class="aside aside-see-also">
     <p class="aside-title">See also</p>
-    <a href="Element.html#//apple_ref/swift/Property/children"><code>Text.children</code></a>
+    <a href="Text.html#//apple_ref/swift/Property/children"><code>Text.children</code></a>
 
 </div>
 
 <div class="aside aside-see-also">
     <p class="aside-title">See also</p>
-    <a href="Element.html#//apple_ref/swift/Property/children"><code>ProcessingInstruction.children</code></a>
+    <a href="ProcessingInstruction.html#//apple_ref/swift/Property/children"><code>ProcessingInstruction.children</code></a>
 
 </div>
 
 <div class="aside aside-see-also">
     <p class="aside-title">See also</p>
-    <a href="Element.html#//apple_ref/swift/Property/children"><code>Comment.children</code></a>
+    <a href="Comment.html#//apple_ref/swift/Property/children"><code>Comment.children</code></a>
 
 </div>
 
 <div class="aside aside-see-also">
     <p class="aside-title">See also</p>
-    <a href="Element.html#//apple_ref/swift/Property/children"><code>CDATASection.children</code></a>
+    <a href="CDATASection.html#//apple_ref/swift/Property/children"><code>CDATASection.children</code></a>
 
 </div>
 
@@ -506,8 +506,15 @@ following document:</p>
 <span class="nt">&lt;/a&gt;</span>
 </code></pre>
 
-<p>evaluating the path <code>[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]</code> would select the <code>&lt;c&gt;</code> element with
-<code>id=&quot;3&quot;</code> but not the <code>&lt;c&gt;</code> element with <code>id=&quot;4&quot;</code>.</p>
+<p>evaluating the path <code>[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]</code> relative to the document would select
+the <code>&lt;c&gt;</code> element with <code>id=&quot;3&quot;</code> but not the <code>&lt;c&gt;</code> element with <code>id=&quot;4&quot;</code>.</p>
+
+<p>In this example, starting at the document object (the parent of the root 
+<code>&lt;a&gt;</code> element), select all children with <code>nodeName == &quot;a&quot;</code>. From that set 
+of nodes (with <code>nodeName == &quot;a&quot;</code>), select all children with <code>nodeName == 
+&quot;b&quot;</code>. Finally, from that set of nodes (with <code>nodeName == &quot;b&quot;</code> that are 
+children of nodes with <code>nodeName == &quot;a&quot;</code>), select all children with 
+<code>nodeName == &quot;c&quot;</code>.</p>
 
                       </div>
                       <div class="declaration">
@@ -566,7 +573,7 @@ following document:</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Generates and XML string representation of this node and its descendants.</p>
+                        <p>Generates an XML string representation of this node and its descendants.</p>
 
                       </div>
                       <div class="declaration">
@@ -659,7 +666,7 @@ Casts the nodes in the resulting array to the specified type.</p>
                       </div>
                       <div>
                         <h4>Return Value</h4>
-                        <p>The elements of the <code><a href="../Protocols/Node.html#/s:vP7MiniDOM4Node8childrenGSaPS0___">children</a></code> array of the specified type</p>
+                        <p>The nodes in the <code><a href="../Protocols/Node.html#/s:vP7MiniDOM4Node8childrenGSaPS0___">children</a></code> array of the specified type</p>
 
                       </div>
                     </section>
@@ -681,7 +688,7 @@ Casts the nodes in the resulting array to the specified type.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>A Boolean value indicating whether the <code><a href="../Protocols/Node.html#/s:vP7MiniDOM4Node8childrenGSaPS0___">children</a></code> array has elements.</p>
+                        <p>A Boolean value indicating whether the <code><a href="../Protocols/Node.html#/s:vP7MiniDOM4Node8childrenGSaPS0___">children</a></code> array is not empty.</p>
 
                       </div>
                       <div class="declaration">
@@ -711,7 +718,7 @@ Casts the nodes in the resulting array to the specified type.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The first element in the <code><a href="../Protocols/Node.html#/s:vP7MiniDOM4Node8childrenGSaPS0___">children</a></code> array.</p>
+                        <p>The first node in the <code><a href="../Protocols/Node.html#/s:vP7MiniDOM4Node8childrenGSaPS0___">children</a></code> array.</p>
 
                       </div>
                       <div class="declaration">
@@ -741,7 +748,7 @@ Casts the nodes in the resulting array to the specified type.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The last element in the <code><a href="../Protocols/Node.html#/s:vP7MiniDOM4Node8childrenGSaPS0___">children</a></code> array.</p>
+                        <p>The last node in the <code><a href="../Protocols/Node.html#/s:vP7MiniDOM4Node8childrenGSaPS0___">children</a></code> array.</p>
 
                       </div>
                       <div class="declaration">

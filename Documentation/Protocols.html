@@ -144,8 +144,8 @@
                         <p>The <code>Node</code> protocol is the primary data type for the entire Document Object
 Model. It represents a single node in the document tree. While all objects
 implementing the <code>Node</code> protocol expose functionality related to children, not
-all objects implementing the <code>Node</code> protocol may have children. There are two
-additional protocols implemented by node types:</p>
+all objects implementing the <code>Node</code> protocol may have children. To address this
+distinction, there are two additional protocols implemented by node types:</p>
 
 <ul>
 <li><code><a href="Protocols/ParentNode.html">ParentNode</a></code> provides a getter and setter on the <code>children</code> property</li>
@@ -159,7 +159,7 @@ attempting to modify the <code>children</code> array of a leaf node.</p>
 <p>The attributes <code>nodeName</code>, <code>nodeValue</code>, and <code>attributes</code> are included as a
 mechanism to get at node information without casting down to the specific
 derived type. In cases where there is no obvious mapping of these attributes
-for a specific <code>nodeType</code> e.g., <code>nodeValue</code> for an Element or <code>attributes</code> for
+for a specific <code>nodeType</code> (e.g., <code>nodeValue</code> for an Element or <code>attributes</code> for
 a Comment), this returns <code>nil</code>.</p>
 
 <p>The values of <code>nodeName</code>, <code>nodeValue</code>, and <code>attributes</code> vary according to the
@@ -203,21 +203,22 @@ node type.</p>
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>The <a href="https://en.wikipedia.org/wiki/Visitor_pattern">Visitor Design Pattern</a> is
-used throughout the MiniDOM library to implement algorithms that involve 
-traversing the DOM tree. It provides a convenient mechanism to separate an 
+used throughout the MiniDOM library to implement algorithms that involve
+traversing the DOM tree. It provides a convenient mechanism to separate an
 algorithm from the object structure on which it operates. It allows operations
 to be added to the DOM structure without modifying the structures themselves.</p>
 
-<p>A <code>Visitor</code> object is provided to the <code>Node.accept(_:)</code> to start the traversal.
-The <code><a href="Protocols/Node.html">Node</a></code> object calls the appropriate methods on the <code>Visitor</code> object before
-traversing recursively through the child nodes.</p>
+<p>A <code>Visitor</code> object is provided to <code>Node.accept(_:)</code> to start the traversal. The
+<code><a href="Protocols/Node.html">Node</a></code> object calls the appropriate methods on the <code>Visitor</code> object before
+calling <code>Node.accept(_:)</code> on its child nodes, performing the recursive
+traversal.</p>
 
 <p>The <code>Visitor</code> protocol defines methods that correspond to each of the <code><a href="Protocols/Node.html">Node</a></code>
 types in the DOM. Types implementing the <code>Visitor</code> protocol do not need to
-deal with the actual traversal; its methods are called by the traversal 
+deal with the actual traversal; its methods are called by the traversal
 algorithm provided by the DOM classes.</p>
 
-<p>For a simple example of a visitor, see the <code>ElementSearch</code> class in 
+<p>For a simple example of a visitor, see the <code>ElementSearch</code> class in
 <code>Search.swift</code>. For a more complex example of a visitor, see the <code>Formatter</code>
 class in <code>Formatter.swift</code>.</p>
 
@@ -297,7 +298,7 @@ class in <code>Formatter.swift</code>.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Represents a node that cannot have child nodes.</p>
+                        <p>Represents a node that cannot have children.</p>
 
                         <a href="Protocols/LeafNode.html" class="slightly-smaller">See more</a>
                       </div>
@@ -336,7 +337,7 @@ class in <code>Formatter.swift</code>.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Represents a node that can have child nodes.</p>
+                        <p>Represents a node that can have children.</p>
 
                         <a href="Protocols/ParentNode.html" class="slightly-smaller">See more</a>
                       </div>
