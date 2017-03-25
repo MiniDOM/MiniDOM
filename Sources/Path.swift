@@ -96,8 +96,15 @@ public extension Node {
      </a>
      ```
 
-     evaluating the path `["a", "b", "c"]` would select the `<c>` element with
-     `id="3"` but not the `<c>` element with `id="4"`.
+     evaluating the path `["a", "b", "c"]` relative to the document would select
+     the `<c>` element with `id="3"` but not the `<c>` element with `id="4"`.
+     
+     In this example, starting at the document object (the parent of the root 
+     `<a>` element), select all children with `nodeName == "a"`. From that set 
+     of nodes (with `nodeName == "a"`), select all children with `nodeName == 
+     "b"`. Finally, from that set of nodes (with `nodeName == "b"` that are 
+     children of nodes with `nodeName == "a"`), select all children with 
+     `nodeName == "c"`.
 
      - parameter path: An array of strings, each representing a `nodeName` in
      the path.

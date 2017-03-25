@@ -23,39 +23,40 @@ import Foundation
 
 /**
  The [Visitor Design Pattern](https://en.wikipedia.org/wiki/Visitor_pattern) is
- used throughout the MiniDOM library to implement algorithms that involve 
- traversing the DOM tree. It provides a convenient mechanism to separate an 
+ used throughout the MiniDOM library to implement algorithms that involve
+ traversing the DOM tree. It provides a convenient mechanism to separate an
  algorithm from the object structure on which it operates. It allows operations
  to be added to the DOM structure without modifying the structures themselves.
- 
- A `Visitor` object is provided to the `Node.accept(_:)` to start the traversal.
- The `Node` object calls the appropriate methods on the `Visitor` object before
- traversing recursively through the child nodes.
- 
+
+ A `Visitor` object is provided to `Node.accept(_:)` to start the traversal. The
+ `Node` object calls the appropriate methods on the `Visitor` object before
+ calling `Node.accept(_:)` on its child nodes, performing the recursive
+ traversal.
+
  The `Visitor` protocol defines methods that correspond to each of the `Node`
  types in the DOM. Types implementing the `Visitor` protocol do not need to
- deal with the actual traversal; its methods are called by the traversal 
+ deal with the actual traversal; its methods are called by the traversal
  algorithm provided by the DOM classes.
- 
- For a simple example of a visitor, see the `ElementSearch` class in 
+
+ For a simple example of a visitor, see the `ElementSearch` class in
  `Search.swift`. For a more complex example of a visitor, see the `Formatter`
  class in `Formatter.swift`.
  */
 public protocol Visitor {
 
     /**
-     Called when the traversal algorithm encounters a `Document` object before 
-     the `children` are traversed.
+     Called when the traversal algorithm encounters a `Document` object before
+     its `children` are traversed.
 
      Visiting a `Document` object is split into a begin and end method to
-     allow implementing operations before and after the `children` of the 
+     allow implementing operations before and after the `children` of the
      `Document` object are visited.
      */
     func beginVisit(_ document: Document)
 
     /**
      Called when the traversal algorithm encounters a `Document` object after
-     the `children` are traversed.
+     its `children` are traversed.
 
      Visiting a `Document` object is split into a begin and end method to
      allow implementing operations before and after the `children` of the
@@ -65,7 +66,7 @@ public protocol Visitor {
 
     /**
      Called when the traversal algorithm encounters an `Element` object before
-     the `children` are traversed.
+     its `children` are traversed.
 
      Visiting an `Element` object is split into a begin and end method to
      allow implementing operations before and after the `children` of the
@@ -75,7 +76,7 @@ public protocol Visitor {
 
     /**
      Called when the traversal algorithm encounters an `Element` object after
-     the `children` are traversed.
+     its `children` are traversed.
 
      Visiting an `Element` object is split into a begin and end method to
      allow implementing operations before and after the `children` of the
@@ -89,7 +90,7 @@ public protocol Visitor {
     func visit(_ text: Text)
 
     /**
-     Called when the traversal algorithm encounters a `ProcessingInstruction` 
+     Called when the traversal algorithm encounters a `ProcessingInstruction`
      object.
      */
     func visit(_ processingInstruction: ProcessingInstruction)
@@ -106,9 +107,9 @@ public protocol Visitor {
 }
 
 /**
- Instead of making the `Visitor` protocol functions optional or requiring 
+ Instead of making the `Visitor` protocol functions optional or requiring
  implementing types to define all of the functions (including ones that may be
- unnecessary for the implementing type's purpose), a default empty 
+ unnecessary for the implementing type's purpose), a default empty
  implementation of each of the functions is provided.
  */
 public extension Visitor {
@@ -146,7 +147,7 @@ public extension Visitor {
 public protocol Visitable {
     /**
      Called to begin traversing the sub-tree rooted at this node.
-     
+
      - parameter visitor: The `Visitor` object whose functions will be invoked
      during the traversal of the sub-tree rooted at this node.
      */
@@ -155,8 +156,8 @@ public protocol Visitable {
 
 extension Document: Visitable {
     /**
-     A document node first calls `beginVisit(self)` on the visitor. It then 
-     calls `accept` on each of the nodes in the `children` array, passing the 
+     A document node first calls `beginVisit(self)` on the visitor. It then
+     calls `accept` on each of the nodes in the `children` array, passing the
      visitor object. Finally, it calls `endVisit(self)` on the visitor.
      */
     public func accept(_ visitor: Visitor) {

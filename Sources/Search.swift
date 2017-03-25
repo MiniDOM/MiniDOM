@@ -37,10 +37,11 @@ class ElementSearch: Visitor {
 
 public extension Document {
     /**
-     Traverses the document tree, collecting element nodes with the specified
-     tag name.
+     Traverses the document tree, collecting `Element` nodes with the specified
+     tag name from anywhere in the document.
      
      - parameter name: Collect elements with this tag name.
+
      - returns: An array of elements with the specified tag name.
      */
     public func elements(withTagName name: String) -> [Element] {
@@ -48,12 +49,13 @@ public extension Document {
     }
 
     /**
-     Traverses the document tree, collecting element nodes that satisfy the 
-     given predicate.
+     Traverses the document tree, collecting `Element` nodes that satisfy the
+     given predicate from anywhere in the document.
      
      - parameter predicate: A closure that takes an element as its argument and
-                            returns a Boolean value indicating whether the 
-                            element should be included in the returned array.
+     returns a Boolean value indicating whether the element should be included 
+     in the returned array.
+
      - returns: An array of the elements that `predicate` allowed.
      */
     public func elements(where predicate: @escaping (Element) -> Bool) -> [Element] {

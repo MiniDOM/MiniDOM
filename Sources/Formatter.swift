@@ -80,16 +80,16 @@ class Formatter: Visitor {
     }
 
     private func formatAttributes(of element: Element) -> String? {
-        if element.attributes?.isEmpty == true {
+        guard let attrs = element.attributes, !attrs.isEmpty else {
             return nil
         }
 
         var formatted: [String] = []
-        let sortedAttributes = element.attributes?.sorted { (kv1: (String, String), kv2: (String, String)) -> Bool in
+        let sortedAttributes = attrs.sorted { (kv1: (String, String), kv2: (String, String)) -> Bool in
             return kv1.0 < kv2.0
         }
 
-        for (key, value) in sortedAttributes ?? [] {
+        for (key, value) in sortedAttributes {
             formatted.append("\(key)=\"\(value)\"")
         }
 
@@ -123,7 +123,7 @@ class Formatter: Visitor {
 
 public extension Node {
     /**
-     Generates and XML string representation of this node and its descendants.
+     Generates an XML string representation of this node and its descendants.
      
      - parameter indentWith: The string used to indent the formatted string.
      

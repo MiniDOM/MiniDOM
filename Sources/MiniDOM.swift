@@ -17,9 +17,15 @@
 //  limitations under the License.
 //
 
-/**
+/*
  This file contains the protocols and classes used to define the Document
  Object Model.
+
+ This is intended to provided a subset of the behavior described in the
+ [DOM Level 1 specification][1]. Much of this file's documentation is adapted
+ from that document.
+
+ [1]: https://www.w3.org/TR/REC-DOM-Level-1/level-one-core.html
  */
 
 import Foundation
@@ -52,8 +58,8 @@ public enum NodeType {
  The `Node` protocol is the primary data type for the entire Document Object
  Model. It represents a single node in the document tree. While all objects
  implementing the `Node` protocol expose functionality related to children, not
- all objects implementing the `Node` protocol may have children. There are two
- additional protocols implemented by node types:
+ all objects implementing the `Node` protocol may have children. To address this
+ distinction, there are two additional protocols implemented by node types:
 
  - `ParentNode` provides a getter and setter on the `children` property
  - `LeafNode` provides a getter on the `children` property that always returns
@@ -65,7 +71,7 @@ public enum NodeType {
  The attributes `nodeName`, `nodeValue`, and `attributes` are included as a
  mechanism to get at node information without casting down to the specific
  derived type. In cases where there is no obvious mapping of these attributes
- for a specific `nodeType` e.g., `nodeValue` for an Element or `attributes` for
+ for a specific `nodeType` (e.g., `nodeValue` for an Element or `attributes` for
  a Comment), this returns `nil`.
 
  The values of `nodeName`, `nodeValue`, and `attributes` vary according to the
@@ -77,10 +83,10 @@ public protocol Node: Visitable {
 
      - SeeAlso: [`Document.nodeType`](Document.html#//apple_ref/swift/Property/nodeType)
      - SeeAlso: [`Element.nodeType`](Element.html#//apple_ref/swift/Property/nodeType)
-     - SeeAlso: [`Text.nodeType`](Element.html#//apple_ref/swift/Property/nodeType)
-     - SeeAlso: [`ProcessingInstruction.nodeType`](Element.html#//apple_ref/swift/Property/nodeType)
-     - SeeAlso: [`Comment.nodeType`](Element.html#//apple_ref/swift/Property/nodeType)
-     - SeeAlso: [`CDATASection.nodeType`](Element.html#//apple_ref/swift/Property/nodeType)
+     - SeeAlso: [`Text.nodeType`](Text.html#//apple_ref/swift/Property/nodeType)
+     - SeeAlso: [`ProcessingInstruction.nodeType`](ProcessingInstruction.html#//apple_ref/swift/Property/nodeType)
+     - SeeAlso: [`Comment.nodeType`](Comment.html#//apple_ref/swift/Property/nodeType)
+     - SeeAlso: [`CDATASection.nodeType`](CDATASection.html#//apple_ref/swift/Property/nodeType)
      */
     static var nodeType: NodeType { get }
 
@@ -89,10 +95,10 @@ public protocol Node: Visitable {
 
      - SeeAlso: [`Document.nodeName`](Document.html#//apple_ref/swift/Property/nodeName)
      - SeeAlso: [`Element.nodeName`](Element.html#//apple_ref/swift/Property/nodeName)
-     - SeeAlso: [`Text.nodeName`](Element.html#//apple_ref/swift/Property/nodeName)
-     - SeeAlso: [`ProcessingInstruction.nodeName`](Element.html#//apple_ref/swift/Property/nodeName)
-     - SeeAlso: [`Comment.nodeName`](Element.html#//apple_ref/swift/Property/nodeName)
-     - SeeAlso: [`CDATASection.nodeName`](Element.html#//apple_ref/swift/Property/nodeName)
+     - SeeAlso: [`Text.nodeName`](Text.html#//apple_ref/swift/Property/nodeName)
+     - SeeAlso: [`ProcessingInstruction.nodeName`](ProcessingInstruction.html#//apple_ref/swift/Property/nodeName)
+     - SeeAlso: [`Comment.nodeName`](Comment.html#//apple_ref/swift/Property/nodeName)
+     - SeeAlso: [`CDATASection.nodeName`](CDATASection.html#//apple_ref/swift/Property/nodeName)
      */
     var nodeName: String { get }
 
@@ -101,10 +107,10 @@ public protocol Node: Visitable {
 
      - SeeAlso: [`Document.nodeValue`](Document.html#//apple_ref/swift/Property/nodeValue)
      - SeeAlso: [`Element.nodeValue`](Element.html#//apple_ref/swift/Property/nodeValue)
-     - SeeAlso: [`Text.nodeValue`](Element.html#//apple_ref/swift/Property/nodeValue)
-     - SeeAlso: [`ProcessingInstruction.nodeValue`](Element.html#//apple_ref/swift/Property/nodeValue)
-     - SeeAlso: [`Comment.nodeValue`](Element.html#//apple_ref/swift/Property/nodeValue)
-     - SeeAlso: [`CDATASection.nodeValue`](Element.html#//apple_ref/swift/Property/nodeValue)
+     - SeeAlso: [`Text.nodeValue`](Text.html#//apple_ref/swift/Property/nodeValue)
+     - SeeAlso: [`ProcessingInstruction.nodeValue`](ProcessingInstruction.html#//apple_ref/swift/Property/nodeValue)
+     - SeeAlso: [`Comment.nodeValue`](Comment.html#//apple_ref/swift/Property/nodeValue)
+     - SeeAlso: [`CDATASection.nodeValue`](CDATASection.html#//apple_ref/swift/Property/nodeValue)
      */
     var nodeValue: String? { get }
 
@@ -113,10 +119,10 @@ public protocol Node: Visitable {
 
      - SeeAlso: [`Document.attributes`](Document.html#//apple_ref/swift/Property/attributes)
      - SeeAlso: [`Element.attributes`](Element.html#//apple_ref/swift/Property/attributes)
-     - SeeAlso: [`Text.attributes`](Element.html#//apple_ref/swift/Property/attributes)
-     - SeeAlso: [`ProcessingInstruction.attributes`](Element.html#//apple_ref/swift/Property/attributes)
-     - SeeAlso: [`Comment.attributes`](Element.html#//apple_ref/swift/Property/attributes)
-     - SeeAlso: [`CDATASection.attributes`](Element.html#//apple_ref/swift/Property/attributes)
+     - SeeAlso: [`Text.attributes`](Text.html#//apple_ref/swift/Property/attributes)
+     - SeeAlso: [`ProcessingInstruction.attributes`](ProcessingInstruction.html#//apple_ref/swift/Property/attributes)
+     - SeeAlso: [`Comment.attributes`](Comment.html#//apple_ref/swift/Property/attributes)
+     - SeeAlso: [`CDATASection.attributes`](CDATASection.html#//apple_ref/swift/Property/attributes)
      */
     var attributes: [String : String]? { get }
 
@@ -125,10 +131,10 @@ public protocol Node: Visitable {
 
      - SeeAlso: [`Document.children`](Document.html#//apple_ref/swift/Property/children)
      - SeeAlso: [`Element.children`](Element.html#//apple_ref/swift/Property/children)
-     - SeeAlso: [`Text.children`](Element.html#//apple_ref/swift/Property/children)
-     - SeeAlso: [`ProcessingInstruction.children`](Element.html#//apple_ref/swift/Property/children)
-     - SeeAlso: [`Comment.children`](Element.html#//apple_ref/swift/Property/children)
-     - SeeAlso: [`CDATASection.children`](Element.html#//apple_ref/swift/Property/children)
+     - SeeAlso: [`Text.children`](Text.html#//apple_ref/swift/Property/children)
+     - SeeAlso: [`ProcessingInstruction.children`](ProcessingInstruction.html#//apple_ref/swift/Property/children)
+     - SeeAlso: [`Comment.children`](Comment.html#//apple_ref/swift/Property/children)
+     - SeeAlso: [`CDATASection.children`](CDATASection.html#//apple_ref/swift/Property/children)
      */
     var children: [Node] { get }
 }
@@ -144,23 +150,24 @@ public extension Node {
      Casts the nodes in the resulting array to the specified type.
 
      - parameter type: Include children of this type in the resulting array
-     - returns: The elements of the `children` array of the specified type
+     
+     - returns: The nodes in the `children` array of the specified type
      */
     public final func children<T: Node>(ofType type: T.Type) -> [T] {
         return only(nodes: children, ofType: type)
     }
 
-    /// A Boolean value indicating whether the `children` array has elements.
+    /// A Boolean value indicating whether the `children` array is not empty.
     public final var hasChildren: Bool {
-        return children.count > 0
+        return !children.isEmpty
     }
 
-    /// The first element in the `children` array.
+    /// The first node in the `children` array.
     public final var firstChild: Node? {
         return children.first
     }
 
-    /// The last element in the `children` array.
+    /// The last node in the `children` array.
     public final var lastChild: Node? {
         return children.last
     }
@@ -169,7 +176,7 @@ public extension Node {
 // MARK: - Leaf Protocol
 
 /**
- Represents a node that cannot have child nodes.
+ Represents a node that cannot have children.
  */
 public protocol LeafNode: Node {
     /**
@@ -192,7 +199,7 @@ public extension LeafNode {
 // MARK: - Parent Protocol
 
 /**
- Represents a node that can have child nodes.
+ Represents a node that can have children.
  */
 public protocol ParentNode: Node {
     /// The children of this node.
@@ -282,14 +289,14 @@ public final class Document: ParentNode {
  </elementExample>
  ```
 
- When represented using DOM, the top node is an `Element` node for
+ When represented using the DOM, the top node is an `Element` node for
  `elementExample`, which contains two child `Element` nodes, one for
  `subelement1` and one for `subelement2`. `subelement1` contains no child
  nodes.
 
  Elements may have attributes associated with them; since the `Element` class
  implements the `Node` protocol, the `attributes` property of the `Node`
- protocol may be used to retrieve the set of all attributes for an element.
+ protocol may be used to retrieve a dictionary of the attributes for an element.
  */
 public final class Element: ParentNode {
 
@@ -372,10 +379,10 @@ public final class Element: ParentNode {
 
 /**
  The `Text` class represents the textual content (termed character data in XML)
- of an Element. If there is no markup inside an element's content, the text is
+ of an `Element`. If there is no markup inside an element's content, the text is
  contained in a single object implementing the `Text` protocol that is the only
- child of the element. If there is markup, it is parsed into a list of elements
- and `Text` nodes that form the list of children of the element.
+ child of the element. If there is markup, it is parsed into a sequence of 
+ elements and `Text` nodes that form the array of children of the element.
  */
 public class Text: TextNode {
 
@@ -438,7 +445,7 @@ public class ProcessingInstruction: LeafNode {
 
     /**
      The target of this processing instruction. XML defines this as being the
-     first token following the markup that begins the processing instruction.
+     first token following the `<?` that begins the processing instruction.
      */
     public var target: String
 
@@ -455,8 +462,8 @@ public class ProcessingInstruction: LeafNode {
      Creates a new `ProcessingInstruction' node.
 
      - parameter target: The target of this processing instruction. XML defines
-     this as being the first token following the markup that begins the
-     processing instruction.
+     this as being the first token following the `<?` that begins the processing
+     instruction.
 
      - parameter data: The content of this processing instruction. This is from
      the first non-whitespace character after the target to the character
@@ -515,9 +522,7 @@ public class Comment: TextNode {
 
  The `text` property holds the text that is contained by the CDATA section.
  Note that this may contain characters that need to be escaped outside of CDATA
- sections and that, depending on the character encoding ("charset") chosen for
- serialization, it may be impossible to write out some characters as part of a
- CDATA section.
+ sections.
  */
 public class CDATASection: TextNode {
 
