@@ -273,6 +273,11 @@ public final class Document: ParentNode {
     public var documentElement: Element? {
         return first(in: children, ofType: Element.self)
     }
+
+    /**
+     Creates a new `Document` node.
+     */
+    public init() { }
 }
 
 // MARK: - Element

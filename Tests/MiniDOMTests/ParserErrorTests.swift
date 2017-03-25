@@ -59,4 +59,22 @@ class ParserErrorTests: XCTestCase {
         expect(result?.error).notTo(beNil())
         // TODO: verify actual error
     }
+
+    func testSuccessResult() {
+        let document = Document()
+        let result = Result.success(document)
+        expect(result.isSuccess).to(beTrue())
+        expect(result.isFailure).to(beFalse())
+        expect(result.value) === document
+        expect(result.error).to(beNil())
+    }
+
+    func testFailureResult() {
+        let error = NSError(domain: "domain", code: 123, userInfo: nil)
+        let result = Result<Document>.failure(error)
+        expect(result.isSuccess).to(beFalse())
+        expect(result.isFailure).to(beTrue())
+        expect(result.value).to(beNil())
+        expect(result.error) === error
+    }
 }
