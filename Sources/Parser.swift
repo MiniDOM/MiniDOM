@@ -113,12 +113,7 @@ public class Parser {
      - returns: An initialized `Parser` object or `nil` if an error occurs.
      */
     public convenience init?(contentsOf url: URL, shouldProcessNamespaces: Bool = false) {
-        guard let parser = XMLParser(contentsOf: url) else {
-            return nil
-        }
-
-        parser.shouldProcessNamespaces = shouldProcessNamespaces
-        self.init(parser: parser)
+        self.init(parser: XMLParser(contentsOf: url), shouldProcessNamespaces: shouldProcessNamespaces)
     }
 
     /**
@@ -136,11 +131,7 @@ public class Parser {
      - returns: An initialized `Parser` object or `nil` if an error occurs.
      */
     public convenience init?(string: String, encoding: String.Encoding = .utf8, shouldProcessNamespaces: Bool = false) {
-        guard let data = string.data(using: encoding) else {
-            return nil
-        }
-
-        self.init(data: data, shouldProcessNamespaces: shouldProcessNamespaces)
+        self.init(data: string.data(using: encoding), shouldProcessNamespaces: shouldProcessNamespaces)
     }
 
     /**
@@ -155,11 +146,12 @@ public class Parser {
      
      - returns: An initialized `Parser` object.
      */
-    public convenience init(data: Data, shouldProcessNamespaces: Bool = false) {
-        let parser = XMLParser(data: data)
-        parser.shouldProcessNamespaces = shouldProcessNamespaces
+    public convenience init?(data: Data?, shouldProcessNamespaces: Bool = false) {
+        guard let data = data else {
+            return nil
+        }
 
-        self.init(parser: parser)
+        self.init(parser: XMLParser(data: data), shouldProcessNamespaces: shouldProcessNamespaces)
     }
 
     /**
@@ -175,15 +167,17 @@ public class Parser {
      
      - returns: An initialized `Parser` object.
      */
-    public convenience init(stream: InputStream, shouldProcessNamespaces: Bool = false) {
-        let parser = XMLParser(stream: stream)
-        parser.shouldProcessNamespaces = shouldProcessNamespaces
-
-        self.init(parser: parser)
+    public convenience init?(stream: InputStream, shouldProcessNamespaces: Bool = false) {
+        self.init(parser: XMLParser(stream: stream), shouldProcessNamespaces: shouldProcessNamespaces)
     }
 
-    private init(parser: XMLParser) {
+    init?(parser: XMLParser?, shouldProcessNamespaces: Bool = false) {
+        guard let parser = parser else {
+            return nil
+        }
+
         self.parser = parser
+        self.parser.shouldProcessNamespaces = shouldProcessNamespaces
     }
 
     /**
