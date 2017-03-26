@@ -42,4 +42,14 @@ class StringWhitespaceTests: XCTestCase {
     func testNormalize() {
         expect("  foo  \r\n\t bar   ".normalized()) == "foo bar"
     }
+
+    func testNormalizeNewlineVariants() {
+        expect("foo\rbar".normalized()) == "foo bar"
+        expect("foo\nbar".normalized()) == "foo bar"
+        expect("foo\r\nbar".normalized()) == "foo bar"
+
+        expect("foo \rbar".normalized()) == "foo bar"
+        expect("foo \nbar".normalized()) == "foo bar"
+        expect("foo \r\nbar".normalized()) == "foo bar"
+    }
 }

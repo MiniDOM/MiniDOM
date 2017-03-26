@@ -19,7 +19,7 @@
 
 import Foundation
 
-public class Formatter: Visitor {
+class Formatter: Visitor {
     private struct Line {
         let depth: Int
         let value: String
@@ -41,13 +41,8 @@ public class Formatter: Visitor {
 
     private let indentString: String
 
-    public init(indentWith string: String = "  ") {
+    init(indentWith string: String) {
         self.indentString = string
-    }
-
-    public func format(document: Document) -> String? {
-        document.accept(self)
-        return formattedString
     }
 
     private func addLine(_ string: String) {
@@ -85,12 +80,12 @@ public class Formatter: Visitor {
     }
 
     private func formatAttributes(of element: Element) -> String? {
-        guard !element.attributes.isEmpty else {
+        guard let attrs = element.attributes, !attrs.isEmpty else {
             return nil
         }
 
         var formatted: [String] = []
-        let sortedAttributes = element.attributes.sorted { (kv1: (String, String), kv2: (String, String)) -> Bool in
+        let sortedAttributes = attrs.sorted { (kv1: (String, String), kv2: (String, String)) -> Bool in
             return kv1.0 < kv2.0
         }
 
@@ -123,5 +118,21 @@ public class Formatter: Visitor {
 
     public func visit(_ cdataSection: CDATASection) {
         addLine("<![CDATA[\(cdataSection.text)]]>")
+    }
+}
+
+public extension Node {
+    /**
+     Generates an XML string representation of this node and its descendants.
+     
+     - parameter indentWith: The string used to indent the formatted string.
+     
+     - returns: A formatted XML string representation of this node and its 
+     descendants.
+     */
+    public func format(indentWith: String = "\t") -> String? {
+        let formatter = Formatter(indentWith: indentWith)
+        accept(formatter)
+        return formatter.formattedString
     }
 }

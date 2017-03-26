@@ -56,4 +56,40 @@ class VisitorTests: XCTestCase {
         let visitor = EmptyVisitor()
         document.accept(visitor)
     }
+
+    func testChildren() {
+        class ChildCheckingVisitor: Visitor {
+            func beginVisit(_ document: Document) {
+                expect(document.children.count) == 1
+            }
+
+            func beginVisit(_ element: Element) {
+                if element.tagName == "bar" {
+                    expect(element.children.isEmpty).to(beTrue())
+                }
+                else {
+                    expect(element.children.isEmpty).to(beFalse())
+                }
+            }
+
+            func visit(_ text: Text) {
+                expect(text.children.isEmpty).to(beTrue())
+            }
+
+            func visit(_ processingInstruction: ProcessingInstruction) {
+                expect(processingInstruction.children.isEmpty).to(beTrue())
+            }
+
+            func visit(_ comment: Comment) {
+                expect(comment.children.isEmpty).to(beTrue())
+            }
+
+            func visit(_ cdataSection: CDATASection) {
+                expect(cdataSection.children.isEmpty).to(beTrue())
+            }
+        }
+
+        let visitor = ChildCheckingVisitor()
+        document.accept(visitor)
+    }
 }

@@ -20,15 +20,30 @@
 import Foundation
 
 public extension String {
+    /**
+     Returns a new string made by removing whitespace and newline characters 
+     from both ends of the receiver.
+     */
     public func trimmed() -> String {
         return trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
     }
 
+    /**
+     Returns a new string made by replacing multiple space whitespace characters
+     (matching the `\\s` regular expression character class) with a single space
+     character.
+     */
     public func collapsed() -> String {
         return replacingOccurrences(of: "\\s+", with: " ", options: .regularExpression)
     }
 
+    /**
+     Returns a new string made by normalizing the whitespace characters in the
+     receiver. Leading and trailing whitespace characters are trimmed (via the
+     `trimmed()` function), then newlines are replaced with spaces, finally
+     whitespace is collapsed (via the `collapsed()` function).
+     */
     public func normalized() -> String {
-        return trimmed().collapsed()
+        return trimmed().replacingOccurrences(of: "\\n", with: " ").collapsed()
     }
 }
