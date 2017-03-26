@@ -200,7 +200,7 @@ public class Parser {
     }
 }
 
-fileprivate class NodeStack: NSObject, XMLParserDelegate {
+class NodeStack: NSObject, XMLParserDelegate {
     private let log = Log(level: .warn)
 
     private var stack: ArraySlice<Node> = []

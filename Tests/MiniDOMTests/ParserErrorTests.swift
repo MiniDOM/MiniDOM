@@ -18,9 +18,10 @@
 //
 
 import Foundation
-import MiniDOM
 import Nimble
 import XCTest
+
+@testable import MiniDOM
 
 class ParserErrorTests: XCTestCase {
     func testInvalidProcessingInstruction() {
@@ -76,5 +77,16 @@ class ParserErrorTests: XCTestCase {
         expect(result.isFailure).to(beTrue())
         expect(result.value).to(beNil())
         expect(result.error) === error
+    }
+
+    func testInvalidCDATABlock() {
+        let bytes: [UInt8] = [192]
+        let invalidUTF8data = Data(bytes: bytes)
+
+        let nodeStack = NodeStack()
+        let parser = XMLParser(data: "".data(using: .utf8)!)
+
+        // single step or watch log to ensure this is caught
+        nodeStack.parser(parser, foundCDATA: invalidUTF8data)
     }
 }
