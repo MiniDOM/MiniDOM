@@ -20,5 +20,8 @@
 import PackageDescription
 
 let package = Package(
-    name: "MiniDOM"
+    name: "MiniDOM",
+    dependencies: [
+        .Package(url: "https://github.com/Quick/Nimble.git", majorVersion: 6),
+    ]
 )
