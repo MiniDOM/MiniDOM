@@ -189,17 +189,23 @@ class NodeStack: NSObject, XMLParserDelegate {
 
     private var stack: ArraySlice<Node> = []
 
-    private func popAndAppendToTopOfStack() {
-        if let child = stack.popLast() {
-            appendToTopOfStack(child: child)
+    private func popAndAppendToTopOfStack(parser: XMLParser) {
+        guard let child = stack.popLast() else {
+            parser.abortParsing()
+            return
         }
+
+        appendToTopOfStack(child: child, parser: parser)
     }
 
-    private func appendToTopOfStack(child: Node) {
-        if var parent = stack.popLast() as? ParentNode {
-            parent.append(child: child)
-            stack.append(parent)
+    private func appendToTopOfStack(child: Node, parser: XMLParser) {
+        guard var parent = stack.popLast() as? ParentNode else {
+            parser.abortParsing()
+            return
         }
+
+        parent.append(child: child)
+        stack.append(parent)
     }
 
     var document: Document? {
@@ -223,7 +229,7 @@ class NodeStack: NSObject, XMLParserDelegate {
 
     func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
         log.debug("elementName=\(elementName)")
-        popAndAppendToTopOfStack()
+        popAndAppendToTopOfStack(parser: parser)
     }
 
     func parser(_ parser: XMLParser, foundCharacters string: String) {
@@ -234,19 +240,19 @@ class NodeStack: NSObject, XMLParserDelegate {
 
         log.debug("string=\(trimmed)")
         let text = Text(text: trimmed)
-        appendToTopOfStack(child: text)
+        appendToTopOfStack(child: text, parser: parser)
     }
 
     func parser(_ parser: XMLParser, foundProcessingInstructionWithTarget target: String, data: String?) {
         log.debug("target=\(target) data=\(data)")
         let pi = ProcessingInstruction(target: target, data: data)
-        appendToTopOfStack(child: pi)
+        appendToTopOfStack(child: pi, parser: parser)
     }
 
     func parser(_ parser: XMLParser, foundComment comment: String) {
         log.debug("comment=\(comment)")
         let comment = Comment(text: comment)
-        appendToTopOfStack(child: comment)
+        appendToTopOfStack(child: comment, parser: parser)
     }
 
     func parser(_ parser: XMLParser, foundCDATA CDATABlock: Data) {
@@ -258,6 +264,6 @@ class NodeStack: NSObject, XMLParserDelegate {
         }
         
         let cdata = CDATASection(text: text)
-        appendToTopOfStack(child: cdata)
+        appendToTopOfStack(child: cdata, parser: parser)
     }
 }

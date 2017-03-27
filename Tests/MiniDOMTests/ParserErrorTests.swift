@@ -81,23 +81,24 @@ class ParserErrorTests: XCTestCase {
         expect(result.error) === error
     }
 
-    func testInvalidCDATABlock() {
-        class TestXMLParser: XMLParser {
-            var parsingAborted = false
+    fileprivate class AbortDetectingXMLParser: XMLParser {
+        var parsingAborted = false
 
-            override func abortParsing() {
-                parsingAborted = true
-            }
+        override func abortParsing() {
+            parsingAborted = true
         }
+    }
 
+    func testInvalidCDATABlock() {
         let bytes: [UInt8] = [192]
         let invalidUTF8data = Data(bytes: bytes)
 
         let nodeStack = NodeStack()
-        let parser = TestXMLParser()
+        let xmlParser = AbortDetectingXMLParser()
 
-        nodeStack.parser(parser, foundCDATA: invalidUTF8data)
-        expect(parser.parsingAborted).to(beTrue())
+        expect(xmlParser.parsingAborted).to(beFalse())
+        nodeStack.parser(xmlParser, foundCDATA: invalidUTF8data)
+        expect(xmlParser.parsingAborted).to(beTrue())
     }
 
     func testNilDocumentNoError() {
@@ -119,5 +120,23 @@ class ParserErrorTests: XCTestCase {
 
         expect(result?.error).to(matchError(Parser.Error.unspecifiedError))
         expect(result?.value).to(beNil())
+    }
+
+    func testUnbalancedEndElements() {
+        let xmlParser = AbortDetectingXMLParser()
+        let nodeStack = NodeStack()
+
+        expect(xmlParser.parsingAborted).to(beFalse())
+        nodeStack.parser(xmlParser, didEndElement: "fnord", namespaceURI: nil, qualifiedName: nil)
+        expect(xmlParser.parsingAborted).to(beTrue())
+    }
+
+    func testAppendToEmptyStack() {
+        let xmlParser = AbortDetectingXMLParser()
+        let nodeStack = NodeStack()
+
+        expect(xmlParser.parsingAborted).to(beFalse())
+        nodeStack.parser(xmlParser, foundComment: "fnord")
+        expect(xmlParser.parsingAborted).to(beTrue())
     }
 }
