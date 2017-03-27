@@ -40,7 +40,8 @@ class ParserErrorTests: XCTestCase {
         expect(result).notTo(beNil())
         expect(result?.value).to(beNil())
         expect(result?.error).notTo(beNil())
-        // TODO: verify actual error
+
+        expect(result?.error).to(matchError(NSError(domain: XMLParser.errorDomain, code: 111, userInfo: nil)))
     }
 
     func testExtraCloseTags() {
@@ -58,7 +59,8 @@ class ParserErrorTests: XCTestCase {
         expect(result).notTo(beNil())
         expect(result?.value).to(beNil())
         expect(result?.error).notTo(beNil())
-        // TODO: verify actual error
+
+        expect(result?.error).to(matchError(NSError(domain: XMLParser.errorDomain, code: 111, userInfo: nil)))
     }
 
     func testSuccessResult() {
@@ -80,13 +82,42 @@ class ParserErrorTests: XCTestCase {
     }
 
     func testInvalidCDATABlock() {
+        class TestXMLParser: XMLParser {
+            var parsingAborted = false
+
+            override func abortParsing() {
+                parsingAborted = true
+            }
+        }
+
         let bytes: [UInt8] = [192]
         let invalidUTF8data = Data(bytes: bytes)
 
         let nodeStack = NodeStack()
-        let parser = XMLParser(data: "".data(using: .utf8)!)
+        let parser = TestXMLParser()
 
-        // single step or watch log to ensure this is caught
         nodeStack.parser(parser, foundCDATA: invalidUTF8data)
+        expect(parser.parsingAborted).to(beTrue())
+    }
+
+    func testNilDocumentNoError() {
+        class TestXMLParser: XMLParser {
+            override func parse() -> Bool {
+                return false
+            }
+
+            override var parserError: Error? {
+                return nil
+            }
+        }
+
+        let parser = Parser(parser: TestXMLParser())
+        expect(parser).notTo(beNil())
+
+        let result = parser?.parse()
+        expect(result).notTo(beNil())
+
+        expect(result?.error).to(matchError(Parser.Error.unspecifiedError))
+        expect(result?.value).to(beNil())
     }
 }
