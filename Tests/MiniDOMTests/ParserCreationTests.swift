@@ -18,9 +18,10 @@
 //
 
 import Foundation
-import MiniDOM
 import Nimble
 import XCTest
+
+@testable import MiniDOM
 
 class ParserCreationTests: XCTestCase {
 
@@ -74,5 +75,15 @@ class ParserCreationTests: XCTestCase {
 
         let inputStreamParser = Parser(stream: inputStream)
         validateResults(from: inputStreamParser)
+    }
+
+    func testCreateWithNilData() {
+        let parser = Parser(data: nil)
+        expect(parser).to(beNil())
+    }
+
+    func testCreateWithNilParser() {
+        let parser = Parser(parser: nil)
+        expect(parser).to(beNil())
     }
 }

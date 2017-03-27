@@ -100,25 +100,17 @@ public class Parser {
         case unspecifiedError
     }
 
+
     /**
      Initializes a parser with the XML content referenced by the given URL.
      
      - parameter url: A `URL` object specifying a URL. The URL must be fully 
      qualified and refer to a scheme that is supported by the `URL` type.
-     
-     - parameter shouldProcessNamespaces: A Boolean value that determines
-     whether the parser reports the prefixes indicating the scope of namespace 
-     declarations.
 
      - returns: An initialized `Parser` object or `nil` if an error occurs.
      */
-    public convenience init?(contentsOf url: URL, shouldProcessNamespaces: Bool = false) {
-        guard let parser = XMLParser(contentsOf: url) else {
-            return nil
-        }
-
-        parser.shouldProcessNamespaces = shouldProcessNamespaces
-        self.init(parser: parser)
+    public convenience init?(contentsOf url: URL) {
+        self.init(parser: XMLParser(contentsOf: url))
     }
 
     /**
@@ -128,19 +120,11 @@ public class Parser {
      - parameter string: A `String` object containing XML markup.
 
      - parameter encoding: The encoding of the `String` object.
-     
-     - parameter shouldProcessNamespaces: A Boolean value that determines
-     whether the parser reports the prefixes indicating the scope of namespace
-     declarations.
-     
+
      - returns: An initialized `Parser` object or `nil` if an error occurs.
      */
-    public convenience init?(string: String, encoding: String.Encoding = .utf8, shouldProcessNamespaces: Bool = false) {
-        guard let data = string.data(using: encoding) else {
-            return nil
-        }
-
-        self.init(data: data, shouldProcessNamespaces: shouldProcessNamespaces)
+    public convenience init?(string: String, encoding: String.Encoding = .utf8) {
+        self.init(data: string.data(using: encoding))
     }
 
     /**
@@ -148,18 +132,15 @@ public class Parser {
      object.
 
      - parameter data: A `Data` object containing XML markup.
-    
-     - parameter shouldProcessNamespaces: A Boolean value that determines
-     whether the parser reports the prefixes indicating the scope of namespace
-     declarations.
-     
+
      - returns: An initialized `Parser` object.
      */
-    public convenience init(data: Data, shouldProcessNamespaces: Bool = false) {
-        let parser = XMLParser(data: data)
-        parser.shouldProcessNamespaces = shouldProcessNamespaces
+    public convenience init?(data: Data?) {
+        guard let data = data else {
+            return nil
+        }
 
-        self.init(parser: parser)
+        self.init(parser: XMLParser(data: data))
     }
 
     /**
@@ -168,21 +149,18 @@ public class Parser {
      - parameter stream: The input stream. The content is incrementally loaded 
      from the specified stream and parsed. The `Parser` will open the stream, 
      and synchronously read from it without scheduling it.
-     
-     - parameter shouldProcessNamespaces: A Boolean value that determines
-     whether the parser reports the prefixes indicating the scope of namespace
-     declarations.
-     
+
      - returns: An initialized `Parser` object.
      */
-    public convenience init(stream: InputStream, shouldProcessNamespaces: Bool = false) {
-        let parser = XMLParser(stream: stream)
-        parser.shouldProcessNamespaces = shouldProcessNamespaces
-
-        self.init(parser: parser)
+    public convenience init?(stream: InputStream) {
+        self.init(parser: XMLParser(stream: stream))
     }
 
-    private init(parser: XMLParser) {
+    init?(parser: XMLParser?) {
+        guard let parser = parser else {
+            return nil
+        }
+
         self.parser = parser
     }
 
@@ -206,22 +184,28 @@ public class Parser {
     }
 }
 
-fileprivate class NodeStack: NSObject, XMLParserDelegate {
+class NodeStack: NSObject, XMLParserDelegate {
     private let log = Log(level: .warn)
 
     private var stack: ArraySlice<Node> = []
 
-    private func popAndAppendToTopOfStack() {
-        if let child = stack.popLast() {
-            appendToTopOfStack(child: child)
+    private func popAndAppendToTopOfStack(parser: XMLParser) {
+        guard let child = stack.popLast() else {
+            parser.abortParsing()
+            return
         }
+
+        appendToTopOfStack(child: child, parser: parser)
     }
 
-    private func appendToTopOfStack(child: Node) {
-        if var parent = stack.popLast() as? ParentNode {
-            parent.append(child: child)
-            stack.append(parent)
+    private func appendToTopOfStack(child: Node, parser: XMLParser) {
+        guard var parent = stack.popLast() as? ParentNode else {
+            parser.abortParsing()
+            return
         }
+
+        parent.append(child: child)
+        stack.append(parent)
     }
 
     var document: Document? {
@@ -239,13 +223,13 @@ fileprivate class NodeStack: NSObject, XMLParserDelegate {
     }
 
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
-        log.debug("elementName=\(elementName) namespaceURI=\(namespaceURI) qualifiedName=\(qName), attributes=\(attributeDict)")
-        stack.append(Element(tagName: elementName, namespaceURI: namespaceURI, qualifiedName: qName, attributes: attributeDict))
+        log.debug("elementName=\(elementName) attributes=\(attributeDict)")
+        stack.append(Element(tagName: elementName, attributes: attributeDict))
     }
 
     func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
-        log.debug("elementName=\(elementName) namespaceURI=\(namespaceURI) qualifiedName=\(qName)")
-        popAndAppendToTopOfStack()
+        log.debug("elementName=\(elementName)")
+        popAndAppendToTopOfStack(parser: parser)
     }
 
     func parser(_ parser: XMLParser, foundCharacters string: String) {
@@ -256,19 +240,19 @@ fileprivate class NodeStack: NSObject, XMLParserDelegate {
 
         log.debug("string=\(trimmed)")
         let text = Text(text: trimmed)
-        appendToTopOfStack(child: text)
+        appendToTopOfStack(child: text, parser: parser)
     }
 
     func parser(_ parser: XMLParser, foundProcessingInstructionWithTarget target: String, data: String?) {
         log.debug("target=\(target) data=\(data)")
         let pi = ProcessingInstruction(target: target, data: data)
-        appendToTopOfStack(child: pi)
+        appendToTopOfStack(child: pi, parser: parser)
     }
 
     func parser(_ parser: XMLParser, foundComment comment: String) {
         log.debug("comment=\(comment)")
         let comment = Comment(text: comment)
-        appendToTopOfStack(child: comment)
+        appendToTopOfStack(child: comment, parser: parser)
     }
 
     func parser(_ parser: XMLParser, foundCDATA CDATABlock: Data) {
@@ -280,6 +264,6 @@ fileprivate class NodeStack: NSObject, XMLParserDelegate {
         }
         
         let cdata = CDATASection(text: text)
-        appendToTopOfStack(child: cdata)
+        appendToTopOfStack(child: cdata, parser: parser)
     }
 }

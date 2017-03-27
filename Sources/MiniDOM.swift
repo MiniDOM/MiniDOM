@@ -337,18 +337,6 @@ public final class Element: ParentNode {
     public var tagName: String
 
     /**
-     If namespace processing is turned on, contains the URI for the current
-     namespace.
-     */
-    public var namespaceURI: String?
-
-    /**
-     If namespace processing is turned on, contains the qualified name for the
-     current namespace.
-     */
-    public var qualifiedName: String?
-
-    /**
      A dictionary that contains any attributes associated with the element.
      Keys are the names of attributes, and values are attribute values.
      */
@@ -362,20 +350,12 @@ public final class Element: ParentNode {
      - parameter tagName: A string that is the name of an element (in its start
      tag).
 
-     - parameter namespaceURI: If namespace processing is turned on, contains
-     the URI for the current namespace.
-
-     - parameter qualifiedName: If namespace processing is turned on, contains
-     the qualified name for the current namespace.
-
      - parameter attributes: A dictionary that contains any attributes
      associated with the element. Keys are the names of attributes, and values
      are attribute values.
      */
-    public init(tagName: String, namespaceURI: String?, qualifiedName: String?, attributes: [String : String]) {
+    public init(tagName: String, attributes: [String : String]) {
         self.tagName = tagName
-        self.namespaceURI = namespaceURI
-        self.qualifiedName = qualifiedName
         self.attributes = attributes
     }
 }
