@@ -244,7 +244,7 @@ class NodeStack: NSObject, XMLParserDelegate {
     }
 
     func parser(_ parser: XMLParser, foundProcessingInstructionWithTarget target: String, data: String?) {
-        log.debug("target=\(target) data=\(data)")
+        log.debug("target=\(target) data=\(String(describing: data))")
         let pi = ProcessingInstruction(target: target, data: data)
         appendToTopOfStack(child: pi, parser: parser)
     }
