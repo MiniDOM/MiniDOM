@@ -154,7 +154,7 @@ public extension Node {
      - returns: The nodes in the `children` array of the specified type
      */
     public final func children<T: Node>(ofType type: T.Type) -> [T] {
-        return only(nodes: children, ofType: type)
+        return children.only(ofType: T.self)
     }
 
     /// A Boolean value indicating whether the `children` array is not empty.
@@ -271,7 +271,7 @@ public final class Document: ParentNode {
      that is the root element of the document.
      */
     public var documentElement: Element? {
-        return first(in: children, ofType: Element.self)
+        return children.first(ofType: Element.self)
     }
 
     /**

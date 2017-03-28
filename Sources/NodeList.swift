@@ -19,28 +19,27 @@
 
 import Foundation
 
-/**
- Returns only the nodes of the specified type in the specified array.
- 
- - parameter nodes: An array of `Node` objects to filter.
- 
- - parameter type: The target type.
- 
- - returns: All members of the specified array that are of the specified type.
- */
-public func only<T: Node>(nodes: [Node], ofType type: T.Type) -> [T] {
-    return nodes.flatMap({ $0 as? T })
-}
+public extension Array where Element == Node {
 
-/**
- Returns the first node of the specified type in the specified array.
- 
- - parameter nodes: An array of `Node` objects to search.
- 
- - parameter type: The target type.
- 
- - returns: The first node of the specified type.
- */
-public func first<T: Node>(in nodes: [Node], ofType type: T.Type) -> T? {
-    return nodes.first(where: { $0.nodeType == type.nodeType }) as? T
+    /**
+     Returns only the nodes of the specified type.
+
+     - parameter type: The target type.
+
+     - returns: All members of the receiver that are of the specified type.
+     */
+    public func only<T: Node>(ofType type: T.Type) -> [T] {
+        return self.flatMap { $0 as? T }
+    }
+
+    /**
+     Returns the first node of the specified type.
+
+     - parameter type: The target type.
+
+     - returns: The first node of the specified type.
+     */
+    public func first<T: Node>(ofType type: T.Type) -> T? {
+        return first(where: { $0.nodeType == type.nodeType }) as? T
+    }
 }

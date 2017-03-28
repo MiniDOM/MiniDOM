@@ -80,7 +80,7 @@ class ContentsTests: XCTestCase {
 
         let headingTextValues = chapterNodes.flatMap { (chapterNode) -> String? in
             let textNodes = chapterNode.evaluate(path: ["JavaXML:Heading", "#text"])
-            return first(in: textNodes, ofType: Text.self)?.text
+            return textNodes.first(ofType: Text.self)?.text
         }
         expect(headingTextValues.count) == 4
 
