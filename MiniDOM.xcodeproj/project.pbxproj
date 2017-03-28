@@ -35,6 +35,7 @@
 		C5EB9CEE1E7CF12D00198F5F /* ParserResultTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB9CED1E7CF12D00198F5F /* ParserResultTests.swift */; };
 		C5EB9CF01E7CF46800198F5F /* ParserErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB9CEF1E7CF46800198F5F /* ParserErrorTests.swift */; };
 		C5EB9CF21E7CF5B900198F5F /* VisitorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB9CF11E7CF5B900198F5F /* VisitorTests.swift */; };
+		C5FCA02D1E8A031400774FF1 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FCA02C1E8A031400774FF1 /* Result.swift */; };
 		DF76322F08E91CF898242959 /* Pods_MiniDOM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1C512F3574C721AA341F6A2 /* Pods_MiniDOM.framework */; };
 /* End PBXBuildFile section */
 
@@ -88,6 +89,7 @@
 		C5EB9CED1E7CF12D00198F5F /* ParserResultTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParserResultTests.swift; sourceTree = "<group>"; };
 		C5EB9CEF1E7CF46800198F5F /* ParserErrorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParserErrorTests.swift; sourceTree = "<group>"; };
 		C5EB9CF11E7CF5B900198F5F /* VisitorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisitorTests.swift; sourceTree = "<group>"; };
+		C5FCA02C1E8A031400774FF1 /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		E2C07698CC069903105E29D7 /* Pods-MiniDOM.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MiniDOM.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MiniDOM/Pods-MiniDOM.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -155,6 +157,7 @@
 				C5EA38511E78E29E0000D01B /* NodeList.swift */,
 				C54FA8E81E763CE6009EEA73 /* Parser.swift */,
 				C5D2BD031E7793E3001FF7E8 /* Path.swift */,
+				C5FCA02C1E8A031400774FF1 /* Result.swift */,
 				C5202D311E76548400C2B35C /* Search.swift */,
 				C5D2BCF91E77562D001FF7E8 /* String+Whitespace.swift */,
 				C5202D2A1E76460800C2B35C /* Visitor.swift */,
@@ -415,6 +418,7 @@
 				C5EA38521E78E29E0000D01B /* NodeList.swift in Sources */,
 				C5202D321E76548400C2B35C /* Search.swift in Sources */,
 				C5D2BCFA1E77562D001FF7E8 /* String+Whitespace.swift in Sources */,
+				C5FCA02D1E8A031400774FF1 /* Result.swift in Sources */,
 				C5202D2D1E7647D200C2B35C /* Formatter.swift in Sources */,
 				C54FA8EB1E763CE6009EEA73 /* MiniDOM.swift in Sources */,
 				C5C88DD21E7C28C700CEDDA8 /* Log.swift in Sources */,
