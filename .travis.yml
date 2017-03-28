@@ -1,5 +1,5 @@
 language: swift
-osx_image: xcode8.2
+osx_image: xcode8.3
 xcode_workspace: MiniDOM.xcworkspace
 xcode_scheme: MiniDOM
 script:
