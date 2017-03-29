@@ -19,7 +19,6 @@
 
 import Foundation
 import MiniDOM
-import Nimble
 import XCTest
 
 class ParserSimpleTests: XCTestCase {
@@ -54,51 +53,51 @@ class ParserSimpleTests: XCTestCase {
     func testTopLevelElement() {
         let documentElement = document.documentElement
 
-        expect(documentElement).notTo(beNil())
-        expect(documentElement?.nodeName) == "foo"
-        expect(documentElement?.tagName) == "foo"
+        XCTAssertNotNil(documentElement)
+        XCTAssertEqual(documentElement?.nodeName, "foo")
+        XCTAssertEqual(documentElement?.tagName, "foo")
     }
 
     func testDocumentElementChildNodes() {
         let children = document.documentElement?.children
 
-        expect(children).notTo(beNil())
-        expect(children).notTo(beEmpty())
-        expect(children?.count) == 5
+        XCTAssertNotNil(children)
+        XCTAssertEqual(children?.isEmpty, false)
+        XCTAssertEqual(children?.count, 5)
 
-        expect(children?[0].nodeName) == "#comment"
-        expect(children?[0].nodeValue) == " This is a comment "
+        XCTAssertEqual(children?[0].nodeName, "#comment")
+        XCTAssertEqual(children?[0].nodeValue, " This is a comment ")
 
-        expect(children?[1].nodeName) == "bar"
-        expect(children?[1].nodeValue).to(beNil())
+        XCTAssertEqual(children?[1].nodeName, "bar")
+        XCTAssertNil(children?[1].nodeValue)
 
-        expect(children?[2].nodeName) == "target"
-        expect(children?[2].nodeValue) == "attr=\"value\""
+        XCTAssertEqual(children?[2].nodeName, "target")
+        XCTAssertEqual(children?[2].nodeValue, "attr=\"value\"")
 
-        expect(children?[3].nodeName) == "#cdata-section"
-        expect(children?[3].nodeValue) == "<div>This is some HTML</div>"
+        XCTAssertEqual(children?[3].nodeName, "#cdata-section")
+        XCTAssertEqual(children?[3].nodeValue, "<div>This is some HTML</div>")
 
-        expect(children?[4].nodeName) == "baz"
-        expect(children?[4].nodeValue).to(beNil())
+        XCTAssertEqual(children?[4].nodeName, "baz")
+        XCTAssertNil(children?[4].nodeValue)
 
         let bar = children?[1] as? Element
-        expect(bar).notTo(beNil())
-        expect(bar?.attributes) == [
+        XCTAssertNotNil(bar)
+        XCTAssertEqual(bar?.attributes ?? [:], [
             "attr1": "value1",
             "attr2": "value2"
-        ]
+        ])
     }
 
     func testTwoElementsNamedFnord() {
         let fnords = document.elements(withTagName: "fnord")
-        expect(fnords.count) == 2
+        XCTAssertEqual(fnords.count, 2)
 
-        expect(fnords[0].children.count) == 1
-        expect(fnords[0].firstChild?.nodeType) == .text
-        expect(fnords[0].firstChild?.nodeValue) == "This is some text"
+        XCTAssertEqual(fnords[0].children.count, 1)
+        XCTAssertEqual(fnords[0].firstChild?.nodeType, .text)
+        XCTAssertEqual(fnords[0].firstChild?.nodeValue, "This is some text")
 
-        expect(fnords[1].children.count) == 1
-        expect(fnords[1].firstChild?.nodeType) == .text
-        expect(fnords[1].firstChild?.nodeValue) == "This is some more text"
+        XCTAssertEqual(fnords[1].children.count, 1)
+        XCTAssertEqual(fnords[1].firstChild?.nodeType, .text)
+        XCTAssertEqual(fnords[1].firstChild?.nodeValue, "This is some more text")
     }
 }

@@ -19,22 +19,22 @@
 
 import Foundation
 import MiniDOM
-import Nimble
 import XCTest
 
 class ParserResultTests: XCTestCase {
     func testSuccess() {
         let result: Result<Int> = .success(42)
-        expect(result.error).to(beNil())
-        expect(result.value).notTo(beNil())
-        expect(result.value) == 42
+        XCTAssertNil(result.error)
+        XCTAssertNotNil(result.value)
+        XCTAssertEqual(result.value, 42)
     }
 
     func testFailure() {
         let error = NSError(domain: "anErrorDomain", code: 123456, userInfo: nil)
         let result: Result<Int> = .failure(error)
-        expect(result.value).to(beNil())
-        expect(result.error).notTo(beNil())
-        expect(result.error) === error
+
+        XCTAssertNil(result.value)
+        XCTAssertNotNil(result.error)
+        XCTAssertEqual(result.error as NSError?, error)
     }
 }

@@ -18,19 +18,18 @@
 //
 
 import Foundation
-import Nimble
 import XCTest
 
 @testable import MiniDOM
 
 class LogTests: XCTestCase {
-    func check(log: Log, expectError: Bool, expectWarn: Bool, expectInfo: Bool, expectDebug: Bool, expectVerbose: Bool) {
-        expect(log.error("Error")) == expectError
-        expect(log.error(NSError.init(domain: "anErrorDomain", code: 123456, userInfo: nil))) == expectError
-        expect(log.warn("Warn")) == expectWarn
-        expect(log.info("Info")) == expectInfo
-        expect(log.debug("Debug")) == expectDebug
-        expect(log.verbose("Verbose")) == expectVerbose
+    func check(log: Log, expectError: Bool, expectWarn: Bool, expectInfo: Bool, expectDebug: Bool, expectVerbose: Bool, file: StaticString = #file, line: UInt = #line) {
+        XCTAssertEqual(log.error("Error"), expectError, file: file, line: line)
+        XCTAssertEqual(log.error(NSError.init(domain: "anErrorDomain", code: 123456, userInfo: nil)), expectError, file: file, line: line)
+        XCTAssertEqual(log.warn("Warn"), expectWarn, file: file, line: line)
+        XCTAssertEqual(log.info("Info"),  expectInfo, file: file, line: line)
+        XCTAssertEqual(log.debug("Debug"), expectDebug, file: file, line: line)
+        XCTAssertEqual(log.verbose("Verbose"), expectVerbose, file: file, line: line)
     }
 
     func testLogLevels() {

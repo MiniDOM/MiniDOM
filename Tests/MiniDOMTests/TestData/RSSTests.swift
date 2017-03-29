@@ -19,12 +19,11 @@
 
 import Foundation
 import MiniDOM
-import Nimble
 import XCTest
 
 class RSSTests: XCTestCase {
     var document: Document!
-    
+
     override func setUp() {
         super.setUp()
         document = loadXML(string: yahooTestsSource)
@@ -32,11 +31,11 @@ class RSSTests: XCTestCase {
 
     func testCdataInTitle() {
         let titleNode = document.evaluate(path: ["rss", "channel", "title", "#cdata-section"]).first
-        expect(titleNode).notTo(beNil())
-        expect(titleNode?.nodeType) == .cdataSection
+        XCTAssertNotNil(titleNode)
+        XCTAssertEqual(titleNode?.nodeType, .cdataSection)
 
         let titleCdata = titleNode as? CDATASection
-        expect(titleCdata).notTo(beNil())
-        expect(titleCdata?.text) == "Yahoo! News Search Results for market"
+        XCTAssertNotNil(titleCdata)
+        XCTAssertEqual(titleCdata?.text, "Yahoo! News Search Results for market")
     }
 }

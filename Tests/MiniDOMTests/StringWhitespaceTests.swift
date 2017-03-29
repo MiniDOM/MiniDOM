@@ -19,37 +19,36 @@
 
 import Foundation
 import MiniDOM
-import Nimble
 import XCTest
 
 class StringWhitespaceTests: XCTestCase {
     func testTrimFromBeginning() {
-        expect("\n\t   foo".trimmed()) == "foo"
+        XCTAssertEqual("\n\t   foo".trimmed(), "foo")
     }
 
     func testTrimFromEnd() {
-        expect("foo   \n\t".trimmed()) == "foo"
+        XCTAssertEqual("foo   \n\t".trimmed(), "foo")
     }
 
     func testTrimFromBeginningAndEnd() {
-        expect("\n\t   foo   \n\t".trimmed()) == "foo"
+        XCTAssertEqual("\n\t   foo   \n\t".trimmed(), "foo")
     }
 
     func testCollapse() {
-        expect(" foo   \n\t  bar ".collapsed()) == " foo bar "
+        XCTAssertEqual(" foo   \n\t  bar ".collapsed(), " foo bar ")
     }
 
     func testNormalize() {
-        expect("  foo  \r\n\t bar   ".normalized()) == "foo bar"
+        XCTAssertEqual("  foo  \r\n\t bar   ".normalized(), "foo bar")
     }
 
     func testNormalizeNewlineVariants() {
-        expect("foo\rbar".normalized()) == "foo bar"
-        expect("foo\nbar".normalized()) == "foo bar"
-        expect("foo\r\nbar".normalized()) == "foo bar"
+        XCTAssertEqual("foo\rbar".normalized(), "foo bar")
+        XCTAssertEqual("foo\nbar".normalized(), "foo bar")
+        XCTAssertEqual("foo\r\nbar".normalized(), "foo bar")
 
-        expect("foo \rbar".normalized()) == "foo bar"
-        expect("foo \nbar".normalized()) == "foo bar"
-        expect("foo \r\nbar".normalized()) == "foo bar"
+        XCTAssertEqual("foo \rbar".normalized(), "foo bar")
+        XCTAssertEqual("foo \nbar".normalized(), "foo bar")
+        XCTAssertEqual("foo \r\nbar".normalized(), "foo bar")
     }
 }

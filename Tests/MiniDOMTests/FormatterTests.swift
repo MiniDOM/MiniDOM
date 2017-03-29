@@ -19,7 +19,6 @@
 
 import Foundation
 import MiniDOM
-import Nimble
 import XCTest
 
 class FormatterTests: XCTestCase {
@@ -53,8 +52,8 @@ class FormatterTests: XCTestCase {
 
     func testReproduceSourceString() {
         let formatted = document.format(indentWith: "  ")
-        expect(formatted).notTo(beNil())
-        expect(formatted) == source
+        XCTAssertNotNil(formatted)
+        XCTAssertEqual(formatted, source)
     }
     
 }

@@ -18,7 +18,6 @@
 //
 
 import Foundation
-import Nimble
 import XCTest
 
 @testable import MiniDOM
@@ -45,14 +44,14 @@ class ParserCreationTests: XCTestCase {
     ].joined(separator: "\n")
 
     func validateResults(from parser: Parser?) {
-        expect(parser).notTo(beNil())
+        XCTAssertNotNil(parser)
 
         let result = parser?.parse()
-        expect(result).notTo(beNil())
-        expect(result?.error).to(beNil())
+        XCTAssertNotNil(result)
+        XCTAssertNil(result?.error)
 
         let document = result?.value
-        expect(document).notTo(beNil())
+        XCTAssertNotNil(document)
     }
 
     func testParseString() {
@@ -63,13 +62,14 @@ class ParserCreationTests: XCTestCase {
     func testParseFromURLAndInputStream() {
         let fileName = String(format: "%@_%@", ProcessInfo.processInfo.globallyUniqueString, "test-data.xml")
         let fileURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName)
-        expect { try self.source.write(to: fileURL, atomically: true, encoding: .utf8) }.notTo(throwError())
+
+        XCTAssertNoThrow(try self.source.write(to: fileURL, atomically: true, encoding: .utf8))
 
         let urlParser = Parser(contentsOf: fileURL)
         validateResults(from: urlParser)
 
         guard let inputStream = InputStream(url: fileURL) else {
-            fail("Cannot create input stream")
+            XCTFail("Cannot create input stream")
             return
         }
 
@@ -79,11 +79,11 @@ class ParserCreationTests: XCTestCase {
 
     func testCreateWithNilData() {
         let parser = Parser(data: nil)
-        expect(parser).to(beNil())
+        XCTAssertNil(parser)
     }
 
     func testCreateWithNilParser() {
         let parser = Parser(parser: nil)
-        expect(parser).to(beNil())
+        XCTAssertNil(parser)
     }
 }

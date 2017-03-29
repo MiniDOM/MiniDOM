@@ -8,7 +8,6 @@
 
 import Foundation
 import MiniDOM
-import Nimble
 import XCTest
 
 class ParserNamespaceTests: XCTestCase {
@@ -35,44 +34,44 @@ class ParserNamespaceTests: XCTestCase {
         let parser = Parser(string: source)
 
         let result = parser?.parse()
-        expect(result?.isSuccess).to(beTrue())
+        XCTAssertTrue(result?.isSuccess == true)
 
         let document = result?.value
 
         let cvslog = document?.documentElement
-        expect(cvslog).notTo(beNil())
-        expect(cvslog?.tagName) == "cvslog"
-        expect(cvslog?.attributes) == ["xmlns": "http://xml.apple.com/cvslog"]
-        expect(cvslog?.children.count) == 1
+        XCTAssertNotNil(cvslog)
+        XCTAssertEqual(cvslog?.tagName, "cvslog")
+        XCTAssertEqual(cvslog?.attributes ?? [:], ["xmlns": "http://xml.apple.com/cvslog"])
+        XCTAssertEqual(cvslog?.children.count, 1)
 
         let radar = cvslog?.firstChild
-        expect(radar).notTo(beNil())
-        expect(radar?.nodeName) == "radar:radar"
-        expect(radar?.attributes) == ["xmlns:radar": "http://xml.apple.com/radar"]
-        expect(radar?.children.count) == 2
+        XCTAssertNotNil(radar)
+        XCTAssertEqual(radar?.nodeName, "radar:radar")
+        XCTAssertEqual(radar?.attributes ?? [:], ["xmlns:radar": "http://xml.apple.com/radar"])
+        XCTAssertEqual(radar?.children.count, 2)
 
         let bugID = radar?.firstChild
-        expect(bugID).notTo(beNil())
-        expect(bugID?.nodeName) == "radar:bugID"
-        expect(bugID?.children.count) == 1
+        XCTAssertNotNil(bugID)
+        XCTAssertEqual(bugID?.nodeName, "radar:bugID")
+        XCTAssertEqual(bugID?.children.count, 1)
 
         let bugIdText = bugID?.firstChild
-        expect(bugIdText).notTo(beNil())
-        expect(bugIdText?.nodeType) == .text
-        expect(bugIdText?.nodeValue) == "2920186"
+        XCTAssertNotNil(bugIdText)
+        XCTAssertEqual(bugIdText?.nodeType, .text)
+        XCTAssertEqual(bugIdText?.nodeValue, "2920186")
 
         let title = radar?.lastChild
-        expect(title).notTo(beNil())
-        expect(title?.nodeName) == "radar:title"
-        expect(title?.children.count) == 1
+        XCTAssertNotNil(title)
+        XCTAssertEqual(title?.nodeName, "radar:title")
+        XCTAssertEqual(title?.children.count, 1)
 
         let titleText = title?.firstChild
-        expect(titleText).notTo(beNil())
-        expect(titleText?.nodeType) == .text
-        expect(titleText?.nodeValue) == "API/NSXMLParser: there ought to be an NSXMLParser"
+        XCTAssertNotNil(titleText)
+        XCTAssertEqual(titleText?.nodeType, .text)
+        XCTAssertEqual(titleText?.nodeValue, "API/NSXMLParser: there ought to be an NSXMLParser")
 
         let formatted = document?.format(indentWith: "  ")
-        expect(formatted) == [
+        XCTAssertEqual(formatted, [
             "<?xml version=\"1.0\" encoding=\"utf-8\"?>",
             "<?xml-stylesheet type='text/css' href='cvslog.css'?>",
             // The <!DOCTYPE> entity will be dropped as it is not handled
@@ -86,6 +85,6 @@ class ParserNamespaceTests: XCTestCase {
             "    </radar:title>",
             "  </radar:radar>",
             "</cvslog>"
-        ].joined(separator: "\n")
+        ].joined(separator: "\n"))
     }
 }

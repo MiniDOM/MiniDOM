@@ -19,7 +19,6 @@
 
 import Foundation
 import MiniDOM
-import Nimble
 import XCTest
 
 extension XCTestCase {
@@ -27,7 +26,7 @@ extension XCTestCase {
         guard let url = Bundle(for: type(of: self)).url(forResource: name, withExtension: ext),
               let parser = Parser(contentsOf: url)
         else {
-            fail("Could not create parser")
+            XCTFail("Could not create parser")
             return nil
         }
 
@@ -36,7 +35,7 @@ extension XCTestCase {
 
     func loadXML(string: String) -> Document? {
         guard let parser = Parser(string: string) else {
-            fail("Could not create parser")
+            XCTFail("Could not create parser")
             return nil
         }
 
@@ -50,7 +49,7 @@ extension XCTestCase {
             return d
 
         case let .failure(error):
-            fail("Error parsing: \(error)")
+            XCTFail("Error parsing: \(error)")
             return nil
         }
     }

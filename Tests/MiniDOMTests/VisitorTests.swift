@@ -19,7 +19,6 @@
 
 import Foundation
 import MiniDOM
-import Nimble
 import XCTest
 
 class VisitorTests: XCTestCase {
@@ -60,32 +59,32 @@ class VisitorTests: XCTestCase {
     func testChildren() {
         class ChildCheckingVisitor: Visitor {
             func beginVisit(_ document: Document) {
-                expect(document.children.count) == 1
+                XCTAssertEqual(document.children.count, 1)
             }
 
             func beginVisit(_ element: Element) {
                 if element.tagName == "bar" {
-                    expect(element.children.isEmpty).to(beTrue())
+                    XCTAssertTrue(element.children.isEmpty)
                 }
                 else {
-                    expect(element.children.isEmpty).to(beFalse())
+                    XCTAssertFalse(element.children.isEmpty)
                 }
             }
 
             func visit(_ text: Text) {
-                expect(text.children.isEmpty).to(beTrue())
+                XCTAssertTrue(text.children.isEmpty)
             }
 
             func visit(_ processingInstruction: ProcessingInstruction) {
-                expect(processingInstruction.children.isEmpty).to(beTrue())
+                XCTAssertTrue(processingInstruction.children.isEmpty)
             }
 
             func visit(_ comment: Comment) {
-                expect(comment.children.isEmpty).to(beTrue())
+                XCTAssertTrue(comment.children.isEmpty)
             }
 
             func visit(_ cdataSection: CDATASection) {
-                expect(cdataSection.children.isEmpty).to(beTrue())
+                XCTAssertTrue(cdataSection.children.isEmpty)
             }
         }
 

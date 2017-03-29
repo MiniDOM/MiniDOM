@@ -19,7 +19,6 @@
 
 import Foundation
 import MiniDOM
-import Nimble
 import XCTest
 
 class PathSimpleTests: XCTestCase {
@@ -61,22 +60,22 @@ class PathSimpleTests: XCTestCase {
 
     func testFindBNodes() {
         let result = document.evaluate(path: ["a", "b"])
-        expect(result.count) == 2
+        XCTAssertEqual(result.count, 2)
 
         let r0 = result[0]
-        expect(r0.nodeName) == "b"
-        expect(r0.nodeType) == NodeType.element
+        XCTAssertEqual(r0.nodeName, "b")
+        XCTAssertEqual(r0.nodeType, NodeType.element)
 
         let e0 = r0 as? Element
-        expect(e0).notTo(beNil())
-        expect(e0?.attributes?["id"]) == "2"
+        XCTAssertNotNil(e0)
+        XCTAssertEqual(e0?.attributes?["id"], "2")
 
         let r1 = result[1]
-        expect(r1.nodeName) == "b"
-        expect(r1.nodeType) == NodeType.element
+        XCTAssertEqual(r1.nodeName, "b")
+        XCTAssertEqual(r1.nodeType, NodeType.element)
 
         let e1 = r1 as? Element
-        expect(e1).notTo(beNil())
-        expect(e1?.attributes?["id"]) == "10"
+        XCTAssertNotNil(e1)
+        XCTAssertEqual(e1?.attributes?["id"], "10")
     }
 }
