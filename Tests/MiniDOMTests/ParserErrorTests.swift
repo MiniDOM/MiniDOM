@@ -18,7 +18,6 @@
 //
 
 import Foundation
-import Nimble
 import XCTest
 
 @testable import MiniDOM
@@ -34,14 +33,14 @@ class ParserErrorTests: XCTestCase {
         ].joined(separator: "\n")
 
         let parser = Parser(string: source)
-        expect(parser).notTo(beNil())
+        XCTAssertNotNil(parser)
 
         let result = parser?.parse()
-        expect(result).notTo(beNil())
-        expect(result?.value).to(beNil())
-        expect(result?.error).notTo(beNil())
+        XCTAssertNotNil(result)
+        XCTAssertNil(result?.value)
+        XCTAssertNotNil(result?.error)
 
-        expect(result?.error).to(matchError(NSError(domain: XMLParser.errorDomain, code: 111, userInfo: nil)))
+        XCTAssertEqual(result?.error as NSError?, NSError(domain: XMLParser.errorDomain, code: 111, userInfo: nil))
     }
 
     func testExtraCloseTags() {
@@ -53,32 +52,34 @@ class ParserErrorTests: XCTestCase {
             ].joined(separator: "\n")
 
         let parser = Parser(string: source)
-        expect(parser).notTo(beNil())
+        XCTAssertNotNil(parser)
 
         let result = parser?.parse()
-        expect(result).notTo(beNil())
-        expect(result?.value).to(beNil())
-        expect(result?.error).notTo(beNil())
+        XCTAssertNotNil(result)
+        XCTAssertNil(result?.value)
+        XCTAssertNotNil(result?.error)
 
-        expect(result?.error).to(matchError(NSError(domain: XMLParser.errorDomain, code: 111, userInfo: nil)))
+        XCTAssertEqual(result?.error as NSError?, NSError(domain: XMLParser.errorDomain, code: 111, userInfo: nil))
     }
 
     func testSuccessResult() {
         let document = Document()
         let result = Result.success(document)
-        expect(result.isSuccess).to(beTrue())
-        expect(result.isFailure).to(beFalse())
-        expect(result.value) === document
-        expect(result.error).to(beNil())
+
+        XCTAssertTrue(result.isSuccess)
+        XCTAssertFalse(result.isFailure)
+        XCTAssertTrue(result.value === document)
+        XCTAssertNil(result.error)
     }
 
     func testFailureResult() {
         let error = NSError(domain: "domain", code: 123, userInfo: nil)
         let result = Result<Document>.failure(error)
-        expect(result.isSuccess).to(beFalse())
-        expect(result.isFailure).to(beTrue())
-        expect(result.value).to(beNil())
-        expect(result.error) === error
+
+        XCTAssertFalse(result.isSuccess)
+        XCTAssertTrue(result.isFailure)
+        XCTAssertNil(result.value)
+        XCTAssertEqual(result.error as NSError?, error)
     }
 
     fileprivate class AbortDetectingXMLParser: XMLParser {
@@ -96,9 +97,9 @@ class ParserErrorTests: XCTestCase {
         let nodeStack = NodeStack()
         let xmlParser = AbortDetectingXMLParser()
 
-        expect(xmlParser.parsingAborted).to(beFalse())
+        XCTAssertFalse(xmlParser.parsingAborted)
         nodeStack.parser(xmlParser, foundCDATA: invalidUTF8data)
-        expect(xmlParser.parsingAborted).to(beTrue())
+        XCTAssertTrue(xmlParser.parsingAborted)
     }
 
     func testNilDocumentNoError() {
@@ -113,30 +114,33 @@ class ParserErrorTests: XCTestCase {
         }
 
         let parser = Parser(parser: TestXMLParser())
-        expect(parser).notTo(beNil())
+        XCTAssertNotNil(parser)
 
         let result = parser?.parse()
-        expect(result).notTo(beNil())
+        XCTAssertNotNil(result)
 
-        expect(result?.error).to(matchError(Parser.Error.unspecifiedError))
-        expect(result?.value).to(beNil())
+        XCTAssertNil(result?.value)
+        guard case .some(Parser.Error.unspecifiedError) = result?.error else {
+            XCTFail()
+            return
+        }
     }
 
     func testUnbalancedEndElements() {
         let xmlParser = AbortDetectingXMLParser()
         let nodeStack = NodeStack()
 
-        expect(xmlParser.parsingAborted).to(beFalse())
+        XCTAssertFalse(xmlParser.parsingAborted)
         nodeStack.parser(xmlParser, didEndElement: "fnord", namespaceURI: nil, qualifiedName: nil)
-        expect(xmlParser.parsingAborted).to(beTrue())
+        XCTAssertTrue(xmlParser.parsingAborted)
     }
 
     func testAppendToEmptyStack() {
         let xmlParser = AbortDetectingXMLParser()
         let nodeStack = NodeStack()
 
-        expect(xmlParser.parsingAborted).to(beFalse())
+        XCTAssertFalse(xmlParser.parsingAborted)
         nodeStack.parser(xmlParser, foundComment: "fnord")
-        expect(xmlParser.parsingAborted).to(beTrue())
+        XCTAssertTrue(xmlParser.parsingAborted)
     }
 }

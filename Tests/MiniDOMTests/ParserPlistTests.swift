@@ -19,14 +19,13 @@
 
 import Foundation
 import MiniDOM
-import Nimble
 import XCTest
 
 class ParserPlistTests: XCTestCase {
     var source: String!
 
     var document: Document!
-    
+
     override func setUp() {
         super.setUp()
 
@@ -61,22 +60,22 @@ class ParserPlistTests: XCTestCase {
     func testRootElement() {
         let documentElement = document.documentElement
 
-        expect(documentElement).notTo(beNil())
-        expect(documentElement?.nodeName) == "plist"
-        expect(documentElement?.attributes) == [
+        XCTAssertNotNil(documentElement)
+        XCTAssertEqual(documentElement?.nodeName, "plist")
+        XCTAssertEqual(documentElement?.attributes ?? [:], [
             "version": "1.0"
-        ]
+        ])
     }
 
     func testSingleDictElementUnderRoot() {
         let documentElement = document.documentElement
 
-        expect(documentElement?.children.count) == 1
+        XCTAssertEqual(documentElement?.children.count, 1)
 
         let dict = documentElement?.firstChild
-        expect(dict).notTo(beNil())
-        expect(dict?.nodeName) == "dict"
-        expect(dict?.children.count) == 16
+        XCTAssertNotNil(dict)
+        XCTAssertEqual(dict?.nodeName, "dict")
+        XCTAssertEqual(dict?.children.count, 16)
     }
 
     func testDictElementIsCorrect() {
@@ -101,7 +100,7 @@ class ParserPlistTests: XCTestCase {
             "string",
         ]
         let actualNodeNames: [String] = dict?.children.map { $0.nodeName } ?? []
-        expect(expectedNodeNames) == actualNodeNames
+        XCTAssertEqual(expectedNodeNames, actualNodeNames)
 
         let expectedNodeValues: [String] = [
             "CFBundleDevelopmentRegion",
@@ -123,6 +122,6 @@ class ParserPlistTests: XCTestCase {
         ]
 
         let actualNodeValues: [String] = dict?.children.flatMap { $0.firstChild?.nodeValue } ?? []
-        expect(expectedNodeValues) == actualNodeValues
+        XCTAssertEqual(expectedNodeValues, actualNodeValues)
     }
 }
