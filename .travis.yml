@@ -11,7 +11,7 @@ script:
   - set -o pipefail
   - xcodebuild -version
   - xcodebuild -showsdks
-  - swift - version
+  - swift -version
   - sh build.sh "$COMMAND"
 after_success:
   - bash <(curl -s https://codecov.io/bash) -J 'MiniDOM'
