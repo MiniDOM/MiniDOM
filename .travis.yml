@@ -3,6 +3,7 @@ osx_image: xcode8.3
 xcode_workspace: MiniDOM.xcworkspace
 xcode_scheme: MiniDOM
 script:
-  - xcodebuild -scheme MiniDOM build test -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPad Air 2,OS=10.3'
+  - sh build.sh build
+  - sh build.sh test
 after_success:
   - bash <(curl -s https://codecov.io/bash) -J 'MiniDOM'
