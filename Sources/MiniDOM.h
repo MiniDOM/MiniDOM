@@ -17,12 +17,10 @@
 //  limitations under the License.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 //! Project version number for MiniDOM.
 FOUNDATION_EXPORT double MiniDOMVersionNumber;
 
 //! Project version string for MiniDOM.
 FOUNDATION_EXPORT const unsigned char MiniDOMVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <MiniDOM/PublicHeader.h>
