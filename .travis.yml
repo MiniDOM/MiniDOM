@@ -4,7 +4,7 @@ env:
   matrix:
     - COMMAND="test-ios"
     - COMMAND="test-macos"
-    - COMMAND="test-tvox"
+    - COMMAND="test-tvos"
     - COMMAND="test-watchos"
     - COMMAND="test-native"
 script:
