@@ -1,9 +1,17 @@
 language: swift
 osx_image: xcode8.3
-xcode_workspace: MiniDOM.xcworkspace
-xcode_scheme: MiniDOM
+env:
+  matrix:
+    - COMMAND="test-ios"
+    - COMMAND="test-macos"
+    - COMMAND="test-tvox"
+    - COMMAND="test-watchos"
+    - COMMAND="test-native"
 script:
-  - sh build.sh build
-  - sh build.sh test
+  - set -o pipefail
+  - xcodebuild -version
+  - xcodebuild -showsdks
+  - swift - version
+  - sh build.sh "$COMMAND"
 after_success:
   - bash <(curl -s https://codecov.io/bash) -J 'MiniDOM'
