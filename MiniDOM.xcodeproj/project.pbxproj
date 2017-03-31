@@ -18,6 +18,7 @@
 		C54FA8EB1E763CE6009EEA73 /* MiniDOM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54FA8E71E763CE6009EEA73 /* MiniDOM.swift */; };
 		C54FA8EC1E763CE6009EEA73 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54FA8E81E763CE6009EEA73 /* Parser.swift */; };
 		C56856EA1E88BDF40058EF81 /* ParserNamespaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56856E91E88BDF40058EF81 /* ParserNamespaceTests.swift */; };
+		C5796E9F1E8EE3C500FEEBC9 /* NodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5796E9E1E8EE3C500FEEBC9 /* NodeTests.swift */; };
 		C5C88DD21E7C28C700CEDDA8 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C88DD11E7C28C700CEDDA8 /* Log.swift */; };
 		C5C88DD41E7C861E00CEDDA8 /* FormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C88DD31E7C861E00CEDDA8 /* FormatterTests.swift */; };
 		C5C88DD71E7C869500CEDDA8 /* XCTestCase+ParseUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C88DD51E7C867900CEDDA8 /* XCTestCase+ParseUtil.swift */; };
@@ -65,6 +66,7 @@
 		C54FA8EF1E763CEE009EEA73 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C54FA8F41E763D42009EEA73 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		C56856E91E88BDF40058EF81 /* ParserNamespaceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParserNamespaceTests.swift; sourceTree = "<group>"; };
+		C5796E9E1E8EE3C500FEEBC9 /* NodeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeTests.swift; sourceTree = "<group>"; };
 		C5C88DD11E7C28C700CEDDA8 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		C5C88DD31E7C861E00CEDDA8 /* FormatterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormatterTests.swift; sourceTree = "<group>"; };
 		C5C88DD51E7C867900CEDDA8 /* XCTestCase+ParseUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCTestCase+ParseUtil.swift"; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 				C5C88DD31E7C861E00CEDDA8 /* FormatterTests.swift */,
 				C54FA8EF1E763CEE009EEA73 /* Info.plist */,
 				C5EB9CEB1E7CEE0B00198F5F /* LogTests.swift */,
+				C5796E9E1E8EE3C500FEEBC9 /* NodeTests.swift */,
 				C5E9AF781E8DFE8C00DEDD15 /* NormalizeTests.swift */,
 				C532F9B91E82128E00FEAD1A /* ParserCreationTests.swift */,
 				C5EB9CEF1E7CF46800198F5F /* ParserErrorTests.swift */,
@@ -322,6 +325,7 @@
 			files = (
 				C5EB9CF21E7CF5B900198F5F /* VisitorTests.swift in Sources */,
 				C5EB9CF01E7CF46800198F5F /* ParserErrorTests.swift in Sources */,
+				C5796E9F1E8EE3C500FEEBC9 /* NodeTests.swift in Sources */,
 				C56856EA1E88BDF40058EF81 /* ParserNamespaceTests.swift in Sources */,
 				C5C88DD91E7C889200CEDDA8 /* ParserSimpleTests.swift in Sources */,
 				C5EB9CEE1E7CF12D00198F5F /* ParserResultTests.swift in Sources */,

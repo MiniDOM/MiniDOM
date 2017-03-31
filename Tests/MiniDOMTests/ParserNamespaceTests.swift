@@ -72,7 +72,6 @@ class ParserNamespaceTests: XCTestCase {
         XCTAssertEqual(titleText?.nodeValue, "API/NSXMLParser: there ought to be an NSXMLParser")
 
         let formatted = document?.prettyPrint(indentWith: "  ")
-        print(formatted ?? "nil")
         XCTAssertEqual(formatted, [
             "<?xml version=\"1.0\" encoding=\"utf-8\"?>",
             "<?xml-stylesheet type='text/css' href='cvslog.css'?>",

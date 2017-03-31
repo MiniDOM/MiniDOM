@@ -31,9 +31,8 @@ class Formatter {
         if let attrs = formatAttributes(of: element) {
             return "<\(element.tagName) \(attrs)\(slashIfLeaf)>"
         }
-        else {
-            return "<\(element.tagName)\(slashIfLeaf)>"
-        }
+
+        return "<\(element.tagName)\(slashIfLeaf)>"
     }
 
     func formatEnd(_ element: Element) -> String? {
@@ -163,6 +162,7 @@ class TreeDumper: Formatter, Visitor {
 
     public func beginVisit(_ document: Document) {
         parts.append(xmlPrologue)
+        parts.append("\n")
     }
 
     public func endVisit(_ document: Document) {
@@ -198,7 +198,8 @@ class TreeDumper: Formatter, Visitor {
 
 public extension Node {
     /**
-     Generates an XML string representation of this node and its descendants.
+     Generates a formatted XML string representation of this node and its 
+     descendants.
      
      - parameter indentWith: The string used to indent the formatted string.
      
@@ -211,6 +212,13 @@ public extension Node {
         return formatter.formattedString
     }
 
+    /**
+     Generates an unformatted XML string representation of this node and its 
+     descendants.
+
+     - returns: A formatted XML string representation of this node and its
+     descendants.
+     */
     public func dump() -> String? {
         let formatter = TreeDumper()
         accept(formatter)

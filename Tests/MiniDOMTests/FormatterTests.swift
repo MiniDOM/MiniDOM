@@ -24,12 +24,29 @@ import XCTest
 class FormatterTests: XCTestCase {
     var source: String!
 
+    var expectedPrettyPrinted: String!
+
     var document: Document!
     
     override func setUp() {
         super.setUp()
 
         source = [
+            "<?xml version=\"1.0\" encoding=\"utf-8\"?>",
+            "<foo>",
+            "  <!-- This is a comment -->",
+            "  <bar attr1=\"value1\" attr2=\"value2\"/>",
+            "  <?target attr=\"value\"?>",
+            "  <![CDATA[<div>This is some HTML</div>]]>",
+            "  <baz>",
+            "    <fnord>This is some text</fnord>",
+            "    <fnord>This is some more text</fnord>",
+            "  </baz>",
+            "  <qux/>",
+            "</foo>"
+        ].joined(separator: "\n")
+
+        expectedPrettyPrinted = [
             "<?xml version=\"1.0\" encoding=\"utf-8\"?>",
             "<foo>",
             "  <!-- This is a comment -->",
@@ -44,6 +61,7 @@ class FormatterTests: XCTestCase {
             "      This is some more text",
             "    </fnord>",
             "  </baz>",
+            "  <qux/>",
             "</foo>"
         ].joined(separator: "\n")
 
@@ -53,7 +71,12 @@ class FormatterTests: XCTestCase {
     func testReproduceSourceString() {
         let formatted = document.prettyPrint(indentWith: "  ")
         XCTAssertNotNil(formatted)
-        print(formatted ?? "nil")
+        XCTAssertEqual(formatted, expectedPrettyPrinted)
+    }
+
+    func testDumper() {
+        let formatted = document.dump()
+        XCTAssertNotNil(formatted)
         XCTAssertEqual(formatted, source)
     }
     

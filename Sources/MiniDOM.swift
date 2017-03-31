@@ -22,10 +22,11 @@
  Object Model.
 
  This is intended to provided a subset of the behavior described in the
- [DOM Level 1 specification][1]. Much of this file's documentation is adapted
- from that document.
+ [DOM Level 1 specification][1] and the [DOM Level 2 specification][2]. Much of 
+ this file's documentation is adapted from those documents.
 
  [1]: https://www.w3.org/TR/REC-DOM-Level-1/level-one-core.html
+ [2]: https://www.w3.org/TR/DOM-Level-2-Core/core.html
  */
 
 import Foundation
@@ -138,6 +139,14 @@ public protocol Node: Visitable {
      */
     var children: [Node] { get }
 
+    /**
+     Puts all `Text` nodes in the full depth of the sub-tree underneath this 
+     `Node`, into a "normal" form where only structure (e.g., elements, 
+     comments, processing instructions, and CDATA sections) separates `Text` 
+     nodes, i.e., there are neither adjacent `Text` nodes nor empty `Text` 
+     nodes. This can be used to ensure that the DOM view of a document is the 
+     same as if it were saved and re-loaded.
+     */
     mutating func normalize()
 }
 
@@ -174,18 +183,22 @@ public extension Node {
         return children.last
     }
 
+    /// Returns the `Element` objects from the `children` array.
     public final var childElements: [Element] {
         return self.children(ofType: Element.self)
     }
 
+    /// A Boolean value indicating whether the `childElements` array is not empty
     public final var hasChildElements: Bool {
         return !childElements.isEmpty
     }
 
+    /// The first element in the `childElements` array.
     public final var firstChildElement: Element? {
         return childElements.first
     }
 
+    /// The last element in the `childElements` array.
     public final var lastChildElement: Element? {
         return childElements.last
     }
