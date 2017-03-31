@@ -115,7 +115,7 @@ public class Parser {
      
      - returns: The result of the parsing operation.
      */
-    public func parse() -> ParserResult {
+    public final func parse() -> ParserResult {
         let stack = NodeStack()
         parser.delegate = stack
 
@@ -179,13 +179,7 @@ class NodeStack: NSObject, XMLParserDelegate {
     }
 
     func parser(_ parser: XMLParser, foundCharacters string: String) {
-        let trimmed = string.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-        guard !trimmed.isEmpty else {
-            return
-        }
-
-        log.debug("string=\(trimmed)")
-        let text = Text(text: trimmed)
+        let text = Text(text: string)
         appendToTopOfStack(child: text, parser: parser)
     }
 
