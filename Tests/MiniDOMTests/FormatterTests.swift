@@ -51,8 +51,9 @@ class FormatterTests: XCTestCase {
     }
 
     func testReproduceSourceString() {
-        let formatted = document.format(indentWith: "  ")
+        let formatted = document.prettyPrint(indentWith: "  ")
         XCTAssertNotNil(formatted)
+        print(formatted ?? "nil")
         XCTAssertEqual(formatted, source)
     }
     

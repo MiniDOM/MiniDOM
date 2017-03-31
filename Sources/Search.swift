@@ -44,7 +44,7 @@ public extension Document {
 
      - returns: An array of elements with the specified tag name.
      */
-    public func elements(withTagName name: String) -> [Element] {
+    public final func elements(withTagName name: String) -> [Element] {
         return elements(where: { $0.tagName == name })
     }
 
@@ -58,7 +58,7 @@ public extension Document {
 
      - returns: An array of the elements that `predicate` allowed.
      */
-    public func elements(where predicate: @escaping (Element) -> Bool) -> [Element] {
+    public final func elements(where predicate: @escaping (Element) -> Bool) -> [Element] {
         let visitor = ElementSearch(predicate: predicate)
         documentElement?.accept(visitor)
         return visitor.elements

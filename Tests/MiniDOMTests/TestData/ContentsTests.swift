@@ -27,6 +27,7 @@ class ContentsTests: XCTestCase {
     override func setUp() {
         super.setUp()
         document = loadXML(string: contentsTestsSource)
+        document.normalize()
     }
 
     func testThreeProcessingInstructions() {
@@ -93,11 +94,9 @@ class ContentsTests: XCTestCase {
 
     func testLastChild() {
         let de = document.documentElement
-        let last = de?.lastChild
+        let last = de?.lastChildElement
         XCTAssertNotNil(last)
         XCTAssertEqual(last?.nodeName, "JavaXML:Contents")
-
-        let lastElement = last as? Element
-        XCTAssertEqual(lastElement?.attributes ?? [:], ["xmlns:topic": "http://www.oreilly.com/topics"])
+        XCTAssertEqual(last?.attributes ?? [:], ["xmlns:topic": "http://www.oreilly.com/topics"])
     }
 }
