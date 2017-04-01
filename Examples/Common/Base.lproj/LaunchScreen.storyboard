@@ -29,9 +29,17 @@ Example</string>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copyright 2017 Anodized Software, Inc." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="89E-ES-JQB">
+                                <rect key="frame" x="76" y="632" width="224" height="15"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="89E-ES-JQB" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Mk8-hJ-Y1t"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="89E-ES-JQB" secondAttribute="bottom" constant="20" id="czY-MX-Cxy"/>
                             <constraint firstItem="LEy-Pb-VGs" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="kGO-rh-JA5"/>
                             <constraint firstItem="LEy-Pb-VGs" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="kvM-yU-fmF"/>
                         </constraints>
@@ -39,7 +47,7 @@ Example</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="52" y="374.66266866566718"/>
         </scene>
     </scenes>
 </document>
