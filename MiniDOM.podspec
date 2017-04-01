@@ -1,11 +1,7 @@
-#
-#  Be sure to run `pod spec lint MiniDOM.podspec' to ensure this is a
-#  valid spec and to remove all comments including this before submitting the spec.
-#
 Pod::Spec.new do |s|
 
   s.name         = "MiniDOM"
-  s.version      = "0.9.4"
+  s.version      = "0.9.5"
   s.summary      = "A minimal XML DOM parser for Swift."
 
   s.homepage     = "https://minidom.github.io/"
@@ -20,6 +16,6 @@ Pod::Spec.new do |s|
 
   s.source       = { :git => "https://github.com/MiniDOM/MiniDOM.git", :tag => "#{s.version}" }
   s.source_files  = "Sources"
-  s.exclude_files = "Tests"
+  s.exclude_files = ["Examples", "Tests"]
 
 end
