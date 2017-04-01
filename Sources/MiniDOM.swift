@@ -418,7 +418,12 @@ public final class Element: ParentNode {
 
     /**
      If an element has only a single child, and that child is a text node, 
-     return that text node's value. Otherwise, return nil.
+     return that text node's value. Otherwise, return nil. It is recommended 
+     first to normalize the document or this element (see `Node.normalize()`).
+     
+     This method will return the text as it is represented in the single child
+     text node. Whitespace will not be stripped or normalized (see 
+     `String.trimmed` and `String.normalized`).
      */
     public final var textValue: String? {
         if children.count == 1 && firstChild?.nodeType == .text {
