@@ -394,6 +394,18 @@ public final class Element: ParentNode {
      */
     public final var attributes: [String : String]?
 
+    /**
+     If an element has only a single child, and that child is a text node, 
+     return that text node's value. Otherwise, return nil.
+     */
+    public final var textValue: String? {
+        if children.count == 1 && firstChild?.nodeType == .text {
+            return firstChild?.nodeValue
+        }
+
+        return nil
+    }
+
     // MARK: Initializer
 
     /**
