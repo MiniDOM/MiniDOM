@@ -21,7 +21,7 @@ import Foundation
 import MiniDOM
 import XCTest
 
-class PathSimpleTests: XCTestCase {
+class PathTests1: XCTestCase {
     var source: String!
 
     var document: Document!
@@ -62,20 +62,51 @@ class PathSimpleTests: XCTestCase {
         let result = document.evaluate(path: ["a", "b"])
         XCTAssertEqual(result.count, 2)
 
-        let r0 = result[0]
-        XCTAssertEqual(r0.nodeName, "b")
-        XCTAssertEqual(r0.nodeType, NodeType.element)
+        let ids = result.flatMap({ $0.attributes?["id"] })
+        XCTAssertEqual(["2", "10"], ids)
+    }
 
-        let e0 = r0 as? Element
-        XCTAssertNotNil(e0)
-        XCTAssertEqual(e0?.attributes?["id"], "2")
+    func testFindCNodes() {
+        let result = document.evaluate(path: ["a", "b", "c"])
+        XCTAssertEqual(result.count, 3)
 
-        let r1 = result[1]
-        XCTAssertEqual(r1.nodeName, "b")
-        XCTAssertEqual(r1.nodeType, NodeType.element)
+        let ids = result.flatMap({ $0.attributes?["id"] })
+        XCTAssertEqual(["3", "7", "11"], ids)
+    }
+}
 
-        let e1 = r1 as? Element
-        XCTAssertNotNil(e1)
-        XCTAssertEqual(e1?.attributes?["id"], "10")
+class PathTests2: XCTestCase {
+    var source: String!
+
+    var document: Document!
+
+    override func setUp() {
+        super.setUp()
+
+        source = [
+            "<a id='1'>",
+            "  <b id='2'>",
+            "    <fnord id='3'/>",
+            "  </b>",
+            "  <c id='4'>",
+            "    <fnord id='5'/>",
+            "  </c>",
+            "  <b id='6'/>",
+            "  <fnord id='7'/>",
+            "  <b id='8'>",
+            "    <fnord id='9'/>",
+            "  </b>",
+            "</a>",
+        ].joined(separator: "\n")
+
+        document = loadXML(string: source)
+    }
+
+    func testFindFnords() {
+        let result = document.evaluate(path: ["a", "b", "fnord"])
+        XCTAssertEqual(result.count, 2)
+
+        let ids = result.flatMap({ $0.attributes?["id"] })
+        XCTAssertEqual(["3", "9"], ids)
     }
 }

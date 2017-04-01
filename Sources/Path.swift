@@ -19,67 +19,6 @@
 
 import Foundation
 
-class PathSearch: Visitor {
-    let path: [String]
-
-    private let log = Log(level: .warn)
-
-    private let pathAsSlice: ArraySlice<String>
-
-    private(set) var matches: [Node] = []
-
-    private var pathStack = ArraySlice<String>()
-
-    init(path: [String]) {
-        self.path = path
-        self.pathAsSlice = ArraySlice<String>(path)
-
-        log.debug("path = \(path)")
-    }
-
-    func beginVisit(_ element: Element) {
-        push(element)
-    }
-
-    func endVisit(_ element: Element) {
-        pop()
-    }
-
-    func visit(_ text: Text) {
-        push(text)
-        pop()
-    }
-
-    func visit(_ processingInstruction: ProcessingInstruction) {
-        push(processingInstruction)
-        pop()
-    }
-
-    func visit(_ comment: Comment) {
-        push(comment)
-        pop()
-    }
-
-    func visit(_ cdataSection: CDATASection) {
-        push(cdataSection)
-        pop()
-    }
-
-    private func push(_ node: Node) {
-        pathStack.append(node.nodeName)
-        log.debug("stack = \(pathStack)")
-
-        if pathAsSlice == pathStack {
-            log.debug("match found")
-            matches.append(node)
-        }
-    }
-
-    private func pop() {
-        _ = pathStack.popLast()
-    }
-}
-
 public extension Node {
     /**
      Selects nodes based on a path relative to this node. For example, in the
@@ -114,15 +53,12 @@ public extension Node {
      */
 
     public final func evaluate(path: [String]) -> [Node] {
-        let visitor = PathSearch(path: path)
+        var selected: [Node] = [self]
 
-        // Start with the children - exclude the current node in the search.
-        // Otherwise, the current node (the object evaluate() is called on) must
-        // be the first element in the path.
-        for child in children {
-            child.accept(visitor)
+        for name in path {
+            selected = selected.flatMap({ $0.children(withName: name) })
         }
 
-        return visitor.matches
+        return selected
     }
 }

@@ -183,6 +183,17 @@ public extension Node {
         return children.last
     }
 
+    /**
+     Returns an array of children with the given `nodeName`.
+
+     - parameter name: The node name to find.
+
+     - returns: The children with the given node name.
+     */
+    public final func children(withName name: String) -> [Node] {
+        return children.nodes(withName: name)
+    }
+
     /// Returns the `Element` objects from the `children` array.
     public final var childElements: [Element] {
         return self.children(ofType: Element.self)
@@ -201,6 +212,17 @@ public extension Node {
     /// The last element in the `childElements` array.
     public final var lastChildElement: Element? {
         return childElements.last
+    }
+
+    /**
+     Returns an array of child `Element` objects with the given `nodeName`.
+
+     - parameter name: The node name to find.
+
+     - returns: The child elements with the given node name.
+     */
+    public final func childElements(withName name: String) -> [Element] {
+        return children.elements(withName: name)
     }
 }
 
