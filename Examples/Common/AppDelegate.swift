@@ -1,6 +1,6 @@
 //
-//  MiniDOM.h
-//  MiniDOM
+//  AppDelegate.swift
+//  MiniDOM Example
 //
 //  Copyright 2017 Anodized Software, Inc.
 //
@@ -17,10 +17,15 @@
 //  limitations under the License.
 //
 
-#import <Foundation/Foundation.h>
+import UIKit
 
-//! Project version number for MiniDOM.
-FOUNDATION_EXPORT double MiniDOMVersionNumber;
+@UIApplicationMain
+class AppDelegate: UIResponder, UIApplicationDelegate {
 
-//! Project version string for MiniDOM.
-FOUNDATION_EXPORT const unsigned char MiniDOMVersionString[];
+    var window: UIWindow?
+
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        return true
+    }
+}
+
