@@ -22,7 +22,7 @@ import MiniDOM
 import XCTest
 
 class NodeTests: XCTestCase {
-    
+
     func testNormalizeLeafNode() {
         var text = Text(text: "Testing 1 2 3")
         text.normalize()
@@ -75,5 +75,32 @@ class NodeTests: XCTestCase {
         let ids = foos.flatMap({ return $0.attributes?["id"] })
         XCTAssertEqual(ids.count, 3)
         XCTAssertEqual(["1", "2", "3"], ids)
+    }
+
+    func testNodeValueNoChildren() {
+        let element = Element(tagName: "fnord")
+        XCTAssertNil(element.textValue)
+    }
+
+    func testNodeValueNonTextChild() {
+        let element = Element(tagName: "fnord", children: [
+            Comment(text: "this space intentionally left blank")
+        ])
+        XCTAssertNil(element.textValue)
+    }
+
+    func testNodeValueMultipleTextChildren() {
+        let element = Element(tagName: "fnord", children: [
+            Text(text: "This is a text node"),
+            Text(text: "This is also a text node")
+        ])
+        XCTAssertNil(element.textValue)
+    }
+
+    func testNodeValueSingleTextChild() {
+        let element = Element(tagName: "fnord", children: [
+            Text(text: "bingo")
+        ])
+        XCTAssertEqual(element.textValue, "bingo")
     }
 }
