@@ -40,7 +40,7 @@ class ContentsTests: XCTestCase {
 
         let pi1 = pis[1]
         XCTAssertEqual(pi1.target, "xml-stylesheet")
-        XCTAssertEqual(pi1.data?.normalized(), "href=\"XSL\\JavaXML.wml.xsl\" type=\"text/xsl\" media=\"wap\"")
+        XCTAssertEqual(pi1.data?.normalized, "href=\"XSL\\JavaXML.wml.xsl\" type=\"text/xsl\" media=\"wap\"")
 
         let pi2 = pis[2]
         XCTAssertEqual(pi2.target, "cocoon-process")
@@ -52,7 +52,7 @@ class ContentsTests: XCTestCase {
         XCTAssertEqual(comments.count, 1)
 
         let c0 = comments[0]
-        XCTAssertEqual(c0.text.normalized(), "Java and XML")
+        XCTAssertEqual(c0.text.normalized, "Java and XML")
     }
 
     func testDocumentElement() {

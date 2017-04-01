@@ -23,32 +23,32 @@ import XCTest
 
 class StringWhitespaceTests: XCTestCase {
     func testTrimFromBeginning() {
-        XCTAssertEqual("\n\t   foo".trimmed(), "foo")
+        XCTAssertEqual("\n\t   foo".trimmed, "foo")
     }
 
     func testTrimFromEnd() {
-        XCTAssertEqual("foo   \n\t".trimmed(), "foo")
+        XCTAssertEqual("foo   \n\t".trimmed, "foo")
     }
 
     func testTrimFromBeginningAndEnd() {
-        XCTAssertEqual("\n\t   foo   \n\t".trimmed(), "foo")
+        XCTAssertEqual("\n\t   foo   \n\t".trimmed, "foo")
     }
 
     func testCollapse() {
-        XCTAssertEqual(" foo   \n\t  bar ".collapsed(), " foo bar ")
+        XCTAssertEqual(" foo   \n\t  bar ".collapsed, " foo bar ")
     }
 
     func testNormalize() {
-        XCTAssertEqual("  foo  \r\n\t bar   ".normalized(), "foo bar")
+        XCTAssertEqual("  foo  \r\n\t bar   ".normalized, "foo bar")
     }
 
     func testNormalizeNewlineVariants() {
-        XCTAssertEqual("foo\rbar".normalized(), "foo bar")
-        XCTAssertEqual("foo\nbar".normalized(), "foo bar")
-        XCTAssertEqual("foo\r\nbar".normalized(), "foo bar")
+        XCTAssertEqual("foo\rbar".normalized, "foo bar")
+        XCTAssertEqual("foo\nbar".normalized, "foo bar")
+        XCTAssertEqual("foo\r\nbar".normalized, "foo bar")
 
-        XCTAssertEqual("foo \rbar".normalized(), "foo bar")
-        XCTAssertEqual("foo \nbar".normalized(), "foo bar")
-        XCTAssertEqual("foo \r\nbar".normalized(), "foo bar")
+        XCTAssertEqual("foo \rbar".normalized, "foo bar")
+        XCTAssertEqual("foo \nbar".normalized, "foo bar")
+        XCTAssertEqual("foo \r\nbar".normalized, "foo bar")
     }
 }

@@ -24,7 +24,7 @@ public extension String {
      Returns a new string made by removing whitespace and newline characters 
      from both ends of the receiver.
      */
-    public func trimmed() -> String {
+    public var trimmed: String {
         return trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
     }
 
@@ -33,7 +33,7 @@ public extension String {
      (matching the `\\s` regular expression character class) with a single space
      character.
      */
-    public func collapsed() -> String {
+    public var collapsed: String {
         return replacingOccurrences(of: "\\s+", with: " ", options: .regularExpression)
     }
 
@@ -43,7 +43,7 @@ public extension String {
      `trimmed()` function), then newlines are replaced with spaces, finally
      whitespace is collapsed (via the `collapsed()` function).
      */
-    public func normalized() -> String {
-        return trimmed().replacingOccurrences(of: "\\n", with: " ").collapsed()
+    public var normalized: String {
+        return trimmed.replacingOccurrences(of: "\\n", with: " ").collapsed
     }
 }

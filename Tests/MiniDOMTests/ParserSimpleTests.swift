@@ -94,10 +94,10 @@ class ParserSimpleTests: XCTestCase {
 
         XCTAssertEqual(fnords[0].children.count, 1)
         XCTAssertEqual(fnords[0].firstChild?.nodeType, .text)
-        XCTAssertEqual(fnords[0].firstChild?.nodeValue?.trimmed(), "This is some text")
+        XCTAssertEqual(fnords[0].firstChild?.nodeValue?.trimmed, "This is some text")
 
         XCTAssertEqual(fnords[1].children.count, 1)
         XCTAssertEqual(fnords[1].firstChild?.nodeType, .text)
-        XCTAssertEqual(fnords[1].firstChild?.nodeValue?.trimmed(), "This is some more text")
+        XCTAssertEqual(fnords[1].firstChild?.nodeValue?.trimmed, "This is some more text")
     }
 }

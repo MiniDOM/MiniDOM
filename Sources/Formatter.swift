@@ -134,7 +134,7 @@ class PrettyPrinter: Formatter, Visitor {
     }
 
     public func visit(_ text: Text) {
-        let trimmed = text.text.trimmed()
+        let trimmed = text.text.trimmed
         if trimmed.isEmpty {
             return
         }
