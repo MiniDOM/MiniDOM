@@ -29,7 +29,7 @@ class ParserPlistTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        let source = [
+        source = [
             "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
             "<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">",
             "<plist version=\"1.0\">",
@@ -70,18 +70,16 @@ class ParserPlistTests: XCTestCase {
     func testSingleDictElementUnderRoot() {
         let documentElement = document.documentElement
 
-        XCTAssertEqual(documentElement?.children.count, 1)
+        XCTAssertEqual(documentElement?.childElements.count, 1)
 
-        let dict = documentElement?.firstChild
+        let dict = documentElement?.firstChildElement
         XCTAssertNotNil(dict)
         XCTAssertEqual(dict?.nodeName, "dict")
-        XCTAssertEqual(dict?.children.count, 16)
+        XCTAssertEqual(dict?.childElements.count, 16)
     }
 
     func testDictElementIsCorrect() {
-        let dict = document.documentElement?.firstChild
-
-        let expectedNodeNames: [String] = [
+        let expectedElementNames: [String] = [
             "key",
             "string",
             "key",
@@ -99,8 +97,10 @@ class ParserPlistTests: XCTestCase {
             "key",
             "string",
         ]
-        let actualNodeNames: [String] = dict?.children.map { $0.nodeName } ?? []
-        XCTAssertEqual(expectedNodeNames, actualNodeNames)
+
+        let dict = document.documentElement?.firstChildElement
+        let actualElementNames: [String] = dict?.childElements.map { $0.nodeName } ?? []
+        XCTAssertEqual(expectedElementNames, actualElementNames)
 
         let expectedNodeValues: [String] = [
             "CFBundleDevelopmentRegion",

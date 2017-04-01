@@ -36,21 +36,22 @@ class ParserNamespaceTests: XCTestCase {
         let result = parser?.parse()
         XCTAssertTrue(result?.isSuccess == true)
 
-        let document = result?.value
+        var document = result?.value
+        document?.normalize()
 
         let cvslog = document?.documentElement
         XCTAssertNotNil(cvslog)
         XCTAssertEqual(cvslog?.tagName, "cvslog")
         XCTAssertEqual(cvslog?.attributes ?? [:], ["xmlns": "http://xml.apple.com/cvslog"])
-        XCTAssertEqual(cvslog?.children.count, 1)
+        XCTAssertEqual(cvslog?.childElements.count, 1)
 
-        let radar = cvslog?.firstChild
+        let radar = cvslog?.firstChildElement
         XCTAssertNotNil(radar)
         XCTAssertEqual(radar?.nodeName, "radar:radar")
         XCTAssertEqual(radar?.attributes ?? [:], ["xmlns:radar": "http://xml.apple.com/radar"])
-        XCTAssertEqual(radar?.children.count, 2)
+        XCTAssertEqual(radar?.childElements.count, 2)
 
-        let bugID = radar?.firstChild
+        let bugID = radar?.firstChildElement
         XCTAssertNotNil(bugID)
         XCTAssertEqual(bugID?.nodeName, "radar:bugID")
         XCTAssertEqual(bugID?.children.count, 1)
@@ -60,7 +61,7 @@ class ParserNamespaceTests: XCTestCase {
         XCTAssertEqual(bugIdText?.nodeType, .text)
         XCTAssertEqual(bugIdText?.nodeValue, "2920186")
 
-        let title = radar?.lastChild
+        let title = radar?.lastChildElement
         XCTAssertNotNil(title)
         XCTAssertEqual(title?.nodeName, "radar:title")
         XCTAssertEqual(title?.children.count, 1)
@@ -70,7 +71,7 @@ class ParserNamespaceTests: XCTestCase {
         XCTAssertEqual(titleText?.nodeType, .text)
         XCTAssertEqual(titleText?.nodeValue, "API/NSXMLParser: there ought to be an NSXMLParser")
 
-        let formatted = document?.format(indentWith: "  ")
+        let formatted = document?.prettyPrint(indentWith: "  ")
         XCTAssertEqual(formatted, [
             "<?xml version=\"1.0\" encoding=\"utf-8\"?>",
             "<?xml-stylesheet type='text/css' href='cvslog.css'?>",

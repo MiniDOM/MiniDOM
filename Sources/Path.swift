@@ -113,7 +113,7 @@ public extension Node {
      to this node.
      */
 
-    func evaluate(path: [String]) -> [Node] {
+    public final func evaluate(path: [String]) -> [Node] {
         let visitor = PathSearch(path: path)
 
         // Start with the children - exclude the current node in the search.

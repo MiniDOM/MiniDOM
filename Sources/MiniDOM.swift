@@ -22,10 +22,11 @@
  Object Model.
 
  This is intended to provided a subset of the behavior described in the
- [DOM Level 1 specification][1]. Much of this file's documentation is adapted
- from that document.
+ [DOM Level 1 specification][1] and the [DOM Level 2 specification][2]. Much of 
+ this file's documentation is adapted from those documents.
 
  [1]: https://www.w3.org/TR/REC-DOM-Level-1/level-one-core.html
+ [2]: https://www.w3.org/TR/DOM-Level-2-Core/core.html
  */
 
 import Foundation
@@ -137,11 +138,21 @@ public protocol Node: Visitable {
      - SeeAlso: [`CDATASection.children`](CDATASection.html#//apple_ref/swift/Property/children)
      */
     var children: [Node] { get }
+
+    /**
+     Puts all `Text` nodes in the full depth of the sub-tree underneath this 
+     `Node`, into a "normal" form where only structure (e.g., elements, 
+     comments, processing instructions, and CDATA sections) separates `Text` 
+     nodes, i.e., there are neither adjacent `Text` nodes nor empty `Text` 
+     nodes. This can be used to ensure that the DOM view of a document is the 
+     same as if it were saved and re-loaded.
+     */
+    mutating func normalize()
 }
 
 public extension Node {
     /// Convenience accessor for the static `nodeType` property.
-    final var nodeType: NodeType {
+    public final var nodeType: NodeType {
         return Self.nodeType
     }
 
@@ -171,6 +182,26 @@ public extension Node {
     public final var lastChild: Node? {
         return children.last
     }
+
+    /// Returns the `Element` objects from the `children` array.
+    public final var childElements: [Element] {
+        return self.children(ofType: Element.self)
+    }
+
+    /// A Boolean value indicating whether the `childElements` array is not empty
+    public final var hasChildElements: Bool {
+        return !childElements.isEmpty
+    }
+
+    /// The first element in the `childElements` array.
+    public final var firstChildElement: Element? {
+        return childElements.first
+    }
+
+    /// The last element in the `childElements` array.
+    public final var lastChildElement: Element? {
+        return childElements.last
+    }
 }
 
 // MARK: - Leaf Protocol
@@ -191,9 +222,11 @@ public extension LeafNode {
      A leaf node does not have children. The value of this property is always
      an empty array.
      */
-    final var children: [Node] {
+    public final var children: [Node] {
         return []
     }
+
+    public final mutating func normalize() { }
 }
 
 // MARK: - Parent Protocol
@@ -212,8 +245,27 @@ public extension ParentNode {
 
      - parameter child: The node to append
      */
-    public mutating func append(child: Node) {
+    public final mutating func append(child: Node) {
         children.append(child)
+    }
+
+    public final mutating func normalize() {
+        var newChildren: [Node] = []
+
+        for var currNode in children {
+            if let currText = currNode as? Text, let prevText = newChildren.last as? Text {
+                prevText.append(currText)
+            }
+            else {
+                newChildren.append(currNode)
+            }
+
+            if currNode.hasChildren {
+                currNode.normalize()
+            }
+        }
+
+        children = newChildren
     }
 }
 
@@ -229,7 +281,7 @@ public protocol TextNode: LeafNode {
 
 public extension TextNode {
     /// The `nodeValue` of a `TextNode` node is its `text` property.
-    var nodeValue: String? {
+    public final var nodeValue: String? {
         return text
     }
 }
@@ -249,20 +301,20 @@ public final class Document: ParentNode {
     public static let nodeType: NodeType = .document
 
     /// The `nodeName` of a `Document` is `#document`.
-    public let nodeName: String = "#document"
+    public final let nodeName: String = "#document"
 
     /// The `nodeValue` of a `Document` is `nil`.
-    public let nodeValue: String? = nil
+    public final let nodeValue: String? = nil
 
     /**
      The children of the document will contain the document element and any
      processing instructions or comments that are siblings of the documnent
      element.
      */
-    public var children: [Node] = []
+    public final var children: [Node] = []
 
     /// The `attributes` dictionary of a `Document` is `nil`.
-    public let attributes: [String : String]? = nil
+    public final let attributes: [String : String]? = nil
 
     // MARK: Document
 
@@ -270,7 +322,7 @@ public final class Document: ParentNode {
      This is a convenience attribute that allows direct access to the child node
      that is the root element of the document.
      */
-    public var documentElement: Element? {
+    public final var documentElement: Element? {
         return children.first(ofType: Element.self)
     }
 
@@ -311,15 +363,15 @@ public final class Element: ParentNode {
     public static let nodeType: NodeType = .element
 
     /// The `nodeName` of an `Element` is its `tagName`.
-    public var nodeName: String {
+    public final var nodeName: String {
         return tagName
     }
 
     /// The `nodeValue` of an `Element` is `nil`.
-    public let nodeValue: String? = nil
+    public final let nodeValue: String? = nil
 
     /// The children of the element.
-    public var children: [Node] = []
+    public final var children: [Node]
 
     // MARK: Element
 
@@ -334,13 +386,13 @@ public final class Element: ParentNode {
 
      `tagName` has the value `"elementExample"`.
      */
-    public var tagName: String
+    public final var tagName: String
 
     /**
      A dictionary that contains any attributes associated with the element.
      Keys are the names of attributes, and values are attribute values.
      */
-    public var attributes: [String : String]?
+    public final var attributes: [String : String]?
 
     // MARK: Initializer
 
@@ -354,9 +406,10 @@ public final class Element: ParentNode {
      associated with the element. Keys are the names of attributes, and values
      are attribute values.
      */
-    public init(tagName: String, attributes: [String : String]) {
+    public init(tagName: String, attributes: [String : String] = [:], children: [Node] = []) {
         self.tagName = tagName
         self.attributes = attributes
+        self.children = children
     }
 }
 
@@ -369,7 +422,7 @@ public final class Element: ParentNode {
  child of the element. If there is markup, it is parsed into a sequence of 
  elements and `Text` nodes that form the array of children of the element.
  */
-public class Text: TextNode {
+public final class Text: TextNode {
 
     // MARK: Node
 
@@ -377,15 +430,15 @@ public class Text: TextNode {
     public static let nodeType: NodeType = .text
 
     /// The `nodeName` of a `Text` node is `#text`.
-    public let nodeName: String = "#text"
+    public final let nodeName: String = "#text"
 
     /// The `attributes` dictionary of a `Text` node is `nil`.
-    public let attributes: [String : String]? = nil
+    public final let attributes: [String : String]? = nil
 
     // MARK: TextNode
 
     /// The string contents of this text node.
-    public var text: String
+    public final var text: String
 
     // MARK: Initializer
 
@@ -397,6 +450,10 @@ public class Text: TextNode {
     public init(text: String) {
         self.text = text
     }
+
+    final func append(_ other: Text) {
+        text = text + other.text
+    }
 }
 
 // MARK: - ProcessingInstruction
@@ -406,7 +463,7 @@ public class Text: TextNode {
  in XML as a way to keep processor-secific information in the text of the
  document.
  */
-public class ProcessingInstruction: LeafNode {
+public final class ProcessingInstruction: LeafNode {
 
     // MARK: Node
 
@@ -414,17 +471,17 @@ public class ProcessingInstruction: LeafNode {
     public static let nodeType: NodeType = .processingInstruction
 
     /// The `nodeName` of a `ProcessingInstruction` is its `target`.
-    public var nodeName: String {
+    public final var nodeName: String {
         return target
     }
 
     /// The `nodeValue` of a `ProcessingInstruction` is its `data`.
-    public var nodeValue: String? {
+    public final var nodeValue: String? {
         return data
     }
 
     /// The `attributes` dictionary of a `ProcessingInstruction` is `nil`.
-    public let attributes: [String : String]? = nil
+    public final let attributes: [String : String]? = nil
 
     // MARK: ProcessingInstruction
 
@@ -432,14 +489,14 @@ public class ProcessingInstruction: LeafNode {
      The target of this processing instruction. XML defines this as being the
      first token following the `<?` that begins the processing instruction.
      */
-    public var target: String
+    public final var target: String
 
     /**
      The content of this processing instruction. This is from the first
      non-whitespace character after the target to the character immediately
      preceding the `?>`.
      */
-    public var data: String?
+    public final var data: String?
 
     // MARK: Initializer
 
@@ -466,7 +523,7 @@ public class ProcessingInstruction: LeafNode {
  This represents the content of a comment, i.e., all the characters between the
  starting `<!--` and ending `-->`.
  */
-public class Comment: TextNode {
+public final class Comment: TextNode {
 
     // MARK: Node
 
@@ -474,15 +531,15 @@ public class Comment: TextNode {
     public static let nodeType: NodeType = .comment
 
     /// The `nodeName` of a `Comment` is `#comment`.
-    public let nodeName: String = "#comment"
+    public final let nodeName: String = "#comment"
 
     /// The `attributes` dictionary of a `Comment` is `nil`.
-    public let attributes: [String : String]? = nil
+    public final let attributes: [String : String]? = nil
 
     // MARK: TextNode
 
     /// The string contents of this comment.
-    public var text: String
+    public final var text: String
 
     // MARK: Initializer
 
@@ -509,7 +566,7 @@ public class Comment: TextNode {
  Note that this may contain characters that need to be escaped outside of CDATA
  sections.
  */
-public class CDATASection: TextNode {
+public final class CDATASection: TextNode {
 
     // MARK: Node
 
@@ -517,15 +574,15 @@ public class CDATASection: TextNode {
     public static let nodeType: NodeType = .cdataSection
 
     /// The `nodeName` of a `CDATASection` is `#cdata-section`.
-    public let nodeName: String = "#cdata-section"
+    public final let nodeName: String = "#cdata-section"
 
     /// The `attributes` dictionary of a `CDATASection` is `nil`.
-    public let attributes: [String : String]? = nil
+    public final let attributes: [String : String]? = nil
 
     // MARK: TextNode
 
     /// The string contents of this CDATA section.
-    public var text: String
+    public final var text: String
 
     // MARK: Initializer
 
