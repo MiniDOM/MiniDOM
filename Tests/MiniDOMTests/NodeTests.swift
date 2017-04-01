@@ -42,4 +42,38 @@ class NodeTests: XCTestCase {
         XCTAssertTrue(element.hasChildren)
         XCTAssertTrue(element.hasChildElements)
     }
+
+    func testChildElements() {
+        let element = Element(tagName: "fnord", children: [
+            Element(tagName: "foo", attributes: ["id": "1"]),
+            Element(tagName: "bar"),
+            Element(tagName: "foo", attributes: ["id": "2"]),
+            Element(tagName: "baz"),
+            Element(tagName: "foo", attributes: ["id": "3"])
+        ])
+
+        let foos = element.childElements(withName: "foo")
+        XCTAssertEqual(foos.count, 3)
+
+        let ids = foos.flatMap({ return $0.attributes?["id"] })
+        XCTAssertEqual(ids.count, 3)
+        XCTAssertEqual(["1", "2", "3"], ids)
+    }
+
+    func testChildrenWithName() {
+        let element = Element(tagName: "fnord", children: [
+            Element(tagName: "foo", attributes: ["id": "1"]),
+            Element(tagName: "bar"),
+            Element(tagName: "foo", attributes: ["id": "2"]),
+            Element(tagName: "baz"),
+            Element(tagName: "foo", attributes: ["id": "3"])
+        ])
+
+        let foos = element.children(withName: "foo")
+        XCTAssertEqual(foos.count, 3)
+
+        let ids = foos.flatMap({ return $0.attributes?["id"] })
+        XCTAssertEqual(ids.count, 3)
+        XCTAssertEqual(["1", "2", "3"], ids)
+    }
 }

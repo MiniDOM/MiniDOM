@@ -38,4 +38,10 @@ class RSSTests: XCTestCase {
         XCTAssertNotNil(titleCdata)
         XCTAssertEqual(titleCdata?.text, "Yahoo! News Search Results for market")
     }
+
+    func testFindItemsInChannel() {
+        let channel = document.evaluate(path: ["rss", "channel"]).first
+        let items = channel?.childElements(withName: "item")
+        XCTAssertEqual(items?.count, 10)
+    }
 }
