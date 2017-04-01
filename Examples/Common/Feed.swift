@@ -14,6 +14,9 @@ struct Feed {
     let items: [Item]
 
     init?(document: Document) {
+        var document = document
+        document.normalize()
+
         guard let title = document.evaluate(path: ["rss", "channel", "title", "#text"]).first(ofType: Text.self)?.nodeValue else {
             return nil
         }
@@ -30,17 +33,13 @@ struct Item {
     let title: String
     let link: URL
 
-    private static func text(from nodes: [Node]) -> [String] {
-        return nodes.only(ofType: Text.self).flatMap({ $0.nodeValue })
-    }
-
     init?(element: Element) {
-        let linkText = Item.text(from: element.evaluate(path: ["link", "#text"])).joined(separator: "")
-        guard let link = URL(string: linkText) else {
+        guard let linkText = element.evaluate(path: ["link", "#text"]).first?.nodeValue,
+              let link = URL(string: linkText),
+              let title = element.evaluate(path: ["title", "#text"]).first?.nodeValue
+        else {
             return nil
         }
-
-        let title = Item.text(from: element.evaluate(path: ["title", "#text"])).joined(separator: " ")
 
         self.title = title
         self.link = link
