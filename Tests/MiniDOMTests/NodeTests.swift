@@ -42,4 +42,31 @@ class NodeTests: XCTestCase {
         XCTAssertTrue(element.hasChildren)
         XCTAssertTrue(element.hasChildElements)
     }
+
+    func testNodeValueNoChildren() {
+        let element = Element(tagName: "fnord")
+        XCTAssertNil(element.textValue)
+    }
+
+    func testNodeValueNonTextChild() {
+        let element = Element(tagName: "fnord", children: [
+            Comment(text: "this space intentionally left blank")
+        ])
+        XCTAssertNil(element.textValue)
+    }
+
+    func testNodeValueMultipleTextChildren() {
+        let element = Element(tagName: "fnord", children: [
+            Text(text: "This is a text node"),
+            Text(text: "This is also a text node")
+        ])
+        XCTAssertNil(element.textValue)
+    }
+
+    func testNodeValueSingleTextChild() {
+        let element = Element(tagName: "fnord", children: [
+            Text(text: "bingo")
+        ])
+        XCTAssertEqual(element.textValue, "bingo")
+    }
 }
