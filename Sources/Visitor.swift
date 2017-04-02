@@ -39,8 +39,8 @@ import Foundation
  algorithm provided by the DOM classes.
 
  For a simple example of a visitor, see the `ElementSearch` class in
- `Search.swift`. For a more complex example of a visitor, see the `Formatter`
- class in `Formatter.swift`.
+ `Search.swift`. For a more complex example of a visitor, see the 
+ `PrettyPrinter` class in `Formatter.swift`.
  */
 public protocol Visitor {
 

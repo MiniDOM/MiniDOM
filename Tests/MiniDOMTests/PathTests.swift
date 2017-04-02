@@ -86,15 +86,15 @@ class PathTests2: XCTestCase {
         source = [
             "<a id='1'>",
             "  <b id='2'>",
-            "    <fnord id='3'/>",
+            "    <z id='3'/>",
             "  </b>",
             "  <c id='4'>",
-            "    <fnord id='5'/>",
+            "    <z id='5'/>",
             "  </c>",
             "  <b id='6'/>",
-            "  <fnord id='7'/>",
+            "  <z id='7'/>",
             "  <b id='8'>",
-            "    <fnord id='9'/>",
+            "    <z id='9'/>",
             "  </b>",
             "</a>",
         ].joined(separator: "\n")
@@ -102,8 +102,8 @@ class PathTests2: XCTestCase {
         document = loadXML(string: source)
     }
 
-    func testFindFnords() {
-        let result = document.evaluate(path: ["a", "b", "fnord"])
+    func testFindZElements() {
+        let result = document.evaluate(path: ["a", "b", "z"])
         XCTAssertEqual(result.count, 2)
 
         let ids = result.flatMap({ $0.attributes?["id"] })

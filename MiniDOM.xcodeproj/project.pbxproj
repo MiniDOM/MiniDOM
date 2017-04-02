@@ -88,6 +88,7 @@
 		C5EB9CED1E7CF12D00198F5F /* ParserResultTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParserResultTests.swift; sourceTree = "<group>"; };
 		C5EB9CEF1E7CF46800198F5F /* ParserErrorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParserErrorTests.swift; sourceTree = "<group>"; };
 		C5EB9CF11E7CF5B900198F5F /* VisitorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisitorTests.swift; sourceTree = "<group>"; };
+		C5F16D291E908AAA00706AAD /* MiniDOM.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MiniDOM.playground; sourceTree = "<group>"; };
 		C5FCA02C1E8A031400774FF1 /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -113,6 +114,7 @@
 		C54FA8B81E759BBE009EEA73 = {
 			isa = PBXGroup;
 			children = (
+				C5F16D291E908AAA00706AAD /* MiniDOM.playground */,
 				C54FA8F41E763D42009EEA73 /* Package.swift */,
 				C54FA8E41E763CE6009EEA73 /* Sources */,
 				C54FA8ED1E763CEE009EEA73 /* Tests */,

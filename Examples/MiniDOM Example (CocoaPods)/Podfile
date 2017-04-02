@@ -7,6 +7,6 @@ target 'MiniDOM Example' do
 
   # Pods for MiniDOM Example
 
-  pod 'MiniDOM', :path => '../../../MiniDOM'
+  pod 'MiniDOM'
 
 end
