@@ -3,9 +3,10 @@
 [![Build Status](https://api.travis-ci.org/MiniDOM/MiniDOM.svg?branch=master)](https://travis-ci.org/MiniDOM/MiniDOM)
 [![codecov.io](https://codecov.io/gh/MiniDOM/MiniDOM/branch/master/graphs/badge.svg)](https://codecov.io/gh/MiniDOM/MiniDOM/branch/master)
 ![Documentation Status](https://minidom.github.io/Documentation/badge.svg)
+[![Platform](https://img.shields.io/cocoapods/p/MiniDOM.svg)](https://minidom.github.io/Documentation)
+![License](https://img.shields.io/cocoapods/l/MiniDOM.svg)
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/MiniDOM.svg)](https://img.shields.io/cocoapods/v/MiniDOM.svg)
-[![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![Platform](https://img.shields.io/cocoapods/p/MiniDOm.svg?style=flat)](http://cocoadocs.org/docsets/MiniDOM)
+[![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg)](https://github.com/Carthage/Carthage)
 
 ## Introduction
 
