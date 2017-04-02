@@ -96,7 +96,7 @@ case "$COMMAND" in
   ;;
 
   "native")
-    swift build --clean
+    swift package clean
     swift build
     exit 0;
   ;;
@@ -124,7 +124,7 @@ case "$COMMAND" in
     exit 0;
   ;;
 
-  "--test-macOS" | "test-macos")
+  "test-macOS" | "test-macos")
     xcodebuild clean \
     -project $PROJECT \
     -scheme "${SCHEME}" \
@@ -138,7 +138,7 @@ case "$COMMAND" in
     exit 0;
   ;;
 
-  "--test-tvOS" | "test-tvos")
+  "test-tvOS" | "test-tvos")
     xcodebuild clean \
     -project $PROJECT \
     -scheme "${SCHEME}" \
@@ -152,7 +152,7 @@ case "$COMMAND" in
     exit 0;
   ;;
 
-  "--test-watchOS" | "test-watchos")
+  "test-watchOS" | "test-watchos")
     xcodebuild clean \
     -project $PROJECT \
     -scheme "${SCHEME}" \
@@ -165,8 +165,8 @@ case "$COMMAND" in
     exit 0;
   ;;
 
-  "--test-native" | "test-native")
-    swift build --clean
+  "test-native" | "test-native")
+    swift package clean
     swift build
     swift test
     exit 0;
