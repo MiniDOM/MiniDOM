@@ -7,15 +7,15 @@ set -o pipefail
 PROJECT="MiniDOM.xcodeproj"
 SCHEME="MiniDOM"
 
-IOS_SDK="iphonesimulator10.3"
-OSX_SDK="macosx10.12"
-TVOS_SDK="appletvsimulator10.2"
-WATCHOS_SDK="watchsimulator3.2"
+IOS_SDK="iphonesimulator11.2"
+OSX_SDK="macosx10.13"
+TVOS_SDK="appletvsimulator11.2"
+WATCHOS_SDK="watchsimulator4.2"
 
-IOS_DESTINATION="OS=10.3,name=iPhone SE"
+IOS_DESTINATION="OS=11.2,name=iPhone SE"
 MACOS_DESTINATION="arch=x86_64"
-TVOS_DESTINATION="OS=10.2,name=Apple TV 1080p"
-WATCHOS_DESTINATION="OS=3.2,name=Apple Watch - 42mm"
+TVOS_DESTINATION="OS=11.2,name=Apple TV"
+WATCHOS_DESTINATION="OS=4.2,name=Apple Watch - 42mm"
 
 usage() {
 cat << EOF
