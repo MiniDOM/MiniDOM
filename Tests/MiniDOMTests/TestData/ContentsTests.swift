@@ -78,7 +78,7 @@ class ContentsTests: XCTestCase {
             ["JavaXML:Book", "JavaXML:Contents", "JavaXML:Chapter"])
         XCTAssertEqual(chapterNodes.count, 4)
 
-        let headingTextValues = chapterNodes.flatMap { (chapterNode) -> String? in
+        let headingTextValues = chapterNodes.compactMap { (chapterNode) -> String? in
             let textNodes = chapterNode.evaluate(path: ["JavaXML:Heading", "#text"])
             return textNodes.first(ofType: Text.self)?.text
         }

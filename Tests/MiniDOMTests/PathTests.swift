@@ -62,7 +62,7 @@ class PathTests1: XCTestCase {
         let result = document.evaluate(path: ["a", "b"])
         XCTAssertEqual(result.count, 2)
 
-        let ids = result.flatMap({ $0.attributes?["id"] })
+        let ids = result.compactMap({ $0.attributes?["id"] })
         XCTAssertEqual(["2", "10"], ids)
     }
 
@@ -70,7 +70,7 @@ class PathTests1: XCTestCase {
         let result = document.evaluate(path: ["a", "b", "c"])
         XCTAssertEqual(result.count, 3)
 
-        let ids = result.flatMap({ $0.attributes?["id"] })
+        let ids = result.compactMap({ $0.attributes?["id"] })
         XCTAssertEqual(["3", "7", "11"], ids)
     }
 }
@@ -106,7 +106,7 @@ class PathTests2: XCTestCase {
         let result = document.evaluate(path: ["a", "b", "z"])
         XCTAssertEqual(result.count, 2)
 
-        let ids = result.flatMap({ $0.attributes?["id"] })
+        let ids = result.compactMap({ $0.attributes?["id"] })
         XCTAssertEqual(["3", "9"], ids)
     }
 }

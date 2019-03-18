@@ -55,7 +55,7 @@ class NodeTests: XCTestCase {
         let foos = element.childElements(withName: "foo")
         XCTAssertEqual(foos.count, 3)
 
-        let ids = foos.flatMap({ return $0.attributes?["id"] })
+        let ids = foos.compactMap({ return $0.attributes?["id"] })
         XCTAssertEqual(ids.count, 3)
         XCTAssertEqual(["1", "2", "3"], ids)
     }
@@ -72,7 +72,7 @@ class NodeTests: XCTestCase {
         let foos = element.children(withName: "foo")
         XCTAssertEqual(foos.count, 3)
 
-        let ids = foos.flatMap({ return $0.attributes?["id"] })
+        let ids = foos.compactMap({ return $0.attributes?["id"] })
         XCTAssertEqual(ids.count, 3)
         XCTAssertEqual(["1", "2", "3"], ids)
     }

@@ -121,7 +121,7 @@ class ParserPlistTests: XCTestCase {
             "1",
         ]
 
-        let actualNodeValues: [String] = dict?.children.flatMap { $0.firstChild?.nodeValue } ?? []
+        let actualNodeValues: [String] = dict?.children.compactMap { $0.firstChild?.nodeValue } ?? []
         XCTAssertEqual(expectedNodeValues, actualNodeValues)
     }
 }
