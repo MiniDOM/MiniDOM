@@ -52,7 +52,7 @@ public extension Node {
      to this node.
      */
 
-    public func evaluate(path: [String]) -> [Node] {
+    func evaluate(path: [String]) -> [Node] {
         var selected: [Node] = [self]
 
         for name in path {

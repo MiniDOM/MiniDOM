@@ -92,7 +92,7 @@ class ParserErrorTests: XCTestCase {
 
     func testInvalidCDATABlock() {
         let bytes: [UInt8] = [192]
-        let invalidUTF8data = Data(bytes: bytes)
+        let invalidUTF8data = Data(bytes)
 
         let nodeStack = NodeStack()
         let xmlParser = AbortDetectingXMLParser()

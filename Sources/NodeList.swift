@@ -28,7 +28,7 @@ public extension Array where Element == Node {
 
      - returns: All members of the receiver that are of the given type.
      */
-    public func only<T: Node>(ofType type: T.Type) -> [T] {
+    func only<T: Node>(ofType type: T.Type) -> [T] {
         return self.compactMap { $0 as? T }
     }
 
@@ -39,7 +39,7 @@ public extension Array where Element == Node {
 
      - returns: The first node of the given type.
      */
-    public func first<T: Node>(ofType type: T.Type) -> T? {
+    func first<T: Node>(ofType type: T.Type) -> T? {
         return first(where: { $0.nodeType == type.nodeType }) as? T
     }
 
@@ -50,7 +50,7 @@ public extension Array where Element == Node {
      
      - returns: The nodes from the receiver with the given node name.
      */
-    public func nodes(withName name: String) -> [Node] {
+    func nodes(withName name: String) -> [Node] {
         return filter({ $0.nodeName == name })
     }
 
@@ -61,7 +61,7 @@ public extension Array where Element == Node {
      
      - returns: The elements from the receiver with the given node name.
      */
-    public func elements(withName name: String) -> [MiniDOM.Element] {
+    func elements(withName name: String) -> [MiniDOM.Element] {
         let elements = only(ofType: MiniDOM.Element.self)
         return elements.filter({ $0.nodeName == name })
     }
