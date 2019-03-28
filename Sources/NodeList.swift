@@ -29,7 +29,7 @@ public extension Array where Element == Node {
      - returns: All members of the receiver that are of the given type.
      */
     public func only<T: Node>(ofType type: T.Type) -> [T] {
-        return self.flatMap { $0 as? T }
+        return self.compactMap { $0 as? T }
     }
 
     /**
