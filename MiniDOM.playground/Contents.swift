@@ -54,7 +54,7 @@ items?.count
 /*:
  Each of the `<item>` elements should have a `<title>` child.
  */
-let itemTitles = items?.flatMap { itemElement -> String? in
+let itemTitles = items?.compactMap { itemElement -> String? in
     let titleElement = itemElement.childElements(withName: "title").first
     return titleElement?.textValue
 }
@@ -64,14 +64,14 @@ itemTitles
  There are `<link>` elements that are children of the `<channel>` element, and that are children of each of the `<item>` elements. We can find all of them.
  */
 let linkElementsFromDocument = document?.elements(withTagName: "link")
-let linkURLsFromDocument = linkElementsFromDocument?.flatMap { $0.textValue }
+let linkURLsFromDocument = linkElementsFromDocument?.compactMap { $0.textValue }
 linkURLsFromDocument
 
 /*:
  The `<item>` children of the `<channel>` element should each have a `<link>` child. Using a path expression, we can collect al0 "https://www.eff.org/rss/updates.xml"l of the text children of the `<link>` elements under the `<channel>` element.
  */
 let linkTextNodesViaPath = document?.evaluate(path: ["rss", "channel", "item", "link", "#text"])
-let linkURLsViaPath = linkTextNodesViaPath?.flatMap { $0.nodeValue }
+let linkURLsViaPath = linkTextNodesViaPath?.compactMap { $0.nodeValue }
 linkURLsViaPath
 
 /*:
