@@ -1,6 +1,6 @@
 # MiniDOM: Minimal XML DOM for Swift
 
-[![Build Status](https://api.travis-ci.org/MiniDOM/MiniDOM.svg?branch=master)](https://travis-ci.org/MiniDOM/MiniDOM)
+<!-- [![Build Status](https://api.travis-ci.org/MiniDOM/MiniDOM.svg?branch=master)](https://travis-ci.org/MiniDOM/MiniDOM) -->
 [![Platform](https://img.shields.io/cocoapods/p/MiniDOM.svg)](https://minidom.github.io/Documentation)
 ![License](https://img.shields.io/cocoapods/l/MiniDOM.svg)
 
