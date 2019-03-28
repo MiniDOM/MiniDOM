@@ -206,7 +206,7 @@ public extension Node {
      - returns: A formatted XML string representation of this node and its 
      descendants.
      */
-    public func prettyPrint(indentWith: String = "\t") -> String? {
+    func prettyPrint(indentWith: String = "\t") -> String? {
         let formatter = PrettyPrinter(indentWith: indentWith)
         accept(formatter)
         return formatter.formattedString
@@ -219,7 +219,7 @@ public extension Node {
      - returns: A formatted XML string representation of this node and its
      descendants.
      */
-    public func dump() -> String? {
+    func dump() -> String? {
         let formatter = TreeDumper()
         accept(formatter)
         return formatter.formattedString

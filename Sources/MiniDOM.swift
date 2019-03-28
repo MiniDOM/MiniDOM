@@ -152,7 +152,7 @@ public protocol Node: Visitable {
 
 public extension Node {
     /// Convenience accessor for the static `nodeType` property.
-    public var nodeType: NodeType {
+    var nodeType: NodeType {
         return Self.nodeType
     }
 
@@ -164,22 +164,22 @@ public extension Node {
      
      - returns: The nodes in the `children` array of the specified type
      */
-    public func children<T: Node>(ofType type: T.Type) -> [T] {
+    func children<T: Node>(ofType type: T.Type) -> [T] {
         return children.only(ofType: T.self)
     }
 
     /// A Boolean value indicating whether the `children` array is not empty.
-    public var hasChildren: Bool {
+    var hasChildren: Bool {
         return !children.isEmpty
     }
 
     /// The first node in the `children` array.
-    public var firstChild: Node? {
+    var firstChild: Node? {
         return children.first
     }
 
     /// The last node in the `children` array.
-    public var lastChild: Node? {
+    var lastChild: Node? {
         return children.last
     }
 
@@ -190,27 +190,27 @@ public extension Node {
 
      - returns: The children with the given node name.
      */
-    public func children(withName name: String) -> [Node] {
+    func children(withName name: String) -> [Node] {
         return children.nodes(withName: name)
     }
 
     /// Returns the `Element` objects from the `children` array.
-    public var childElements: [Element] {
+    var childElements: [Element] {
         return self.children(ofType: Element.self)
     }
 
     /// A Boolean value indicating whether the `childElements` array is not empty
-    public var hasChildElements: Bool {
+    var hasChildElements: Bool {
         return !childElements.isEmpty
     }
 
     /// The first element in the `childElements` array.
-    public var firstChildElement: Element? {
+    var firstChildElement: Element? {
         return childElements.first
     }
 
     /// The last element in the `childElements` array.
-    public var lastChildElement: Element? {
+    var lastChildElement: Element? {
         return childElements.last
     }
 
@@ -221,7 +221,7 @@ public extension Node {
 
      - returns: The child elements with the given node name.
      */
-    public func childElements(withName name: String) -> [Element] {
+    func childElements(withName name: String) -> [Element] {
         return children.elements(withName: name)
     }
 }
@@ -244,11 +244,11 @@ public extension LeafNode {
      A leaf node does not have children. The value of this property is always
      an empty array.
      */
-    public var children: [Node] {
+    var children: [Node] {
         return []
     }
 
-    public mutating func normalize() { }
+    mutating func normalize() { }
 }
 
 // MARK: - Parent Protocol
@@ -267,11 +267,11 @@ public extension ParentNode {
 
      - parameter child: The node to append
      */
-    public mutating func append(child: Node) {
+    mutating func append(child: Node) {
         children.append(child)
     }
 
-    public mutating func normalize() {
+    mutating func normalize() {
         var newChildren: [Node] = []
 
         for var currNode in children {
@@ -303,7 +303,7 @@ public protocol TextNode: LeafNode {
 
 public extension TextNode {
     /// The `nodeValue` of a `TextNode` node is its `text` property.
-    public var nodeValue: String? {
+    var nodeValue: String? {
         return text
     }
 }

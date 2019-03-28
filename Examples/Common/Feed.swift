@@ -33,7 +33,7 @@ struct Feed {
         }
 
         let itemElements = document.evaluate(path: ["rss", "channel", "item"]).only(ofType: Element.self)
-        let items = itemElements.flatMap({ Item(element: $0) })
+        let items = itemElements.compactMap({ Item(element: $0) })
 
         self.title = title
         self.items = items

@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "MiniDOM"
-  s.version      = "1.0.0"
+  s.version      = "1.0.1"
   s.summary      = "A minimal XML DOM parser for Swift."
 
   s.homepage     = "https://minidom.github.io/"
