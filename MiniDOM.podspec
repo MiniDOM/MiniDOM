@@ -6,7 +6,7 @@ Pod::Spec.new do |s|
 
   s.homepage     = "https://minidom.github.io/"
 
-  s.license      = { :type => "Apache", :file => "LICENSE" }
+  s.license      = { :type => "MIT", :file => "LICENSE" }
   s.author       =  "Paul Calnan"
 
   s.ios.deployment_target = "8.4"

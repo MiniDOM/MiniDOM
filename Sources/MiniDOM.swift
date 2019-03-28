@@ -2,19 +2,25 @@
 //  MiniDOM.swift
 //  MiniDOM
 //
-//  Copyright 2017 Anodized Software, Inc.
+//  Copyright 2017-2019 Anodized Software, Inc.
 //
-//  Licensed under the Apache License, Version 2.0 (the "License");
-//  you may not use this file except in compliance with the License.
-//  You may obtain a copy of the License at
+//  Permission is hereby granted, free of charge, to any person obtaining a
+//  copy of this software and associated documentation files (the "Software"),
+//  to deal in the Software without restriction, including without limitation
+//  the rights to use, copy, modify, merge, publish, distribute, sublicense,
+//  and/or sell copies of the Software, and to permit persons to whom the
+//  Software is furnished to do so, subject to the following conditions:
 //
-//  http://www.apache.org/licenses/LICENSE-2.0
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
 //
-//  Unless required by applicable law or agreed to in writing, software
-//  distributed under the License is distributed on an "AS IS" BASIS,
-//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//  See the License for the specific language governing permissions and
-//  limitations under the License.
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+//  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+//  DEALINGS IN THE SOFTWARE.
 //
 
 /*
@@ -22,7 +28,7 @@
  Object Model.
 
  This is intended to provided a subset of the behavior described in the
- [DOM Level 1 specification][1] and the [DOM Level 2 specification][2]. Much of 
+ [DOM Level 1 specification][1] and the [DOM Level 2 specification][2]. Much of
  this file's documentation is adapted from those documents.
 
  [1]: https://www.w3.org/TR/REC-DOM-Level-1/level-one-core.html
@@ -140,11 +146,11 @@ public protocol Node: Visitable {
     var children: [Node] { get }
 
     /**
-     Puts all `Text` nodes in the full depth of the sub-tree underneath this 
-     `Node`, into a "normal" form where only structure (e.g., elements, 
-     comments, processing instructions, and CDATA sections) separates `Text` 
-     nodes, i.e., there are neither adjacent `Text` nodes nor empty `Text` 
-     nodes. This can be used to ensure that the DOM view of a document is the 
+     Puts all `Text` nodes in the full depth of the sub-tree underneath this
+     `Node`, into a "normal" form where only structure (e.g., elements,
+     comments, processing instructions, and CDATA sections) separates `Text`
+     nodes, i.e., there are neither adjacent `Text` nodes nor empty `Text`
+     nodes. This can be used to ensure that the DOM view of a document is the
      same as if it were saved and re-loaded.
      */
     mutating func normalize()
@@ -161,7 +167,7 @@ public extension Node {
      Casts the nodes in the resulting array to the specified type.
 
      - parameter type: Include children of this type in the resulting array
-     
+
      - returns: The nodes in the `children` array of the specified type
      */
     func children<T: Node>(ofType type: T.Type) -> [T] {
@@ -417,12 +423,12 @@ public final class Element: ParentNode {
     public final var attributes: [String : String]?
 
     /**
-     If an element has only a single child, and that child is a text node, 
-     return that text node's value. Otherwise, return nil. It is recommended 
+     If an element has only a single child, and that child is a text node,
+     return that text node's value. Otherwise, return nil. It is recommended
      first to normalize the document or this element (see `Node.normalize()`).
-     
+
      This method will return the text as it is represented in the single child
-     text node. Whitespace will not be stripped or normalized (see 
+     text node. Whitespace will not be stripped or normalized (see
      `String.trimmed` and `String.normalized`).
      */
     public final var textValue: String? {
@@ -458,7 +464,7 @@ public final class Element: ParentNode {
  The `Text` class represents the textual content (termed character data in XML)
  of an `Element`. If there is no markup inside an element's content, the text is
  contained in a single object implementing the `Text` protocol that is the only
- child of the element. If there is markup, it is parsed into a sequence of 
+ child of the element. If there is markup, it is parsed into a sequence of
  elements and `Text` nodes that form the array of children of the element.
  */
 public final class Text: TextNode {
