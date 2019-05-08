@@ -1,5 +1,5 @@
 //
-//  ParserErrorTests.swift
+//  MiniDOMErrorTests.swift
 //  MiniDOM
 //
 //  Copyright 2017-2019 Anodized Software, Inc.
@@ -28,7 +28,7 @@ import XCTest
 
 @testable import MiniDOM
 
-class ParserErrorTests: XCTestCase {
+class MiniDOMErrorTests: XCTestCase {
     func testInvalidProcessingInstruction() {
         let source = [
             "<?xml version=\"1.0\" encoding=\"utf-8\"?>",
@@ -43,10 +43,10 @@ class ParserErrorTests: XCTestCase {
 
         let result = parser?.parse()
         XCTAssertNotNil(result)
-        XCTAssertNil(result?.value)
+        XCTAssertNil(result?.document)
         XCTAssertNotNil(result?.error)
 
-        XCTAssertEqual(result?.error as NSError?, NSError(domain: XMLParser.errorDomain, code: 111, userInfo: nil))
+        XCTAssertEqual(result?.error, MiniDOMError.xmlParserError(NSError(domain: XMLParser.errorDomain, code: 111, userInfo: nil)))
     }
 
     func testExtraCloseTags() {
@@ -62,30 +62,30 @@ class ParserErrorTests: XCTestCase {
 
         let result = parser?.parse()
         XCTAssertNotNil(result)
-        XCTAssertNil(result?.value)
+        XCTAssertNil(result?.document)
         XCTAssertNotNil(result?.error)
 
-        XCTAssertEqual(result?.error as NSError?, NSError(domain: XMLParser.errorDomain, code: 111, userInfo: nil))
+        XCTAssertEqual(result?.error, .xmlParserError(NSError(domain: XMLParser.errorDomain, code: 111, userInfo: nil)))
     }
 
     func testSuccessResult() {
         let document = Document()
-        let result = Result.success(document)
+        let result = ParserResult.success(document)
 
         XCTAssertTrue(result.isSuccess)
         XCTAssertFalse(result.isFailure)
-        XCTAssertTrue(result.value === document)
+        XCTAssertTrue(result.document === document)
         XCTAssertNil(result.error)
     }
 
     func testFailureResult() {
         let error = NSError(domain: "domain", code: 123, userInfo: nil)
-        let result = Result<Document>.failure(error)
+        let result = ParserResult.failure(MiniDOMError.xmlParserError(error))
 
         XCTAssertFalse(result.isSuccess)
         XCTAssertTrue(result.isFailure)
-        XCTAssertNil(result.value)
-        XCTAssertEqual(result.error as NSError?, error)
+        XCTAssertNil(result.document)
+        XCTAssertEqual(result.error, .xmlParserError(error))
     }
 
     fileprivate class AbortDetectingXMLParser: XMLParser {
@@ -122,11 +122,11 @@ class ParserErrorTests: XCTestCase {
         let parser = Parser(parser: TestXMLParser())
         XCTAssertNotNil(parser)
 
-        let result = parser?.parse()
+        let result = parser.parse()
         XCTAssertNotNil(result)
 
-        XCTAssertNil(result?.value)
-        guard case .some(Parser.Error.unspecifiedError) = result?.error else {
+        XCTAssertNil(result.document)
+        guard case .some(MiniDOMError.unspecifiedError) = result.error else {
             XCTFail()
             return
         }
@@ -148,5 +148,20 @@ class ParserErrorTests: XCTestCase {
         XCTAssertFalse(xmlParser.parsingAborted)
         nodeStack.parser(xmlParser, foundComment: "fnord")
         XCTAssertTrue(xmlParser.parsingAborted)
+    }
+
+    func testEquality() {
+        XCTAssertEqual(MiniDOMError.unspecifiedError, MiniDOMError.unspecifiedError)
+
+        let e1 = NSError(domain: XMLParser.errorDomain, code: 1, userInfo: nil)
+        let e2 = NSError(domain: XMLParser.errorDomain, code: 2, userInfo: nil)
+
+        XCTAssertNotEqual(e1, e2)
+
+        XCTAssertEqual(MiniDOMError.xmlParserError(e1), MiniDOMError.xmlParserError(e1))
+
+        XCTAssertNotEqual(MiniDOMError.unspecifiedError, MiniDOMError.xmlParserError(e1))
+        XCTAssertNotEqual(MiniDOMError.xmlParserError(e1), MiniDOMError.unspecifiedError)
+        XCTAssertNotEqual(MiniDOMError.xmlParserError(e1), MiniDOMError.xmlParserError(e2))
     }
 }

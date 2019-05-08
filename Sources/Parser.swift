@@ -34,24 +34,6 @@ public class Parser {
     private let log = Log(level: .all)
 
     /**
-     Used to represent a parser error.
-     */
-    public enum Error: Swift.Error {
-        /**
-         Indicates that the parser terminated abnormally resulting in the
-         associated error value
-         */
-        case parserError(Swift.Error)
-
-        /**
-         Indicates that the parser terminated abnormally but did not report an
-         error.
-         */
-        case unspecifiedError
-    }
-
-
-    /**
      Initializes a parser with the XML content referenced by the given URL.
 
      - parameter url: A `URL` object specifying a URL. The URL must be fully
@@ -85,12 +67,15 @@ public class Parser {
 
      - returns: An initialized `Parser` object.
      */
-    public convenience init?(data: Data?) {
+    public convenience init(data: Data) {
+        self.init(parser: XMLParser(data: data))
+    }
+
+    convenience init?(data: Data?) {
         guard let data = data else {
             return nil
         }
-
-        self.init(parser: XMLParser(data: data))
+        self.init(data: data)
     }
 
     /**
@@ -102,19 +87,21 @@ public class Parser {
 
      - returns: An initialized `Parser` object.
      */
-    public convenience init?(stream: InputStream) {
+    public convenience init(stream: InputStream) {
         self.init(parser: XMLParser(stream: stream))
     }
 
-    init?(parser: XMLParser?) {
+    convenience init?(parser: XMLParser?) {
         guard let parser = parser else {
             return nil
         }
 
-        self.parser = parser
+        self.init(parser: parser)
     }
 
-    public typealias ParserResult = Result<Document>
+    init(parser: XMLParser) {
+        self.parser = parser
+    }
 
     /**
      Performs the parsing operation.
@@ -126,7 +113,7 @@ public class Parser {
         parser.delegate = stack
 
         guard parser.parse(), let document = stack.document else {
-            let error = parser.parserError ?? Error.unspecifiedError
+            let error = MiniDOMError.from(parser.parserError)
             log.error("Error parsing document: \(error)")
             return .failure(error)
         }

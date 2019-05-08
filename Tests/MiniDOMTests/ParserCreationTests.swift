@@ -56,7 +56,7 @@ class ParserCreationTests: XCTestCase {
         XCTAssertNotNil(result)
         XCTAssertNil(result?.error)
 
-        let document = result?.value
+        let document = result?.document
         XCTAssertNotNil(document)
     }
 

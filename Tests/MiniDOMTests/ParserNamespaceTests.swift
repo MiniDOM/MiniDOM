@@ -53,7 +53,7 @@ class ParserNamespaceTests: XCTestCase {
         let result = parser?.parse()
         XCTAssertTrue(result?.isSuccess == true)
 
-        var document = result?.value
+        var document = result?.document
         document?.normalize()
 
         let cvslog = document?.documentElement

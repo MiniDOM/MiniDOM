@@ -1,5 +1,5 @@
 //
-//  Result.swift
+//  MiniDOMError.swift
 //  MiniDOM
 //
 //  Copyright 2017-2019 Anodized Software, Inc.
@@ -26,56 +26,43 @@
 import Foundation
 
 /**
- Used to represent whether an operation was successful or encountered an error.
+ Used to represent an error from the MiniDOM library.
  */
-public enum Result<SuccessType> {
-    /**
-     Indicates the operation was successful and resulted in the provided
-     associated value.
-     */
-    case success(SuccessType)
+public enum MiniDOMError: Error, Equatable {
 
     /**
-     Indicates the parsing operation failed and resulted in the provided
-     associated error value.
+     Indicates that the parser terminated abnormally resulting in the
+     associated error value
      */
-    case failure(Error)
+    case xmlParserError(Error)
 
-    /// Returns `true` if the result is a success, `false` otherwise.
-    public var isSuccess: Bool {
-        switch self {
-        case .success:
+    /**
+     Indicates that the parser terminated abnormally but did not report an
+     error.
+     */
+    case unspecifiedError
+
+    /**
+     Converts a raw error as provided by `XMLParser.parserError` into a
+     `MiniDOMError`.
+     */
+    internal static func from(_ parserError: Error?) -> MiniDOMError {
+        guard let e = parserError else {
+            return .unspecifiedError
+        }
+        return .xmlParserError(e)
+    }
+
+    public static func == (lhs: MiniDOMError, rhs: MiniDOMError) -> Bool {
+        switch (lhs, rhs) {
+        case (.unspecifiedError, .unspecifiedError):
             return true
-        case .failure:
+
+        case (.xmlParserError(let e1), .xmlParserError(let e2)):
+            return (e1 as NSError) == (e2 as NSError)
+
+        default:
             return false
         }
-    }
-
-    /// Returns `true` if the result is a failure, `false` otherwise.
-    public var isFailure: Bool {
-        return !isSuccess
-    }
-
-    /**
-     Returns the assoicated value if the result is a success, `nil` otherwise.
-     */
-    public var value: SuccessType? {
-        if case let .success(value) = self {
-            return value
-        }
-
-        return nil
-    }
-
-    /**
-     Returns the associated error value if the result is a failure, `nil`
-     otherwise.
-     */
-    public var error: Error? {
-        if case let .failure(error) = self {
-            return error
-        }
-
-        return nil
     }
 }

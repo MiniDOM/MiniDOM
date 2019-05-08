@@ -1,5 +1,5 @@
 //
-//  ParserResultTests.swift
+//  ParserResult.swift
 //  MiniDOM
 //
 //  Copyright 2017-2019 Anodized Software, Inc.
@@ -22,26 +22,49 @@
 //  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 //  DEALINGS IN THE SOFTWARE.
 //
-
 import Foundation
-import MiniDOM
-import XCTest
 
-class ParserResultTests: XCTestCase {
-    func testSuccess() {
-        let doc = Document()
-        let result: ParserResult = .success(doc)
-        XCTAssertNil(result.error)
-        XCTAssertNotNil(result.document)
-        XCTAssertTrue(doc === result.document)
+/// Encapsulates the result of a parser operation.
+public typealias ParserResult = Result<Document, MiniDOMError>
+
+/// Convenience functions for parser results.
+public extension ParserResult {
+
+    /// Returns `true` if the result is a success, `false` otherwise.
+    var isSuccess: Bool {
+        switch self {
+        case .success:
+            return true
+        case .failure:
+            return false
+        }
     }
 
-    func testFailure() {
-        let error = NSError(domain: "anErrorDomain", code: 123456, userInfo: nil)
-        let result = ParserResult.failure(MiniDOMError.xmlParserError(error))
+    /// Returns `true` if the result is a failure, `false` otherwise.
+    var isFailure: Bool {
+        return !isSuccess
+    }
 
-        XCTAssertNil(result.document)
-        XCTAssertNotNil(result.error)
-        XCTAssertEqual(result.error, .xmlParserError(error))
+    /**
+     Returns the assoicated value if the result is a success, `nil` otherwise.
+     */
+    var document: Document? {
+        if case let .success(doc) = self {
+            return doc
+        }
+
+        return nil
+    }
+
+    /**
+     Returns the associated error value if the result is a failure, `nil`
+     otherwise.
+     */
+    var error: MiniDOMError? {
+        if case let .failure(error) = self {
+            return error
+        }
+
+        return nil
     }
 }
