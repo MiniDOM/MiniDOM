@@ -26,5 +26,13 @@
 import PackageDescription
 
 let package = Package(
-    name: "MiniDOM"
+    name: "MiniDOM",
+    products: [
+        .library(name: "MiniDOM", targets: ["MiniDOM"]),
+    ],
+    targets: [
+        .target(
+            name: "MiniDOM",
+            dependencies: []),
+    ]
 )
