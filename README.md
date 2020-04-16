@@ -1,6 +1,5 @@
 # MiniDOM: Minimal XML DOM for Swift
 
-<!-- [![Build Status](https://api.travis-ci.org/MiniDOM/MiniDOM.svg?branch=master)](https://travis-ci.org/MiniDOM/MiniDOM) -->
 [![Platform](https://img.shields.io/cocoapods/p/MiniDOM.svg)](https://minidom.github.io/Documentation)
 ![License](https://img.shields.io/cocoapods/l/MiniDOM.svg)
 
@@ -15,7 +14,7 @@
 
 MiniDOM is a minimal implementation of the Document Object Model interface. It is intended to be simpler than the full DOM but full-featured enough to be useful in most applications.
 
-MiniDOM is fully [documented](https://minidom.github.io/Documentation/) and [unit tested](https://codecov.io/gh/MiniDOM/MiniDOM/). It can be used on iOS, macOS, watchOS, and tvOS. The library is released under the Apache 2.0 license.
+MiniDOM is fully [documented](https://minidom.github.io/Documentation/) and [unit tested](https://codecov.io/gh/MiniDOM/MiniDOM/). It can be used on iOS, macOS, watchOS, and tvOS. The library is released under the MIT license.
 
 To parse an XML document, simply create a `Parser` object and call `parse()`:
 
@@ -42,21 +41,17 @@ Add the following to your `Podfile`:
 
     pod 'MiniDOM'
 
-An example project using CocoaPods is availble in the `Examples/MiniDOM Example (CocoaPods)` subdirectory. To use this example, you must run `pod install` in that directory before opening `MiniDOM Example.xcworkspace`.
-
 ### Carthage
 
 Add the following to your `Cartfile`:
 
     github "MiniDOM/MiniDOM"
 
-An example project using Carthage is available in the `Examples/MiniDOM Example (Carthage)` subdirectory. To use this example, you must run `carthage update` in that directory before opening `MiniDOM Example.xcproject`
-
 ### Swift Package Manager
 
 Add the following dependency to your `Package.swift` file:
 
-    .Package(url: "https://github.com/MiniDOM/MiniDOM.git", majorVersion: 1)
+    .package(url: "https://github.com/MiniDOM/MiniDOM/", from: "1.0.0")
 
 ### Dependencies
 
@@ -105,7 +100,7 @@ We have an XML document saved in the resources section of the playground. It con
 ```swift
 let url = Bundle.main.url(forResource: "eff-updates", withExtension: "rss")!
 let parser = Parser(contentsOf: url)
-let document = parser?.parse().value
+let document = parser?.parse().document
 ```
 
 ### Walking through the document
