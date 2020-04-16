@@ -136,19 +136,7 @@
 		C54FA8E41E763CE6009EEA73 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				C5202D2C1E7647D200C2B35C /* Formatter.swift */,
-				C54FA8E51E763CE6009EEA73 /* Info.plist */,
-				C5C88DD11E7C28C700CEDDA8 /* Log.swift */,
-				C54FA8E61E763CE6009EEA73 /* MiniDOM.h */,
-				C54FA8E71E763CE6009EEA73 /* MiniDOM.swift */,
-				C5190AF3224FCE4100679E6A /* MiniDOMError.swift */,
-				C5EA38511E78E29E0000D01B /* NodeList.swift */,
-				C54FA8E81E763CE6009EEA73 /* Parser.swift */,
-				C5190AF1224FCD1300679E6A /* ParserResult.swift */,
-				C5D2BD031E7793E3001FF7E8 /* Path.swift */,
-				C5202D311E76548400C2B35C /* Search.swift */,
-				C5D2BCF91E77562D001FF7E8 /* String+Whitespace.swift */,
-				C5202D2A1E76460800C2B35C /* Visitor.swift */,
+				C5F20A122447E87A00A351A6 /* MiniDOM */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -197,6 +185,26 @@
 				C5D2BCFD1E775BAB001FF7E8 /* RSSTestsSource.xml */,
 			);
 			path = TestData;
+			sourceTree = "<group>";
+		};
+		C5F20A122447E87A00A351A6 /* MiniDOM */ = {
+			isa = PBXGroup;
+			children = (
+				C5202D2C1E7647D200C2B35C /* Formatter.swift */,
+				C54FA8E51E763CE6009EEA73 /* Info.plist */,
+				C5C88DD11E7C28C700CEDDA8 /* Log.swift */,
+				C54FA8E61E763CE6009EEA73 /* MiniDOM.h */,
+				C54FA8E71E763CE6009EEA73 /* MiniDOM.swift */,
+				C5190AF3224FCE4100679E6A /* MiniDOMError.swift */,
+				C5EA38511E78E29E0000D01B /* NodeList.swift */,
+				C54FA8E81E763CE6009EEA73 /* Parser.swift */,
+				C5190AF1224FCD1300679E6A /* ParserResult.swift */,
+				C5D2BD031E7793E3001FF7E8 /* Path.swift */,
+				C5202D311E76548400C2B35C /* Search.swift */,
+				C5D2BCF91E77562D001FF7E8 /* String+Whitespace.swift */,
+				C5202D2A1E76460800C2B35C /* Visitor.swift */,
+			);
+			path = MiniDOM;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -489,7 +497,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Sources/Info.plist;
+				INFOPLIST_FILE = Sources/MiniDOM/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks @executable_path/../Frameworks @loader_path/../Frameworks";
@@ -516,7 +524,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Sources/Info.plist;
+				INFOPLIST_FILE = Sources/MiniDOM/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks @executable_path/../Frameworks @loader_path/../Frameworks";
