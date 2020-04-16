@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "MiniDOM",
+        "repositoryURL": "https://github.com/MiniDOM/MiniDOM",
+        "state": {
+          "branch": "master",
+          "revision": "a4e5bb3517ee7ce725a0cf8e0596177c3b500e17",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}

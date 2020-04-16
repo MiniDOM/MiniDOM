@@ -1,8 +1,8 @@
 //
 //  TableViewController.swift
-//  MiniDOM Example
+//  FeedViewer
 //
-//  Copyright 2017-2019 Anodized Software, Inc.
+//  Copyright 2017-2020 Anodized Software, Inc.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a
 //  copy of this software and associated documentation files (the "Software"),
@@ -44,7 +44,7 @@ class TableViewController: UITableViewController {
             let parser = Parser(contentsOf: url)
             let result = parser?.parse()
 
-            guard let document = result?.value else {
+            guard let document = result?.document else {
                 print("parse problem")
                 return
             }
@@ -85,5 +85,6 @@ class TableViewController: UITableViewController {
         }
 
         UIApplication.shared.open(item.link)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
