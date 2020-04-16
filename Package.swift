@@ -1,4 +1,4 @@
-// swift-tools-version:4.0
+// swift-tools-version:5.2
 //
 //  Package.swift
 //  MiniDOM
@@ -29,13 +29,18 @@ import PackageDescription
 let package = Package(
     name: "MiniDOM",
     products: [
-        .library(name: "MiniDOM", targets: ["MiniDOM"]),
+        .library(
+            name: "MiniDOM",
+            targets: ["MiniDOM"]),
+    ],
+    dependencies: [
     ],
     targets: [
         .target(
             name: "MiniDOM",
-            dependencies: [],
-            path: ".",
-            sources: ["Sources"])
+            dependencies: []),
+        .testTarget(
+            name: "MiniDOMTests",
+            dependencies: ["MiniDOM"]),
     ]
 )

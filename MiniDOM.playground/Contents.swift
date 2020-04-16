@@ -12,7 +12,7 @@ import MiniDOM
  */
 let url = Bundle.main.url(forResource: "eff-updates", withExtension: "rss")!
 let parser = Parser(contentsOf: url)
-let document = parser?.parse().value
+let document = parser?.parse().document
 
 /*:
  The document's structure is something like this:
