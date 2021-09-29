@@ -31,19 +31,20 @@ class Formatter {
     }
 
     func formatStart(_ element: Element) -> String {
+        let tagName = element.tagName.escapedString()
         let isLeaf = !element.hasChildren
         let slashIfLeaf = isLeaf ? "/" : ""
 
         if let attrs = formatAttributes(of: element) {
-            return "<\(element.tagName) \(attrs)\(slashIfLeaf)>"
+            return "<\(tagName) \(attrs)\(slashIfLeaf)>"
         }
 
-        return "<\(element.tagName)\(slashIfLeaf)>"
+        return "<\(tagName)\(slashIfLeaf)>"
     }
 
     func formatEnd(_ element: Element) -> String? {
         if element.hasChildren {
-            return "</\(element.tagName)>"
+            return "</\(element.tagName.escapedString())>"
         }
 
         return nil
@@ -60,7 +61,7 @@ class Formatter {
         }
 
         for (key, value) in sortedAttributes {
-            formatted.append("\(key)=\"\(value)\"")
+            formatted.append("\(key.escapedString())=\"\(value.escapedString())\"")
         }
 
         return formatted.joined(separator: " ")
@@ -71,7 +72,7 @@ class Formatter {
 
         parts.append(processingInstruction.target)
         if let data = processingInstruction.data {
-            parts.append(data)
+            parts.append(data.escapedString(shouldEscapePredefinedEntities: false))
         }
 
         let body = parts.joined(separator: " ")
@@ -79,11 +80,11 @@ class Formatter {
     }
 
     func format(_ comment: Comment) -> String {
-        return "<!--\(comment.text)-->"
+        return "<!--\(comment.text.escapedString(shouldEscapePredefinedEntities: false))-->"
     }
 
     func format(_ cdataSection: CDATASection) -> String {
-        return "<![CDATA[\(cdataSection.text)]]>"
+        return "<![CDATA[\(cdataSection.text.escapedString(shouldEscapePredefinedEntities: false))]]>"
     }
 }
 
