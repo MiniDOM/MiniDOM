@@ -32,6 +32,9 @@ let package = Package(
         .library(
             name: "MiniDOM",
             targets: ["MiniDOM"]),
+        .executable(
+            name: "RoundTripValidator",
+            targets: ["RoundTripValidator"])
     ],
     dependencies: [
     ],
@@ -39,6 +42,9 @@ let package = Package(
         .target(
             name: "MiniDOM",
             dependencies: []),
+        .target(
+            name: "RoundTripValidator",
+            dependencies: ["MiniDOM"]),
         .testTarget(
             name: "MiniDOMTests",
             dependencies: ["MiniDOM"]),

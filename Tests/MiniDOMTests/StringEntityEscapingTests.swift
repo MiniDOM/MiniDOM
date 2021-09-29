@@ -35,7 +35,7 @@ class StringEntityEscapingTests: XCTestCase {
 
     func testCRLF() {
         XCTAssertEqual("The quick\nbrown fox jumps\rover the lazy dog.".escapedString(),
-                       "The quick&#xA;brown fox jumps&#xD;over the lazy dog.")
+                       "The quick\nbrown fox jumps\rover the lazy dog.")
     }
 
     func testSimplifiedChinese() {
@@ -45,7 +45,7 @@ class StringEntityEscapingTests: XCTestCase {
         // 00000000: feff 4f60 597d ff0c 4e16 754c 000a       ..O`Y}..N.uL..
 
         XCTAssertEqual("你好，世界".escapedString(),
-                       "&#x4F60;&#x597D;&#xFF0C;&#x4E16;&#x754C;")
+                       "&#x4f60;&#x597d;&#xff0c;&#x4e16;&#x754c;")
     }
 
     func testPredefinedEntities() {
@@ -56,6 +56,6 @@ class StringEntityEscapingTests: XCTestCase {
                        "foo&bar<baz>qux'quux\"fnord")
 
         XCTAssertEqual("\"你好，世界\"".escapedString(shouldEscapePredefinedEntities: false),
-                       "\"&#x4F60;&#x597D;&#xFF0C;&#x4E16;&#x754C;\"")
+                       "\"&#x4f60;&#x597d;&#xff0c;&#x4e16;&#x754c;\"")
     }
 }

@@ -42,7 +42,7 @@ extension String {
 
         for scalar in self.unicodeScalars {
             // Is it one of the standard entities?
-            if Self.nonEscapedRange.contains(scalar) {
+            if scalar.value == 0x0A || scalar.value == 0x0D || Self.nonEscapedRange.contains(scalar) {
                 if shouldEscapePredefinedEntities, let entity = Self.predefinedEntities[scalar] {
                     output.append(entity)
                 }
@@ -51,7 +51,7 @@ extension String {
                 }
             }
             else {
-                output.append(String(format: "&#x%X;", scalar.value))
+                output.append(String(format: "&#x%x;", scalar.value))
             }
         }
 

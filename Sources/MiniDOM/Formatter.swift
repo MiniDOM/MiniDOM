@@ -86,6 +86,11 @@ class Formatter {
     func format(_ cdataSection: CDATASection) -> String {
         return "<![CDATA[\(cdataSection.text.escapedString(shouldEscapePredefinedEntities: false))]]>"
     }
+
+    func format(_ text: Text, trim: Bool) -> String {
+        let unescaped = trim ? text.text.trimmed : text.text
+        return unescaped.escapedString()
+    }
 }
 
 class PrettyPrinter: Formatter, Visitor {
@@ -141,12 +146,11 @@ class PrettyPrinter: Formatter, Visitor {
     }
 
     public func visit(_ text: Text) {
-        let trimmed = text.text.trimmed
-        if trimmed.isEmpty {
+        let formatted = format(text, trim: true)
+        if formatted.isEmpty {
             return
         }
-
-        addLine(trimmed)
+        addLine(formatted)
     }
 
     public func visit(_ processingInstruction: ProcessingInstruction) {
@@ -187,7 +191,7 @@ class TreeDumper: Formatter, Visitor {
     }
 
     public func visit(_ text: Text) {
-        parts.append(text.text)
+        parts.append(format(text, trim: false))
     }
 
     public func visit(_ processingInstruction: ProcessingInstruction) {
