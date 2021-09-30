@@ -25,12 +25,37 @@
 
 import Foundation
 
-class Formatter {
-    var xmlPrologue: String {
-        return "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
+public protocol Formatter {
+
+    var prologue: String { get }
+
+    func formatStart(_ element: Element) -> String
+    func formatEnd(_ element: Element) -> String?
+    func formatAttributes(of element: Element) -> String?
+    func format(_ processingInstruction: ProcessingInstruction) -> String
+    func format(_ comment: Comment) -> String
+    func format(_ text: Text, trim: Bool) -> String
+    func format(_ cdataSection: CDATASection) -> String
+}
+
+public class XMLFormatter: Formatter {
+
+    public enum Encoding: String {
+        case utf8 = "utf-8"
+        case latin1 = "iso-8859-1"
     }
 
-    func formatStart(_ element: Element) -> String {
+    public let encoding: Encoding
+
+    public var prologue: String {
+        return "<?xml version=\"1.0\" encoding=\"\(encoding.rawValue)\"?>"
+    }
+
+    public init(encoding: Encoding) {
+        self.encoding = encoding
+    }
+
+    public func formatStart(_ element: Element) -> String {
         let tagName = element.tagName.escapedString()
         let isLeaf = !element.hasChildren
         let slashIfLeaf = isLeaf ? "/" : ""
@@ -42,7 +67,7 @@ class Formatter {
         return "<\(tagName)\(slashIfLeaf)>"
     }
 
-    func formatEnd(_ element: Element) -> String? {
+    public func formatEnd(_ element: Element) -> String? {
         if element.hasChildren {
             return "</\(element.tagName.escapedString())>"
         }
@@ -50,7 +75,7 @@ class Formatter {
         return nil
     }
 
-    func formatAttributes(of element: Element) -> String? {
+    public func formatAttributes(of element: Element) -> String? {
         guard let attrs = element.attributes, !attrs.isEmpty else {
             return nil
         }
@@ -67,7 +92,7 @@ class Formatter {
         return formatted.joined(separator: " ")
     }
 
-    func format(_ processingInstruction: ProcessingInstruction) -> String {
+    public func format(_ processingInstruction: ProcessingInstruction) -> String {
         var parts: [String] = []
 
         parts.append(processingInstruction.target)
@@ -79,21 +104,22 @@ class Formatter {
         return "<?\(body)?>"
     }
 
-    func format(_ comment: Comment) -> String {
+    public func format(_ comment: Comment) -> String {
         return "<!--\(comment.text.escapedString(shouldEscapePredefinedEntities: false))-->"
     }
 
-    func format(_ cdataSection: CDATASection) -> String {
+    public func format(_ cdataSection: CDATASection) -> String {
         return "<![CDATA[\(cdataSection.text.escapedString(shouldEscapePredefinedEntities: false))]]>"
     }
 
-    func format(_ text: Text, trim: Bool) -> String {
+    public func format(_ text: Text, trim: Bool) -> String {
         let unescaped = trim ? text.text.trimmed : text.text
         return unescaped.escapedString()
     }
 }
 
-class PrettyPrinter: Formatter, Visitor {
+class PrettyPrinter: Visitor {
+
     private struct Line {
         let depth: Int
         let value: String
@@ -107,103 +133,106 @@ class PrettyPrinter: Formatter, Visitor {
         }
     }
 
+    let formatter: Formatter
+
+    var formattedString: String {
+        return lines.map({ $0.format(indentingWith: indentString) }).joined(separator: "\n")
+    }
+
     private var depth = 0
-
     private var lines: [Line] = []
-
-    private(set) var formattedString: String?
-
     private let indentString: String
 
-    init(indentWith string: String) {
-        self.indentString = string
+    init(formatter: Formatter, indentString: String) {
+        self.formatter = formatter
+        self.indentString = indentString
     }
 
-    private func addLine(_ string: String?) {
-        guard let string = string else {
-            return
-        }
-
-        lines.append(Line(depth: depth, value: string))
-    }
-
-    public func beginVisit(_ document: Document) {
-        addLine(xmlPrologue)
-    }
-
-    public func endVisit(_ document: Document) {
-        formattedString = lines.map({ $0.format(indentingWith: indentString) }).joined(separator: "\n")
+    func beginVisit(_ document: Document) {
+        addLine(formatter.prologue)
     }
 
     public func beginVisit(_ element: Element) {
-        addLine(formatStart(element))
+        addLine(formatter.formatStart(element))
         depth += 1
     }
 
-    public func endVisit(_ element: Element) {
+    func endVisit(_ element: Element) {
         depth -= 1
-        addLine(formatEnd(element))
+        addLine(formatter.formatEnd(element))
     }
 
-    public func visit(_ text: Text) {
-        let formatted = format(text, trim: true)
+    func visit(_ text: Text) {
+        let formatted = formatter.format(text, trim: true)
         if formatted.isEmpty {
             return
         }
         addLine(formatted)
     }
 
-    public func visit(_ processingInstruction: ProcessingInstruction) {
-        addLine(format(processingInstruction))
+    func visit(_ processingInstruction: ProcessingInstruction) {
+        addLine(formatter.format(processingInstruction))
     }
 
-    public func visit(_ comment: Comment) {
-        addLine(format(comment))
+    func visit(_ comment: Comment) {
+        addLine(formatter.format(comment))
     }
 
-    public func visit(_ cdataSection: CDATASection) {
-        addLine(format(cdataSection))
+    func visit(_ cdataSection: CDATASection) {
+        addLine(formatter.format(cdataSection))
+    }
+
+    private func addLine(_ string: String?) {
+        guard let string = string, !string.isEmpty else {
+            return
+        }
+        lines.append(Line(depth: depth, value: string))
     }
 }
 
-class TreeDumper: Formatter, Visitor {
+class TreeDumper: Visitor {
+
+    let formatter: Formatter
+
+    var formattedString: String {
+        return parts.joined()
+    }
+
     private var parts: [String] = []
 
-    private(set) var formattedString: String?
+    init(formatter: Formatter) {
+        self.formatter = formatter
+    }
 
-    public func beginVisit(_ document: Document) {
-        parts.append(xmlPrologue)
+    func beginVisit(_ document: Document) {
+        parts.append(formatter.prologue)
         parts.append("\n")
     }
 
-    public func endVisit(_ document: Document) {
-        formattedString = parts.joined()
+    func beginVisit(_ element: Element) {
+        parts.append(formatter.formatStart(element))
     }
 
-    public func beginVisit(_ element: Element) {
-        parts.append(formatStart(element))
-    }
-
-    public func endVisit(_ element: Element) {
-        if let part = formatEnd(element) {
+    func endVisit(_ element: Element) {
+        if let part = formatter.formatEnd(element) {
             parts.append(part)
         }
     }
 
-    public func visit(_ text: Text) {
-        parts.append(format(text, trim: false))
+    func visit(_ text: Text) {
+        parts.append(formatter.format(text, trim: false))
     }
 
-    public func visit(_ processingInstruction: ProcessingInstruction) {
-        parts.append(format(processingInstruction))
+    func visit(_ processingInstruction: ProcessingInstruction) {
+        parts.append(formatter.format(processingInstruction))
     }
 
-    public func visit(_ comment: Comment) {
-        parts.append(format(comment))
+    func visit(_ comment: Comment) {
+        parts.append(formatter.format(comment))
     }
 
-    public func visit(_ cdataSection: CDATASection) {
-        parts.append(format(cdataSection))
+    func visit(_ cdataSection: CDATASection) {
+        parts.append(formatter.format(cdataSection))
     }
 }
 
@@ -213,26 +242,56 @@ public extension Node {
      descendants.
 
      - parameter indentWith: The string used to indent the formatted string.
+     - parameter encoding: The encoding to use in the resulting XML string.
 
      - returns: A formatted XML string representation of this node and its
      descendants.
      */
-    func prettyPrint(indentWith: String = "\t") -> String? {
-        let formatter = PrettyPrinter(indentWith: indentWith)
-        accept(formatter)
-        return formatter.formattedString
+    func prettyPrint(indentWith indentString: String = "\t", encoding: XMLFormatter.Encoding = .utf8) -> String {
+        return prettyPrint(using: XMLFormatter(encoding: encoding), indentWith: indentString)
+    }
+
+    /**
+     Generates a formatted string representation of this node and its
+     descendants using the given formatter.
+
+     - parameter formatter: The formatter to use while traversing the tree.
+     - parameter indentWith: The string used to indent the formatted string.
+
+     - returns: A formatted string representation of this node and its
+     descendants.
+     */
+    func prettyPrint(using formatter: Formatter, indentWith indentString: String = "\t") -> String {
+        let printer = PrettyPrinter(formatter: formatter, indentString: indentString)
+        accept(printer)
+        return printer.formattedString
     }
 
     /**
      Generates an unformatted XML string representation of this node and its
      descendants.
 
-     - returns: A formatted XML string representation of this node and its
+     - parameter encoding: The encoding to use in the resulting XML string.
+
+     - returns: An unformatted XML string representation of this node and its
      descendants.
      */
-    func dump() -> String? {
-        let formatter = TreeDumper()
-        accept(formatter)
-        return formatter.formattedString
+    func dump(encoding: XMLFormatter.Encoding = .utf8) -> String {
+        return dump(using: XMLFormatter(encoding: encoding))
+    }
+
+    /**
+     Generates an unformatted string representation of this node and its
+     descendants using the given formatter.
+
+     - parameter formatter: The formatter to use while traversing the tree.
+
+     - returns: An unformatted string representation of this node and its
+     descendants.
+     */
+    func dump(using formatter: Formatter) -> String {
+        let dumper = TreeDumper(formatter: formatter)
+        accept(dumper)
+        return dumper.formattedString
     }
 }
