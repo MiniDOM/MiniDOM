@@ -40,6 +40,10 @@ class ElementSearch: Visitor {
             elements.append(element)
         }
     }
+
+    func endVisit(_ element: Element) {
+        // no-op, but required for protocol witness
+    }
 }
 
 class ElementPathSearch: ElementSearch, LazyVisitor {
@@ -68,7 +72,7 @@ class ElementPathSearch: ElementSearch, LazyVisitor {
         keepVisiting = !predicate(element)
     }
 
-    func endVisit(_ element: Element) {
+    override func endVisit(_ element: Element) {
         if keepVisiting {
             elements.removeLast()
         }
@@ -100,7 +104,7 @@ public extension Document {
      */
     final func elements(where predicate: @escaping (Element) -> Bool) -> [Element] {
         let visitor = ElementSearch(predicate: predicate)
-        documentElement?.accept(visitor)
+        accept(visitor)
         return visitor.elements
     }
 
