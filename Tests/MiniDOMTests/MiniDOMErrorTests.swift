@@ -100,7 +100,7 @@ class MiniDOMErrorTests: XCTestCase {
         let bytes: [UInt8] = [192]
         let invalidUTF8data = Data(bytes)
 
-        let nodeStack = NodeStack()
+        let nodeStack = DocumentParser()
         let xmlParser = AbortDetectingXMLParser()
 
         XCTAssertFalse(xmlParser.parsingAborted)
@@ -134,7 +134,7 @@ class MiniDOMErrorTests: XCTestCase {
 
     func testUnbalancedEndElements() {
         let xmlParser = AbortDetectingXMLParser()
-        let nodeStack = NodeStack()
+        let nodeStack = DocumentParser()
 
         XCTAssertFalse(xmlParser.parsingAborted)
         nodeStack.parser(xmlParser, didEndElement: "fnord", namespaceURI: nil, qualifiedName: nil)
@@ -143,7 +143,7 @@ class MiniDOMErrorTests: XCTestCase {
 
     func testAppendToEmptyStack() {
         let xmlParser = AbortDetectingXMLParser()
-        let nodeStack = NodeStack()
+        let nodeStack = DocumentParser()
 
         XCTAssertFalse(xmlParser.parsingAborted)
         nodeStack.parser(xmlParser, foundComment: "fnord")

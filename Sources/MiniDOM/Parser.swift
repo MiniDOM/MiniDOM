@@ -29,6 +29,7 @@ import Foundation
  Instances of this class parse XML documents into a tree of DOM objects.
  */
 public class Parser {
+
     private let parser: XMLParser
 
     private let log = Log(level: .all)
@@ -109,10 +110,10 @@ public class Parser {
      - returns: The result of the parsing operation.
      */
     public final func parse() -> ParserResult {
-        let stack = NodeStack()
-        parser.delegate = stack
+        let docParser = DocumentParser()
+        parser.delegate = docParser
 
-        guard parser.parse(), let document = stack.document else {
+        guard parser.parse(), let document = docParser.document else {
             let error = MiniDOMError.from(parser.parserError)
             log.error("Error parsing document: \(error)")
             return .failure(error)
@@ -121,39 +122,32 @@ public class Parser {
         parser.delegate = nil
         return .success(document)
     }
+
+    public final func streamElements(to stream: @escaping (Element) -> Bool, filter: @escaping (String) -> Bool) {
+        let streamParser = StreamingParser(stream: stream, filter: filter)
+        parser.delegate = streamParser
+        parser.parse()
+        parser.delegate = nil
+    }
 }
 
-class NodeStack: NSObject, XMLParserDelegate {
-    private let log = Log(level: .warn)
-
-    private var stack: ArraySlice<Node> = []
-
-    private func popAndAppendToTopOfStack(parser: XMLParser) {
-        guard let child = stack.popLast() else {
-            parser.abortParsing()
-            return
-        }
-
-        appendToTopOfStack(child: child, parser: parser)
-    }
-
-    private func appendToTopOfStack(child: Node, parser: XMLParser) {
-        guard var parent = stack.popLast() as? ParentNode else {
-            parser.abortParsing()
-            return
-        }
-
-        parent.append(child: child)
-        stack.append(parent)
-    }
+class DocumentParser: NSObject, XMLParserDelegate {
 
     var document: Document? {
         return stack.first as? Document
     }
 
+    private let log = Log(level: .warn)
+    private var stack = NodeStack()
+
     func parserDidStartDocument(_ parser: XMLParser) {
         log.debug("")
-        stack.append(Document())
+        do {
+            try stack.append(Document())
+        }
+        catch {
+            parser.abortParsing()
+        }
     }
 
     func parserDidEndDocument(_ parser: XMLParser) {
@@ -163,29 +157,51 @@ class NodeStack: NSObject, XMLParserDelegate {
 
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
         log.debug("elementName=\(elementName) attributes=\(attributeDict)")
-        stack.append(Element(tagName: elementName, attributes: attributeDict))
+        do {
+            try stack.append(Element(tagName: elementName, attributes: attributeDict))
+        }
+        catch {
+            parser.abortParsing()
+        }
     }
 
     func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
         log.debug("elementName=\(elementName)")
-        popAndAppendToTopOfStack(parser: parser)
+        do {
+            try stack.popAndAppend()
+        }
+        catch {
+            parser.abortParsing()
+        }
     }
 
     func parser(_ parser: XMLParser, foundCharacters string: String) {
-        let text = Text(text: string)
-        appendToTopOfStack(child: text, parser: parser)
+        do {
+            try stack.append(Text(text: string))
+        }
+        catch {
+            parser.abortParsing()
+        }
     }
 
     func parser(_ parser: XMLParser, foundProcessingInstructionWithTarget target: String, data: String?) {
         log.debug("target=\(target) data=\(String(describing: data))")
-        let pi = ProcessingInstruction(target: target, data: data)
-        appendToTopOfStack(child: pi, parser: parser)
+        do {
+            try stack.append(ProcessingInstruction(target: target, data: data))
+        }
+        catch {
+            parser.abortParsing()
+        }
     }
 
     func parser(_ parser: XMLParser, foundComment comment: String) {
         log.debug("comment=\(comment)")
-        let comment = Comment(text: comment)
-        appendToTopOfStack(child: comment, parser: parser)
+        do {
+            try stack.append(Comment(text: comment))
+        }
+        catch {
+            parser.abortParsing()
+        }
     }
 
     func parser(_ parser: XMLParser, foundCDATA CDATABlock: Data) {
@@ -196,7 +212,150 @@ class NodeStack: NSObject, XMLParserDelegate {
             return
         }
 
-        let cdata = CDATASection(text: text)
-        appendToTopOfStack(child: cdata, parser: parser)
+        do {
+            try stack.append(CDATASection(text: text))
+        }
+        catch {
+            parser.abortParsing()
+        }
+    }
+}
+
+class StreamingParser: NSObject, XMLParserDelegate {
+
+    let stream: (Element) -> Bool
+    let filter: (String) -> Bool
+
+    private let log = Log(level: .warn)
+    private var stacks: ArraySlice<NodeStack> = []
+
+    init(stream: @escaping (Element) -> Bool, filter: @escaping (String) -> Bool) {
+        self.stream = stream
+        self.filter = filter
+    }
+
+    func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
+        log.debug("elementName=\(elementName) attributes=\(attributeDict)")
+
+        if filter(elementName) {
+            stacks.append(NodeStack())
+        }
+
+        do {
+            try stacks.last?.append(Element(tagName: elementName, attributes: attributeDict))
+        }
+        catch {
+            parser.abortParsing()
+        }
+    }
+
+    func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+        log.debug("elementName=\(elementName)")
+
+        autoreleasepool {
+            do {
+                try stacks.last?.popAndAppend()
+
+                if filter(elementName),
+                   let element = stacks.popLast()?.first as? Element {
+                    if !stream(element) {
+                        parser.abortParsing()
+                    }
+                    try stacks.last?.append(element)
+                    try stacks.last?.popAndAppend()
+                }
+            }
+            catch {
+                parser.abortParsing()
+            }
+        }
+    }
+
+    func parser(_ parser: XMLParser, foundCharacters string: String) {
+        do {
+            try stacks.last?.append(Text(text: string))
+        }
+        catch {
+            parser.abortParsing()
+        }
+    }
+
+    func parser(_ parser: XMLParser, foundProcessingInstructionWithTarget target: String, data: String?) {
+        log.debug("target=\(target) data=\(String(describing: data))")
+        do {
+            try stacks.last?.append(ProcessingInstruction(target: target, data: data))
+        }
+        catch {
+            parser.abortParsing()
+        }
+    }
+
+    func parser(_ parser: XMLParser, foundComment comment: String) {
+        log.debug("comment=\(comment)")
+        do {
+            try stacks.last?.append(Comment(text: comment))
+        }
+        catch {
+            parser.abortParsing()
+        }
+    }
+
+    func parser(_ parser: XMLParser, foundCDATA CDATABlock: Data) {
+        log.debug("CDATABlock=\(CDATABlock)")
+        guard let text = String(data: CDATABlock, encoding: .utf8) else {
+            log.error("invalid encoding")
+            parser.abortParsing()
+            return
+        }
+
+        do {
+            try stacks.last?.append(CDATASection(text: text))
+        }
+        catch {
+            parser.abortParsing()
+        }
+    }
+}
+
+private class NodeStack {
+
+    enum Error: Swift.Error {
+        case invalidState
+    }
+
+    var first: Node? {
+        return stack.first
+    }
+
+    private var stack: ArraySlice<Node> = []
+
+    func append(_ node: Node) throws {
+        if node is ParentNode {
+            stack.append(node)
+        }
+        else if var parent = stack.popLast() as? ParentNode {
+            parent.append(child: node)
+            stack.append(parent)
+        }
+        else {
+            throw Error.invalidState
+        }
+    }
+
+    func popAndAppend() throws {
+        guard let child = stack.popLast() else {
+            throw Error.invalidState
+        }
+
+        if var parent = stack.popLast() as? ParentNode {
+            parent.append(child: child)
+            stack.append(parent)
+        }
+        else if child is ParentNode {
+            stack.append(child)
+        }
+        else {
+            throw Error.invalidState
+        }
     }
 }

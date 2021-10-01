@@ -41,6 +41,7 @@
 		C5EB9CEE1E7CF12D00198F5F /* ParserResultTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB9CED1E7CF12D00198F5F /* ParserResultTests.swift */; };
 		C5EB9CF01E7CF46800198F5F /* MiniDOMErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB9CEF1E7CF46800198F5F /* MiniDOMErrorTests.swift */; };
 		C5EB9CF21E7CF5B900198F5F /* VisitorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB9CF11E7CF5B900198F5F /* VisitorTests.swift */; };
+		D42EB191270725980030794B /* ParserStreamTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42EB190270725980030794B /* ParserStreamTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +97,7 @@
 		C5EB9CEF1E7CF46800198F5F /* MiniDOMErrorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniDOMErrorTests.swift; sourceTree = "<group>"; };
 		C5EB9CF11E7CF5B900198F5F /* VisitorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisitorTests.swift; sourceTree = "<group>"; };
 		C5F16D291E908AAA00706AAD /* MiniDOM.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MiniDOM.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		D42EB190270725980030794B /* ParserStreamTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserStreamTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +169,7 @@
 				C5C88DDA1E7C89BD00CEDDA8 /* ParserPlistTests.swift */,
 				C5EB9CED1E7CF12D00198F5F /* ParserResultTests.swift */,
 				C5C88DD81E7C889200CEDDA8 /* ParserSimpleTests.swift */,
+				D42EB190270725980030794B /* ParserStreamTests.swift */,
 				C5EB9CE31E7CC85700198F5F /* PathTests.swift */,
 				C54E911E2704C41500901FFB /* StringEntityEscapingTests.swift */,
 				C5EB9CE51E7CC94600198F5F /* StringWhitespaceTests.swift */,
@@ -346,6 +349,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5EB9CF21E7CF5B900198F5F /* VisitorTests.swift in Sources */,
+				D42EB191270725980030794B /* ParserStreamTests.swift in Sources */,
 				C5EB9CF01E7CF46800198F5F /* MiniDOMErrorTests.swift in Sources */,
 				C5796E9F1E8EE3C500FEEBC9 /* NodeTests.swift in Sources */,
 				C56856EA1E88BDF40058EF81 /* ParserNamespaceTests.swift in Sources */,
