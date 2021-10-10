@@ -230,6 +230,12 @@ public extension Node {
     func childElements(withName name: String) -> [Element] {
         return children.elements(withName: name)
     }
+
+    func normalized() -> Self {
+        var norm = self
+        norm.normalize()
+        return norm
+    }
 }
 
 // MARK: - Leaf Protocol
