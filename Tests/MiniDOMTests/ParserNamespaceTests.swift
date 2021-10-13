@@ -48,15 +48,14 @@ class ParserNamespaceTests: XCTestCase {
     }
 
     func testParseWithoutNamespacesOrEntities() {
-        let parser = Parser(string: source)
+        let parser = DOMParser(string: source)
 
         let result = parser?.parse()
         XCTAssertTrue(result?.isSuccess == true)
 
-        var document = result?.document
-        document?.normalize()
+        let document = result?.document
 
-        let cvslog = document?.documentElement
+        let cvslog = document?.rootElement
         XCTAssertNotNil(cvslog)
         XCTAssertEqual(cvslog?.tagName, "cvslog")
         XCTAssertEqual(cvslog?.attributes ?? [:], ["xmlns": "http://xml.apple.com/cvslog"])

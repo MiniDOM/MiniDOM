@@ -31,7 +31,7 @@ class ParserStreamTests: XCTestCase {
 
     let sourceData = [
         "<?xml version=\"1.0\" encoding=\"utf-8\"?>",
-        "<foo>",
+        "<foo attr=\"val\">",
         "  <!-- This is a comment -->",
         "  <bar attr1=\"value1\" attr2=\"value2\"/>",
         "  <?target attr=\"value\"?>",
@@ -48,7 +48,7 @@ class ParserStreamTests: XCTestCase {
     ].joined(separator: "\n").data(using: .utf8)!
 
     func testFullElementStream() {
-        let parser = Parser(stream: InputStream(data: sourceData))
+        let parser = SAXParser(data: sourceData)
 
         var elements = [Element]()
 
@@ -68,7 +68,7 @@ class ParserStreamTests: XCTestCase {
     }
 
     func testPartialElementStream() {
-        let parser = Parser(stream: InputStream(data: sourceData))
+        let parser = SAXParser(data: sourceData)
 
         var foundElement: Element?
 

@@ -49,7 +49,7 @@ class ParserCreationTests: XCTestCase {
         "</html>"
     ].joined(separator: "\n")
 
-    func validateResults(from parser: Parser?) {
+    func validateResults(from parser: DOMParser?) {
         XCTAssertNotNil(parser)
 
         let result = parser?.parse()
@@ -61,35 +61,23 @@ class ParserCreationTests: XCTestCase {
     }
 
     func testParseString() {
-        let parser = Parser(string: source)
+        let parser = DOMParser(string: source)
         validateResults(from: parser)
     }
 
-    func testParseFromURLAndInputStream() {
+    func testParseFromURL() {
         let fileName = String(format: "%@_%@", ProcessInfo.processInfo.globallyUniqueString, "test-data.xml")
         let fileURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName)
 
         XCTAssertNoThrow(try self.source.write(to: fileURL, atomically: true, encoding: .utf8))
 
-        let urlParser = Parser(contentsOf: fileURL)
+        let urlParser = DOMParser(contentsOf: fileURL)
         validateResults(from: urlParser)
-
-        guard let inputStream = InputStream(url: fileURL) else {
-            XCTFail("Cannot create input stream")
-            return
-        }
-
-        let inputStreamParser = Parser(stream: inputStream)
-        validateResults(from: inputStreamParser)
     }
 
     func testCreateWithNilData() {
-        let parser = Parser(data: nil)
+        let parser = DOMParser(data: nil)
         XCTAssertNil(parser)
     }
 
-    func testCreateWithNilParser() {
-        let parser = Parser(parser: nil)
-        XCTAssertNil(parser)
-    }
 }

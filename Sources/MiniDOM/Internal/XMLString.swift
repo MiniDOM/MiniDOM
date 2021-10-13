@@ -1,8 +1,8 @@
 //
-//  ParserResultTests.swift
+//  XMLString.swift
 //  MiniDOM
 //
-//  Copyright 2017-2020 Anodized Software, Inc.
+//  Copyright 2017-2021 Anodized Software, Inc.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a
 //  copy of this software and associated documentation files (the "Software"),
@@ -24,23 +24,38 @@
 //
 
 import Foundation
-import MiniDOM
-import XCTest
+import libxml2
 
-class ParserResultTests: XCTestCase {
-    func testSuccess() {
-        let doc = Document()
-        let result: ParserResult = .success(doc)
-        XCTAssertNil(result.error)
-        XCTAssertNotNil(result.document)
+protocol XMLString {
+
+    var value: String { get }
+}
+
+extension UnsafePointer: XMLString where Pointee == xmlChar {
+
+    var value: String {
+        return String(cString: self)
+    }
+}
+
+extension UnsafeMutablePointer: XMLString where Pointee == xmlChar {
+
+    var value: String {
+        return String(cString: self)
+    }
+}
+
+extension String: XMLString {
+
+    var value: String {
+        return self
+    }
+}
+
+extension Array where Element == XMLString? {
+
+    func joined(separator: String) -> String {
+        return compactMap { $0?.value }.joined(separator: separator)
     }
 
-    func testFailure() {
-        let error = NSError(domain: "anErrorDomain", code: 123456, userInfo: nil)
-        let result = ParserResult.failure(MiniDOMError.xmlParserError(error))
-
-        XCTAssertNil(result.document)
-        XCTAssertNotNil(result.error)
-        XCTAssertEqual(result.error, .xmlParserError(error))
-    }
 }

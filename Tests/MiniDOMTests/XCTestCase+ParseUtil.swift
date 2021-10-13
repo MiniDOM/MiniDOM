@@ -30,7 +30,7 @@ import XCTest
 extension XCTestCase {
     func loadXML(resourceWithName name: String, extension ext: String) -> Document? {
         guard let url = Bundle(for: type(of: self)).url(forResource: name, withExtension: ext),
-              let parser = Parser(contentsOf: url)
+              let parser = DOMParser(contentsOf: url)
         else {
             XCTFail("Could not create parser")
             return nil
@@ -40,7 +40,7 @@ extension XCTestCase {
     }
 
     func loadXML(string: String) -> Document? {
-        guard let parser = Parser(string: string) else {
+        guard let parser = DOMParser(string: string) else {
             XCTFail("Could not create parser")
             return nil
         }
@@ -48,7 +48,7 @@ extension XCTestCase {
         return parse(with: parser)
     }
 
-    private func parse(with parser: Parser) -> Document? {
+    private func parse(with parser: DOMParser) -> Document? {
         let result = parser.parse()
         switch result {
         case let .success(d):

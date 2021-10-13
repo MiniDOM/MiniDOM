@@ -57,7 +57,7 @@ class ParserSimpleTests: XCTestCase {
     }
 
     func testTopLevelElement() {
-        let documentElement = document.documentElement
+        let documentElement = document.rootElement
 
         XCTAssertNotNil(documentElement)
         XCTAssertEqual(documentElement?.nodeName, "foo")
@@ -65,7 +65,7 @@ class ParserSimpleTests: XCTestCase {
     }
 
     func testDocumentElementChildNodes() {
-        let children = document.documentElement?.children.filter({ $0.nodeType != .text })
+        let children = document.rootElement?.children.filter({ $0.nodeType != .text })
 
         XCTAssertNotNil(children)
         XCTAssertEqual(children?.isEmpty, false)

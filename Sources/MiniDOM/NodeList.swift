@@ -25,7 +25,7 @@
 
 import Foundation
 
-public extension Array where Element == Node {
+public extension Sequence where Element == Node {
 
     /**
      Returns only the nodes of the given type.
@@ -35,7 +35,7 @@ public extension Array where Element == Node {
      - returns: All members of the receiver that are of the given type.
      */
     func only<T: Node>(ofType type: T.Type) -> [T] {
-        return self.compactMap { $0 as? T }
+        return compactMap { $0 as? T }
     }
 
     /**
@@ -70,5 +70,16 @@ public extension Array where Element == Node {
     func elements(withName name: String) -> [MiniDOM.Element] {
         let elements = only(ofType: MiniDOM.Element.self)
         return elements.filter({ $0.nodeName == name })
+    }
+
+    /**
+     Returns the first `Element` object from the receiver with the given node name.
+
+     - parameter name: The node name to find.
+
+     - returns: The first element from the receiver with the given node name.
+     */
+    func firstElement(withName name: String) -> MiniDOM.Element? {
+        lazy.compactMap { $0 as? MiniDOM.Element }.first(where: { $0.nodeName == name })
     }
 }

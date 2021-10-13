@@ -54,7 +54,6 @@ class VisitorTests: XCTestCase {
             ].joined(separator: "\n")
 
         document = loadXML(string: source)
-        document.normalize()
     }
 
     func testEmptyVisitor() {

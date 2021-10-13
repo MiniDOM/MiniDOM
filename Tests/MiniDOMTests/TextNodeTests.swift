@@ -56,8 +56,8 @@ class TextNodeTests: XCTestCase {
 
         let titleTextNodes = title?.children(ofType: Text.self)
         XCTAssertNotNil(titleTextNodes)
-        XCTAssertEqual(titleTextNodes?.count, 2)
+        XCTAssertEqual(titleTextNodes?.count, 1)
         XCTAssertEqual(titleTextNodes?.compactMap({ $0.nodeValue }) ?? [],
-                       ["California Bill To Ban ", "“Fake News” Would Be Disastrous for Political Speech"])
+                       ["California Bill To Ban “Fake News” Would Be Disastrous for Political Speech"])
     }
 }

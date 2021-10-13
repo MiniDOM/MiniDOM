@@ -33,7 +33,6 @@ class ContentsTests: XCTestCase {
     override func setUp() {
         super.setUp()
         document = loadXML(string: contentsTestsSource)
-        document.normalize()
     }
 
     func testThreeProcessingInstructions() {
@@ -62,7 +61,7 @@ class ContentsTests: XCTestCase {
     }
 
     func testDocumentElement() {
-        let de = document.documentElement
+        let de = document.rootElement
         XCTAssertNotNil(de)
         XCTAssertEqual(de?.nodeName, "JavaXML:Book")
         XCTAssertEqual(de?.attributes ?? [:], [
@@ -74,7 +73,7 @@ class ContentsTests: XCTestCase {
     }
 
     func testTwoElementsUnderDocumentElement() {
-        let children = document.documentElement?.children(ofType: Element.self)
+        let children = document.rootElement?.children(ofType: Element.self)
         XCTAssertEqual(children?.count, 2)
         XCTAssertEqual(children?.map({ $0.nodeName }) ?? [], ["JavaXML:Title", "JavaXML:Contents"])
     }
@@ -99,7 +98,7 @@ class ContentsTests: XCTestCase {
     }
 
     func testLastChild() {
-        let de = document.documentElement
+        let de = document.rootElement
         let last = de?.lastChildElement
         XCTAssertNotNil(last)
         XCTAssertEqual(last?.nodeName, "JavaXML:Contents")

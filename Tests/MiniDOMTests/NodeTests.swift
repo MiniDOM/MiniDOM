@@ -29,14 +29,8 @@ import XCTest
 
 class NodeTests: XCTestCase {
 
-    func testNormalizeLeafNode() {
-        var text = Text(text: "Testing 1 2 3")
-        text.normalize()
-        XCTAssertEqual(text.text, "Testing 1 2 3")
-    }
-
     func testHasChildElements() {
-        let element = Element(tagName: "foo")
+        var element = Element(tagName: "foo")
         XCTAssertFalse(element.hasChildren)
         XCTAssertFalse(element.hasChildElements)
 
@@ -100,7 +94,7 @@ class NodeTests: XCTestCase {
             Text(text: "This is a text node"),
             Text(text: "This is also a text node")
         ])
-        XCTAssertNil(element.textValue)
+        XCTAssertEqual(element.textValue, "This is a text node")
     }
 
     func testNodeValueSingleTextChild() {
