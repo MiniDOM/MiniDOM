@@ -54,6 +54,7 @@ class VisitorTests: XCTestCase {
             ].joined(separator: "\n")
 
         document = loadXML(string: source)
+        document.normalize()
     }
 
     func testEmptyVisitor() {
@@ -96,5 +97,45 @@ class VisitorTests: XCTestCase {
 
         let visitor = ChildCheckingVisitor()
         document.accept(visitor)
+    }
+
+    func testLazySearch() {
+        class LazyTester: LazyVisitor {
+            var nodesVisited = [Node]()
+            var keepVisiting = true
+
+            func beginVisit(_ element: Element) {
+                nodesVisited.append(element)
+            }
+
+            func visit(_ text: Text) {
+                nodesVisited.append(text)
+            }
+
+            func visit(_ processingInstruction: ProcessingInstruction) {
+                nodesVisited.append(processingInstruction)
+            }
+
+            func visit(_ comment: Comment) {
+                nodesVisited.append(comment)
+            }
+
+            func visit(_ cdataSection: CDATASection) {
+                nodesVisited.append(cdataSection)
+                keepVisiting = false
+            }
+        }
+
+        let visitor = LazyTester()
+        document.acceptLazy(visitor)
+        XCTAssertEqual(visitor.nodesVisited.count, 9)
+
+        let fnordPath = document.pathToElement(where: { $0.tagName == "fnord" })
+        XCTAssertNotNil(fnordPath)
+        XCTAssertEqual(fnordPath?.count, 3)
+        XCTAssertEqual(fnordPath?[0].tagName, "foo")
+        XCTAssertEqual(fnordPath?[1].tagName, "baz")
+        XCTAssertEqual(fnordPath?[2].tagName, "fnord")
+        XCTAssertEqual(fnordPath?[2].textValue?.trimmed, "This is some text")
     }
 }

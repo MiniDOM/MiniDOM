@@ -113,6 +113,24 @@ public protocol Visitor {
 }
 
 /**
+ A specialized Visitor capable of terminating a search early.
+ */
+public protocol LazyVisitor: Visitor {
+
+    /**
+     Called by the traversal algorithm to decide whether to continue searching.
+     When `keepVisiting` returns false the search is terminated.
+     */
+    var keepVisiting: Bool { get }
+
+    /**
+     Called when the traversal algorthm encounters any `Element`.
+     Returning `false` will skip visitaton and further traversal of `element`.
+     */
+    func shouldVisit(element: Element) -> Bool
+}
+
+/**
  Instead of making the `Visitor` protocol functions optional or requiring
  implementing types to define all of the functions (including ones that may be
  unnecessary for the implementing type's purpose), a default empty
@@ -145,6 +163,14 @@ public extension Visitor {
     func visit(_ cdataSection: CDATASection) {}
 }
 
+public extension LazyVisitor {
+
+    /// Default implementation returns true.
+    func shouldVisit(element: Element) -> Bool {
+        return true
+    }
+}
+
 // MARK: - Visitable Protocol
 
 /**
@@ -168,11 +194,18 @@ extension Document: Visitable {
      */
     public func accept(_ visitor: Visitor) {
         visitor.beginVisit(self)
+        visitChildren(with: visitor)
+        visitor.endVisit(self)
+    }
 
-        for child in children {
-            child.accept(visitor)
-        }
-
+    /**
+     A document node first calls `beginVisit(self)` on the visitor. It then
+     calls `accept` on each of the nodes in the `children` array, passing the
+     visitor object. Finally, it calls `endVisit(self)` on the visitor.
+     */
+    public func acceptLazy(_ visitor: LazyVisitor) {
+        visitor.beginVisit(self)
+        lazilyVisitChildren(with: visitor)
         visitor.endVisit(self)
     }
 }
@@ -185,11 +218,18 @@ extension Element: Visitable {
      */
     public func accept(_ visitor: Visitor) {
         visitor.beginVisit(self)
+        visitChildren(with: visitor)
+        visitor.endVisit(self)
+    }
 
-        for child in children {
-            child.accept(visitor)
-        }
-
+    /**
+     An element node first calls `beginVisit(self)` on the visitor. It then
+     calls `accept` on each of the nodes in the `children` array, passing the
+     visitor object. Finally, it calls `endVisit(self)` on the visitor.
+     */
+    public func acceptLazy(_ visitor: LazyVisitor) {
+        visitor.beginVisit(self)
+        lazilyVisitChildren(with: visitor)
         visitor.endVisit(self)
     }
 }
@@ -227,5 +267,29 @@ extension CDATASection: Visitable {
      */
     public func accept(_ visitor: Visitor) {
         visitor.visit(self)
+    }
+}
+
+private extension ParentNode {
+    func visitChildren(with visitor: Visitor) {
+        for child in children {
+            child.accept(visitor)
+        }
+    }
+
+    func lazilyVisitChildren(with visitor: LazyVisitor) {
+        for child in children {
+            if let element = child as? Element {
+                if visitor.shouldVisit(element: element) {
+                    element.acceptLazy(visitor)
+                }
+            }
+            else {
+                child.accept(visitor)
+            }
+            if !visitor.keepVisiting {
+                break
+            }
+        }
     }
 }
