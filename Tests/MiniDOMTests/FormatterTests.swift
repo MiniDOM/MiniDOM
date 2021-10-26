@@ -71,7 +71,7 @@ class FormatterTests: XCTestCase {
             "</foo>"
         ].joined(separator: "\n")
 
-        document = loadXML(string: source)
+        document = Document(string: source)
     }
 
     func testReproduceSourceString() {

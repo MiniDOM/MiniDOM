@@ -48,12 +48,7 @@ class ParserNamespaceTests: XCTestCase {
     }
 
     func testParseWithoutNamespacesOrEntities() {
-        let parser = DOMParser(string: source)
-
-        let result = parser?.parse()
-        XCTAssertTrue(result?.isSuccess == true)
-
-        let document = result?.document
+        let document = Document(string: source)
 
         let cvslog = document?.rootElement
         XCTAssertNotNil(cvslog)

@@ -32,7 +32,7 @@ class RSSTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        document = loadXML(string: yahooTestsSource)
+        document = Document(string: yahooTestsSource)
     }
 
     func testCdataInTitle() {

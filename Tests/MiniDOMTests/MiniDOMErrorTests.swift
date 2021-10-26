@@ -38,15 +38,8 @@ class MiniDOMErrorTests: XCTestCase {
             "</foo>"
         ].joined(separator: "\n")
 
-        let parser = DOMParser(string: source)
-        XCTAssertNotNil(parser)
-
-        let result = parser?.parse()
-        XCTAssertNotNil(result)
-        XCTAssertNil(result?.document)
-        XCTAssertNotNil(result?.error)
-
-        XCTAssertNotNil(result?.error)
+        let result = Document(string: source)
+        XCTAssertNil(result)
     }
 
     func testExtraCloseTags() {
@@ -55,17 +48,10 @@ class MiniDOMErrorTests: XCTestCase {
             "<foo>",
             "  <bar></bar></bar>",
             "</foo>"
-            ].joined(separator: "\n")
+        ].joined(separator: "\n")
 
-        let parser = DOMParser(string: source)
-        XCTAssertNotNil(parser)
-
-        let result = parser?.parse()
-        XCTAssertNotNil(result)
-        XCTAssertNil(result?.document)
-        XCTAssertNotNil(result?.error)
-
-        XCTAssertNotNil(result?.error)
+        let result = Document(string: source)
+        XCTAssertNil(result)
     }
 
     func testSuccessResult() {

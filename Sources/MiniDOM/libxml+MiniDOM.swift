@@ -2,10 +2,28 @@
 //  libxml+MiniDOM.swift
 //  MiniDOM
 //
-//  Created by Rob Visentin on 10/26/21.
-//  Copyright © 2021 Anodized Software, Inc. All rights reserved.
+//  Copyright 2017-2021 Anodized Software, Inc.
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a
+//  copy of this software and associated documentation files (the "Software"),
+//  to deal in the Software without restriction, including without limitation
+//  the rights to use, copy, modify, merge, publish, distribute, sublicense,
+//  and/or sell copies of the Software, and to permit persons to whom the
+//  Software is furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+//  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+//  DEALINGS IN THE SOFTWARE.
 //
 
+import Foundation
 import libxml2
 
 public extension Document {
@@ -22,6 +40,30 @@ public extension Document {
         }
 
         self.children = children
+    }
+
+    init?(contentsOf url: URL?, options: Int32 = 0) {
+        guard let url = url, let xmlDoc = xmlDocPtr(contentsOf: url) else {
+            return nil
+        }
+        defer {
+            xmlFreeDoc(xmlDoc)
+        }
+        self.init(xmlDoc: xmlDoc)
+    }
+
+    init?(string: String?, encoding: String.Encoding = .utf8, options: Int32 = 0) {
+        self.init(data: string?.data(using: encoding), options: options)
+    }
+
+    init?(data: Data?, options: Int32 = 0) {
+        guard let data = data, let xmlDoc = xmlDocPtr(data: data) else {
+            return nil
+        }
+        defer {
+            xmlFreeDoc(xmlDoc)
+        }
+        self.init(xmlDoc: xmlDoc)
     }
 }
 
@@ -80,6 +122,29 @@ public extension Element {
 }
 
 public extension xmlDocPtr {
+
+    init?(contentsOf url: URL, options: Int32 = 0) {
+        guard let doc = xmlReadFile((url.absoluteString as NSString).utf8String, nil, options) else {
+            return nil
+        }
+        self = doc
+    }
+
+    init?(string: String, encoding: String.Encoding = .utf8, options: Int32 = 0) {
+        guard let data = string.data(using: encoding) else {
+            return nil
+        }
+        self.init(data: data, options: options)
+    }
+
+    init?(data: Data, options: Int32 = 0) {
+        guard let doc = data.withUnsafeBytes({
+            xmlReadMemory($0.bindMemory(to: CChar.self).baseAddress, Int32(data.count), nil, nil, options)
+        }) else {
+            return nil
+        }
+        self = doc
+    }
 
     func toDocument() -> Document {
         return Document(xmlDoc: self)

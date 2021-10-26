@@ -32,7 +32,7 @@ class ContentsTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        document = loadXML(string: contentsTestsSource)
+        document = Document(string: contentsTestsSource)
     }
 
     func testThreeProcessingInstructions() {

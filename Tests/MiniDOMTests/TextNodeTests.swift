@@ -47,7 +47,7 @@ class TextNodeTests: XCTestCase {
             "</feed>"
         ].joined(separator: "\n")
 
-        document = loadXML(string: source)
+        document = Document(string: source)
     }
 
     func testFirstTitle() {

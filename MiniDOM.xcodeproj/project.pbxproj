@@ -43,7 +43,6 @@
 		D42EB19C2715F4EE0030794B /* SAXParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42EB19B2715F4EE0030794B /* SAXParser.swift */; };
 		D46AEDF62727F942002F9E07 /* libxml+MiniDOM.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46AEDF52727F942002F9E07 /* libxml+MiniDOM.swift */; };
 		D48CEBEE2716174B0005EFB1 /* NodeStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D48CEBED2716174B0005EFB1 /* NodeStack.swift */; };
-		D48CEBF1271628CC0005EFB1 /* DOMParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D48CEBF0271628CC0005EFB1 /* DOMParser.swift */; };
 		D48CEBF327179F1D0005EFB1 /* XMLString.swift in Sources */ = {isa = PBXBuildFile; fileRef = D48CEBF227179F1D0005EFB1 /* XMLString.swift */; };
 /* End PBXBuildFile section */
 
@@ -102,7 +101,6 @@
 		D42EB19B2715F4EE0030794B /* SAXParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SAXParser.swift; sourceTree = "<group>"; };
 		D46AEDF52727F942002F9E07 /* libxml+MiniDOM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "libxml+MiniDOM.swift"; sourceTree = "<group>"; };
 		D48CEBED2716174B0005EFB1 /* NodeStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeStack.swift; sourceTree = "<group>"; };
-		D48CEBF0271628CC0005EFB1 /* DOMParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DOMParser.swift; sourceTree = "<group>"; };
 		D48CEBF227179F1D0005EFB1 /* XMLString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLString.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -204,7 +202,6 @@
 			isa = PBXGroup;
 			children = (
 				D48CEBEF271617560005EFB1 /* Internal */,
-				D48CEBF0271628CC0005EFB1 /* DOMParser.swift */,
 				C5202D2C1E7647D200C2B35C /* Formatter.swift */,
 				C54FA8E51E763CE6009EEA73 /* Info.plist */,
 				D46AEDF52727F942002F9E07 /* libxml+MiniDOM.swift */,
@@ -360,7 +357,6 @@
 				C5C88DD21E7C28C700CEDDA8 /* Log.swift in Sources */,
 				C54E911D2704BB4400901FFB /* String+EntityEscaping.swift in Sources */,
 				D48CEBF327179F1D0005EFB1 /* XMLString.swift in Sources */,
-				D48CEBF1271628CC0005EFB1 /* DOMParser.swift in Sources */,
 				D46AEDF62727F942002F9E07 /* libxml+MiniDOM.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

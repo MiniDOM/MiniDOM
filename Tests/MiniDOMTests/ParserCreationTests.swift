@@ -49,20 +49,9 @@ class ParserCreationTests: XCTestCase {
         "</html>"
     ].joined(separator: "\n")
 
-    func validateResults(from parser: DOMParser?) {
-        XCTAssertNotNil(parser)
-
-        let result = parser?.parse()
-        XCTAssertNotNil(result)
-        XCTAssertNil(result?.error)
-
-        let document = result?.document
-        XCTAssertNotNil(document)
-    }
-
     func testParseString() {
-        let parser = DOMParser(string: source)
-        validateResults(from: parser)
+        let stringDoc = Document(string: source)
+        XCTAssertNotNil(stringDoc)
     }
 
     func testParseFromURL() {
@@ -71,13 +60,13 @@ class ParserCreationTests: XCTestCase {
 
         XCTAssertNoThrow(try self.source.write(to: fileURL, atomically: true, encoding: .utf8))
 
-        let urlParser = DOMParser(contentsOf: fileURL)
-        validateResults(from: urlParser)
+        let urlDoc = Document(contentsOf: fileURL)
+        XCTAssertNotNil(urlDoc)
     }
 
     func testCreateWithNilData() {
-        let parser = DOMParser(data: nil)
-        XCTAssertNil(parser)
+        let nilDoc = Document(data: nil)
+        XCTAssertNil(nilDoc)
     }
 
 }

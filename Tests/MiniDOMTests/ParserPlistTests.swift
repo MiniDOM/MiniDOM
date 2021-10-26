@@ -60,7 +60,7 @@ class ParserPlistTests: XCTestCase {
             "</plist>",
         ].joined(separator: "\n")
 
-        document = loadXML(string: source)
+        document = Document(string: source)
     }
 
     func testRootElement() {
