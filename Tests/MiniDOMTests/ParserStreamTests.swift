@@ -55,8 +55,8 @@ class ParserStreamTests: XCTestCase {
         parser.streamElements { element in
             elements.append(element)
             return true
-        } filter: { name, attributes in
-            attributes["attr"] == "val" || name == "fnord"
+        } filter: {
+            $0 == "foo" || $0 == "fnord"
         }
 
         XCTAssertEqual(elements.count, 3)
@@ -75,8 +75,8 @@ class ParserStreamTests: XCTestCase {
         parser.streamElements { element in
             foundElement = element
             return false
-        } filter: { name, _ in
-            name == "bar"
+        } filter: {
+            $0 == "bar"
         }
 
         XCTAssertNotNil(foundElement)

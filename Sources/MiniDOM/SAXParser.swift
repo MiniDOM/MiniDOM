@@ -26,10 +26,32 @@
 import Foundation
 import libxml2
 
-public class SAXParser {
+public protocol SAXConsumer: AnyObject {
+
+    var continueParsing: Bool { get }
+
+    func didStartDocument()
+    func didEndDocument()
+
+    func didStart(elementName: String, attributes: [String: String])
+    func didEnd(elementName: String)
+
+    func foundCharacters(in string: String)
+    func foundProcessingInstruction(target: String, data: String?)
+    func foundComment(_ comment: String)
+    func foundCDATA(_ CDATAString: String)
+
+}
+
+public class SAXParser: SAXConsumer {
 
     private let stream: InputStream
     private let log = Log(level: .all)
+
+    public private(set) var continueParsing = true
+
+    private var consumers = NSHashTable<AnyObject>()
+    private var activeConsumers = [SAXConsumer]()
 
     /**
      Initializes a parser with the XML content referenced by the given URL.
@@ -58,7 +80,7 @@ public class SAXParser {
         self.init(stream: InputStream(data: data))
     }
 
-    convenience init?(data: Data?) {
+    public convenience init?(data: Data?) {
         guard let data = data else {
             return nil
         }
@@ -79,43 +101,48 @@ public class SAXParser {
     }
 
     /**
+     Adds the given consumer to the list of objects that receive callbacks during parsing.
+     */
+    public func add(consumer: SAXConsumer) {
+        consumers.add(consumer)
+    }
+
+    /**
+     Removes the given consumer from the list of objects that receive callbacks during parsing.
+     */
+    public func remove(consumer: SAXConsumer) {
+        consumers.remove(consumer)
+    }
+
+    /**
      Parses the stream synchronously and reports elements found. After `streamElements` has been called,
      subsequent calls to `streamElements` on the receiver have no effect.
 
      - parameter callback: The callback to invoke whenever an element matching `filter` is parsed.
      - parameter filter: Given an element name and attributes, return `true` to parse and invoke `callback` for this element.
+     Adds the given consumer to the list of objects that receive callbacks during parsing.
      */
-    public func streamElements(to callback: @escaping (Element) throws -> Bool, filter: @escaping (String, [String: String]) -> Bool) {
+    public func streamElements(to callback: @escaping (Element) throws -> Bool, filter: @escaping (String) -> Bool) {
         guard stream.streamStatus != .closed else {
             return
         }
-        SAXParserImpl(callback: callback, filter: filter).parse(stream: stream)
-    }
-}
-
-// MARK: - Private
-
-private class SAXParserImpl {
-
-    let callback: (Element) throws -> Bool
-    let filter: (String, [String: String]) -> Bool
-
-    private let log = Log(level: .warn)
-    private var stacks: ArraySlice<NodeStack> = []
-    private var stopParsing = false
-
-    init(callback: @escaping (Element) throws -> Bool, filter: @escaping (String, [String: String]) -> Bool) {
-        self.callback = callback
-        self.filter = filter
+        add(consumer: ElementStream(callback: callback, filter: filter))
+        parse()
     }
 
-    func parse(stream: InputStream) {
-        defer {
-            stopParsing = false
+    /**
+     Parses the stream synchronously and invokes callbacks on all `consumers`. After `parse` has been called,
+     subsequent calls to `parse` on the receiver have no effect.
+     */
+    public func parse() {
+        guard stream.streamStatus != .closed else {
+            return
         }
 
         var handler = xmlSAXHandler()
         handler.initialized = XML_SAX2_MAGIC
+        handler.startDocument = SAXParser_startDocument
+        handler.endDocument = SAXParser_endDocument
         handler.startElement = SAXParser_startElement
         handler.endElement = SAXParser_endElement
         handler.characters = SAXParser_characters
@@ -128,7 +155,7 @@ private class SAXParserImpl {
             parser.release()
         }
 
-        let bufferSize = 2048
+        let bufferSize = 1024
         let buffer = UnsafeMutablePointer<UInt8>.allocate(capacity: bufferSize)
         defer {
             buffer.deallocate()
@@ -156,16 +183,19 @@ private class SAXParserImpl {
             xmlFreeParserCtxt(pushParser)
         }
 
-        while stream.hasBytesAvailable && !stopParsing {
+        activeConsumers = consumers.allObjects as? [SAXConsumer] ?? []
+        continueParsing = true
+
+        while stream.hasBytesAvailable && continueParsing {
             autoreleasepool {
                 len = stream.read(buffer, maxLength: bufferSize)
 
                 if let error = stream.streamError {
                     log.error("SAXParser stream error: \(error)")
-                    stopParsing = true
+                    continueParsing = false
                 }
                 else if len == 0 {
-                    stopParsing = true
+                    continueParsing = false
                 }
                 else {
                     let result = buffer.withMemoryRebound(to: CChar.self, capacity: 4) {
@@ -174,119 +204,81 @@ private class SAXParserImpl {
 
                     if result != 0 {
                         log.error("SAXParser parse error: \(result)")
-                        stopParsing = true
+                        continueParsing = false
                     }
+                }
+
+                if activeConsumers.isEmpty {
+                    continueParsing = false
                 }
             }
         }
+    }
+}
+
+// MARK: - SAXConsumer
+
+public extension SAXParser {
+
+    func didStartDocument() {
+        activeConsumers.forEach { $0.didStartDocument() }
+        activeConsumers = activeConsumers.filter { $0.continueParsing }
+    }
+
+    func didEndDocument() {
+        activeConsumers.forEach { $0.didEndDocument() }
+        activeConsumers = activeConsumers.filter { $0.continueParsing }
     }
 
     func didStart(elementName: String, attributes: [String: String]) {
-        guard !stopParsing else {
-            return
-        }
-
-        log.debug("start elementName=\(elementName) attributes=\(attributes)")
-
-        if filter(elementName, attributes) {
-            stacks.append(NodeStack())
-        }
-
-        do {
-            try stacks.last?.append(node: Element(tagName: elementName, attributes: attributes))
-        }
-        catch {
-            stopParsing = true
-        }
+        activeConsumers.forEach { $0.didStart(elementName: elementName, attributes: attributes) }
+        activeConsumers = activeConsumers.filter { $0.continueParsing }
     }
 
     func didEnd(elementName: String) {
-        guard !stopParsing else {
-            return
-        }
-
-        log.debug("end elementName=\(elementName)")
-
-        autoreleasepool {
-            do {
-                try stacks.last?.popAndAppend()
-
-                if let element = stacks.last?.first as? Element,
-                   element.tagName == elementName,
-                   filter(elementName, element.attributes ?? [:]) {
-                    if try callback(element) {
-                        stacks.removeLast()
-                        try stacks.last?.append(node: element)
-                        try stacks.last?.popAndAppend()
-                    }
-                    else {
-                        stopParsing = true
-                    }
-                }
-            }
-            catch {
-                stopParsing = true
-            }
-        }
+        activeConsumers.forEach { $0.didEnd(elementName: elementName) }
+        activeConsumers = activeConsumers.filter { $0.continueParsing }
     }
 
     func foundCharacters(in string: String) {
-        guard !stopParsing else {
-            return
-        }
-
-        do {
-            try stacks.last?.append(string: string, nodeType: Text.self)
-        }
-        catch {
-            stopParsing = true
-        }
+        activeConsumers.forEach { $0.foundCharacters(in: string) }
+        activeConsumers = activeConsumers.filter { $0.continueParsing }
     }
 
     func foundProcessingInstruction(target: String, data: String?) {
-        guard !stopParsing else {
-            return
-        }
-
-        log.debug("processing instruction target=\(target) data=\(String(describing: data))")
-
-        do {
-            try stacks.last?.append(node: ProcessingInstruction(target: target, data: data))
-        }
-        catch {
-            stopParsing = true
-        }
+        activeConsumers.forEach { $0.foundProcessingInstruction(target: target, data: data) }
+        activeConsumers = activeConsumers.filter { $0.continueParsing }
     }
 
     func foundComment(_ comment: String) {
-        guard !stopParsing else {
-            return
-        }
-
-        log.debug("comment=\(comment)")
-
-        do {
-            try stacks.last?.append(node: Comment(text: comment))
-        }
-        catch {
-            stopParsing = true
-        }
+        activeConsumers.forEach { $0.foundComment(comment) }
+        activeConsumers = activeConsumers.filter { $0.continueParsing }
     }
 
     func foundCDATA(_ CDATAString: String) {
-        guard !stopParsing else {
-            return
-        }
-
-        log.debug("CDATA=\(CDATAString)")
-
-        do {
-            try stacks.last?.append(string: CDATAString, nodeType: CDATASection.self)
-        }
-        catch {
-            stopParsing = true
-        }
+        activeConsumers.forEach { $0.foundCDATA(CDATAString) }
+        activeConsumers = activeConsumers.filter { $0.continueParsing }
     }
+}
+
+// MARK: - Private
+
+private func SAXParser_startDocument(ctx: UnsafeMutableRawPointer?) {
+    guard let ctx = ctx else {
+        return
+    }
+
+    let parser = Unmanaged<SAXParser>.fromOpaque(ctx).takeUnretainedValue()
+    parser.didStartDocument()
+}
+
+private func SAXParser_endDocument(ctx: UnsafeMutableRawPointer?) {
+    guard let ctx = ctx else {
+        return
+    }
+
+    let parser = Unmanaged<SAXParser>.fromOpaque(ctx).takeUnretainedValue()
+    parser.didEndDocument()
 }
 
 private func SAXParser_startElement(ctx: UnsafeMutableRawPointer?, name: UnsafePointer<xmlChar>?, attributesList: UnsafeMutablePointer<UnsafePointer<xmlChar>?>?) {
@@ -308,7 +300,7 @@ private func SAXParser_startElement(ctx: UnsafeMutableRawPointer?, name: UnsafeP
         attributeIterator = attributeIterator?.advanced(by: 2)
     }
 
-    let parser = Unmanaged<SAXParserImpl>.fromOpaque(ctx).takeUnretainedValue()
+    let parser = Unmanaged<SAXParser>.fromOpaque(ctx).takeUnretainedValue()
     parser.didStart(elementName: name, attributes: attributes)
 }
 
@@ -318,7 +310,7 @@ private func SAXParser_endElement(ctx: UnsafeMutableRawPointer?, name: UnsafePoi
         return
     }
 
-    let parser = Unmanaged<SAXParserImpl>.fromOpaque(ctx).takeUnretainedValue()
+    let parser = Unmanaged<SAXParser>.fromOpaque(ctx).takeUnretainedValue()
     parser.didEnd(elementName: name)
 }
 
@@ -331,7 +323,7 @@ private func SAXParser_characters(ctx: UnsafeMutableRawPointer?, characters: Uns
         return
     }
 
-    let parser = Unmanaged<SAXParserImpl>.fromOpaque(ctx).takeUnretainedValue()
+    let parser = Unmanaged<SAXParser>.fromOpaque(ctx).takeUnretainedValue()
     parser.foundCharacters(in: string)
 }
 
@@ -342,7 +334,7 @@ private func SAXParser_processingInstruction(ctx: UnsafeMutableRawPointer?, targ
         return
     }
 
-    let parser = Unmanaged<SAXParserImpl>.fromOpaque(ctx).takeUnretainedValue()
+    let parser = Unmanaged<SAXParser>.fromOpaque(ctx).takeUnretainedValue()
     parser.foundProcessingInstruction(target: target, data: data)
 }
 
@@ -352,7 +344,7 @@ private func SAXParser_comment(ctx: UnsafeMutableRawPointer?, comment: UnsafePoi
         return
     }
 
-    let parser = Unmanaged<SAXParserImpl>.fromOpaque(ctx).takeUnretainedValue()
+    let parser = Unmanaged<SAXParser>.fromOpaque(ctx).takeUnretainedValue()
     parser.foundComment(comment)
 }
 
@@ -365,6 +357,6 @@ private func SAXParser_cdata(ctx: UnsafeMutableRawPointer?, characters: UnsafePo
         return
     }
 
-    let parser = Unmanaged<SAXParserImpl>.fromOpaque(ctx).takeUnretainedValue()
+    let parser = Unmanaged<SAXParser>.fromOpaque(ctx).takeUnretainedValue()
     parser.foundCDATA(string)
 }

@@ -39,6 +39,7 @@
 		C5EB9CEE1E7CF12D00198F5F /* ParserResultTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB9CED1E7CF12D00198F5F /* ParserResultTests.swift */; };
 		C5EB9CF01E7CF46800198F5F /* MiniDOMErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB9CEF1E7CF46800198F5F /* MiniDOMErrorTests.swift */; };
 		C5EB9CF21E7CF5B900198F5F /* VisitorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB9CF11E7CF5B900198F5F /* VisitorTests.swift */; };
+		D4228B612731866200E56785 /* ElementStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4228B602731866200E56785 /* ElementStream.swift */; };
 		D42EB191270725980030794B /* ParserStreamTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42EB190270725980030794B /* ParserStreamTests.swift */; };
 		D42EB19C2715F4EE0030794B /* SAXParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42EB19B2715F4EE0030794B /* SAXParser.swift */; };
 		D46AEDF62727F942002F9E07 /* libxml+MiniDOM.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46AEDF52727F942002F9E07 /* libxml+MiniDOM.swift */; };
@@ -97,6 +98,7 @@
 		C5EB9CEF1E7CF46800198F5F /* MiniDOMErrorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniDOMErrorTests.swift; sourceTree = "<group>"; };
 		C5EB9CF11E7CF5B900198F5F /* VisitorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisitorTests.swift; sourceTree = "<group>"; };
 		C5F16D291E908AAA00706AAD /* MiniDOM.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MiniDOM.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		D4228B602731866200E56785 /* ElementStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementStream.swift; sourceTree = "<group>"; };
 		D42EB190270725980030794B /* ParserStreamTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserStreamTests.swift; sourceTree = "<group>"; };
 		D42EB19B2715F4EE0030794B /* SAXParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SAXParser.swift; sourceTree = "<group>"; };
 		D46AEDF52727F942002F9E07 /* libxml+MiniDOM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "libxml+MiniDOM.swift"; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 		D48CEBEF271617560005EFB1 /* Internal */ = {
 			isa = PBXGroup;
 			children = (
+				D4228B602731866200E56785 /* ElementStream.swift */,
 				C5C88DD11E7C28C700CEDDA8 /* Log.swift */,
 				D48CEBED2716174B0005EFB1 /* NodeStack.swift */,
 				D48CEBF227179F1D0005EFB1 /* XMLString.swift */,
@@ -347,6 +350,7 @@
 				C5D2BD051E779465001FF7E8 /* Path.swift in Sources */,
 				C5190AF4224FCE4100679E6A /* MiniDOMError.swift in Sources */,
 				C5190AF2224FCD1300679E6A /* ParserResult.swift in Sources */,
+				D4228B612731866200E56785 /* ElementStream.swift in Sources */,
 				C5202D2B1E76460800C2B35C /* Visitor.swift in Sources */,
 				C5EA38521E78E29E0000D01B /* NodeList.swift in Sources */,
 				C5202D321E76548400C2B35C /* Search.swift in Sources */,
