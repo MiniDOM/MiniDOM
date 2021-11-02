@@ -83,9 +83,9 @@ public class SAXParser {
      subsequent calls to `streamElements` on the receiver have no effect.
 
      - parameter callback: The callback to invoke whenever an element matching `filter` is parsed.
-     - parameter filter: Given an element name, return `true` to parse and invoke `callback` for this element.
+     - parameter filter: Given an element name and attributes, return `true` to parse and invoke `callback` for this element.
      */
-    public func streamElements(to callback: @escaping (Element) throws -> Bool, filter: @escaping (String) -> Bool) {
+    public func streamElements(to callback: @escaping (Element) throws -> Bool, filter: @escaping (String, [String: String]) -> Bool) {
         guard stream.streamStatus != .closed else {
             return
         }
@@ -98,13 +98,13 @@ public class SAXParser {
 private class SAXParserImpl {
 
     let callback: (Element) throws -> Bool
-    let filter: (String) -> Bool
+    let filter: (String, [String: String]) -> Bool
 
     private let log = Log(level: .warn)
     private var stacks: ArraySlice<NodeStack> = []
     private var stopParsing = false
 
-    init(callback: @escaping (Element) throws -> Bool, filter: @escaping (String) -> Bool) {
+    init(callback: @escaping (Element) throws -> Bool, filter: @escaping (String, [String: String]) -> Bool) {
         self.callback = callback
         self.filter = filter
     }
@@ -188,7 +188,7 @@ private class SAXParserImpl {
 
         log.debug("start elementName=\(elementName) attributes=\(attributes)")
 
-        if filter(elementName) {
+        if filter(elementName, attributes) {
             stacks.append(NodeStack())
         }
 
@@ -201,19 +201,27 @@ private class SAXParserImpl {
     }
 
     func didEnd(elementName: String) {
+        guard !stopParsing else {
+            return
+        }
+
         log.debug("end elementName=\(elementName)")
 
         autoreleasepool {
             do {
                 try stacks.last?.popAndAppend()
 
-                if filter(elementName),
-                   let element = stacks.popLast()?.first as? Element {
-                    if try !callback(element) {
+                if let element = stacks.last?.first as? Element,
+                   element.tagName == elementName,
+                   filter(elementName, element.attributes ?? [:]) {
+                    if try callback(element) {
+                        stacks.removeLast()
+                        try stacks.last?.append(node: element)
+                        try stacks.last?.popAndAppend()
+                    }
+                    else {
                         stopParsing = true
                     }
-                    try stacks.last?.append(node: element)
-                    try stacks.last?.popAndAppend()
                 }
             }
             catch {
@@ -223,6 +231,10 @@ private class SAXParserImpl {
     }
 
     func foundCharacters(in string: String) {
+        guard !stopParsing else {
+            return
+        }
+
         do {
             try stacks.last?.append(string: string, nodeType: Text.self)
         }
@@ -232,7 +244,12 @@ private class SAXParserImpl {
     }
 
     func foundProcessingInstruction(target: String, data: String?) {
+        guard !stopParsing else {
+            return
+        }
+
         log.debug("processing instruction target=\(target) data=\(String(describing: data))")
+
         do {
             try stacks.last?.append(node: ProcessingInstruction(target: target, data: data))
         }
@@ -242,7 +259,12 @@ private class SAXParserImpl {
     }
 
     func foundComment(_ comment: String) {
+        guard !stopParsing else {
+            return
+        }
+
         log.debug("comment=\(comment)")
+
         do {
             try stacks.last?.append(node: Comment(text: comment))
         }
@@ -252,7 +274,12 @@ private class SAXParserImpl {
     }
 
     func foundCDATA(_ CDATAString: String) {
+        guard !stopParsing else {
+            return
+        }
+
         log.debug("CDATA=\(CDATAString)")
+
         do {
             try stacks.last?.append(string: CDATAString, nodeType: CDATASection.self)
         }
