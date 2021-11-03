@@ -198,8 +198,8 @@ public class SAXParser: SAXConsumer {
                     continueParsing = false
                 }
                 else {
-                    let result = buffer.withMemoryRebound(to: CChar.self, capacity: 4) {
-                        xmlParseChunk(pushParser, $0, Int32(len), stream.hasBytesAvailable ? 0 : 1)
+                    let result = buffer.withMemoryRebound(to: CChar.self, capacity: bufferSize) {
+                        xmlParseChunk(pushParser, $0, Int32(len), 0)
                     }
 
                     if result != 0 {
@@ -212,6 +212,10 @@ public class SAXParser: SAXConsumer {
                     continueParsing = false
                 }
             }
+        }
+
+        if !stream.hasBytesAvailable {
+            xmlParseChunk(pushParser, nil, 0, 1)
         }
     }
 }
