@@ -15,6 +15,16 @@ cmd="$1"
 xml_filename="$2"
 metrics_filename="$3"
 
+# We cannot invoke `swift run` from `xctrace` so we have to build first...
 cd "$project_root"
-swift run PerformanceTest "$cmd" "$xml_filename" --metrics-filename="$metrics_filename"
+swift build
+
+# ...which writes the executable here
+executable=".build/debug/PerformanceTest"
+
+cd "$project_root"
+xcrun xctrace record \
+    --template 'Time Profiler' \
+    --launch -- \
+    "$executable" "$cmd" "$xml_filename" --metrics-filename="$metrics_filename"
 
