@@ -51,11 +51,3 @@ extension String: XMLString {
         return self
     }
 }
-
-extension Array where Element == XMLString? {
-
-    func joined(separator: String) -> String {
-        return compactMap { $0?.value }.joined(separator: separator)
-    }
-
-}

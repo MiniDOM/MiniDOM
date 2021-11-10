@@ -69,11 +69,27 @@ public extension Document {
 
 public extension Element {
 
+    private static func join(_ x1: XMLString?, _ x2: XMLString?) -> String {
+        switch (x1?.value, x2?.value) {
+        case (.some(let s1), .none):
+            return s1
+
+        case (.none, .some(let s2)):
+            return s2
+
+        case (.some(let s1), .some(let s2)):
+            return String(format: "%@:%@", s1, s2)
+
+        case (.none, .none):
+            return ""
+        }
+    }
+
     init(xmlNode: xmlNodePtr) {
         let name = xmlNode.pointee.name
         let prefix = xmlNode.pointee.ns?.pointee.prefix
 
-        self.tagName = [prefix, name].joined(separator: ":")
+        self.tagName = Self.join(prefix, name)
 
         if xmlNode.pointee.nsDef != nil {
             var attributes = self.attributes ?? [String: String]()
@@ -81,9 +97,10 @@ public extension Element {
 
             while nsDef != nil {
                 if let href = nsDef?.pointee.href {
-                    let key = ["xmlns", nsDef?.pointee.prefix].joined(separator: ":")
+
+                    let key = Self.join("xmlns", nsDef?.pointee.prefix)
                     attributes[key] = href.value
-              }
+                }
                 nsDef = nsDef?.pointee.next
             }
 
@@ -97,7 +114,7 @@ public extension Element {
             while attribute != nil {
                 if let attributeName = attribute?.pointee.name,
                    let attributeValue = xmlGetProp(xmlNode, attributeName) {
-                    let key = [attribute?.pointee.ns?.pointee.prefix, attributeName].joined(separator: ":")
+                    let key = Self.join(attribute?.pointee.ns?.pointee.prefix, attributeName)
                     attributes[key] = attributeValue.value
                     xmlFree(attributeValue)
               }
