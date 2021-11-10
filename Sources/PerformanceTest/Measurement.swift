@@ -35,6 +35,8 @@ func measure(_ block: () -> Void) -> Measurement {
 }
 
 struct Measurement {
+    var timestamp: Date
+
     var timeOfDay: timeval
 
     var rusage: rusage
@@ -50,23 +52,25 @@ struct Measurement {
             fatalError("Call to gettimeofday() failed with errno \(errno)")
         }
 
-        self.init(rusage: rusage, timeOfDay: timeOfDay)
+        self.init(timestamp: Date(), rusage: rusage, timeOfDay: timeOfDay)
     }
 
-    private init(rusage: rusage, timeOfDay: timeval) {
+    private init(timestamp: Date, rusage: rusage, timeOfDay: timeval) {
+        self.timestamp = timestamp
         self.rusage = rusage
         self.timeOfDay = timeOfDay
     }
 
     fileprivate init(start: Measurement, end: Measurement) {
         let m = end - start
-        self.init(rusage: m.rusage, timeOfDay: m.timeOfDay)
+        self.init(timestamp: m.timestamp, rusage: m.rusage, timeOfDay: m.timeOfDay)
     }
 }
 
 extension Measurement {
     static func -(lhs: Measurement, rhs: Measurement) -> Measurement {
         return Measurement(
+            timestamp: min(lhs.timestamp, rhs.timestamp),
             rusage: lhs.rusage - rhs.rusage,
             timeOfDay: lhs.timeOfDay - rhs.timeOfDay
         )
@@ -76,6 +80,7 @@ extension Measurement {
 extension Measurement {
     static var fieldNames: [String] {
         [
+            "timestamp",
             "wallClock",
             "ru_utime",
             "ru_stime",
@@ -105,7 +110,16 @@ extension Measurement {
             return integer.description
         }
 
+        func format(_ date: Date) -> String {
+            let df = DateFormatter()
+            df.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
+            df.locale = Locale(identifier: "en_US_POSIX")
+
+            return df.string(from: date)
+        }
+
         return [
+            format(timestamp),
             format(timeOfDay.asTimeInterval),
             format(rusage.ru_utime.asTimeInterval),
             format(rusage.ru_stime.asTimeInterval),
