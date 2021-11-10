@@ -121,6 +121,6 @@ struct StreamElements: Subcommand {
                 filter: { _ in true }
             )
         }
-        try write(metrics: m, subcommand: "document-from-data")
+        try write(metrics: m, subcommand: "stream-elements")
     }
 }
