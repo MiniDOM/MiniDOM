@@ -34,9 +34,14 @@ let package = Package(
             targets: ["MiniDOM"]),
         .executable(
             name: "RoundTripValidator",
-            targets: ["RoundTripValidator"])
+            targets: ["RoundTripValidator"]),
+        .executable(
+            name: "PerformanceTest",
+            targets: ["PerformanceTest"]),
     ],
     dependencies: [
+        .package(url: "https://github.com/apple/swift-argument-parser",
+                 .upToNextMajor(from: "1.0.0")),
     ],
     targets: [
         .target(
@@ -45,6 +50,12 @@ let package = Package(
         .target(
             name: "RoundTripValidator",
             dependencies: ["MiniDOM"]),
+        .target(
+            name: "PerformanceTest",
+            dependencies: [
+                "MiniDOM",
+                .product(name: "ArgumentParser", package: "swift-argument-parser"),
+            ]),
         .testTarget(
             name: "MiniDOMTests",
             dependencies: ["MiniDOM"]),

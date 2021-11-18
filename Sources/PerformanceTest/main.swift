@@ -1,6 +1,6 @@
 //
-//  XMLString.swift
-//  MiniDOM
+//  main.swift
+//  PerformanceTest
 //
 //  Copyright 2017-2021 Anodized Software, Inc.
 //
@@ -24,30 +24,5 @@
 //
 
 import Foundation
-import libxml2
 
-protocol XMLString {
-
-    var value: String { get }
-}
-
-extension UnsafePointer: XMLString where Pointee == xmlChar {
-
-    var value: String {
-        return String(cString: self)
-    }
-}
-
-extension UnsafeMutablePointer: XMLString where Pointee == xmlChar {
-
-    var value: String {
-        return String(cString: self)
-    }
-}
-
-extension String: XMLString {
-
-    var value: String {
-        return self
-    }
-}
+PerformanceTest.main()

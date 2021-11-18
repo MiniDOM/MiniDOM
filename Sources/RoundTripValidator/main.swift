@@ -32,7 +32,7 @@ private func printError(_ message: CustomStringConvertible) {
 
 enum RoundTripValidatorError: Error {
     case incorrectArguments
-    case unableToCreateParser
+    case unableToParseInput
     case unableToDecodeData
     case couldNotDumpString
     case inputAndOutputDoNotMatch
@@ -51,16 +51,11 @@ func main(args: [String]) throws -> Int32 {
         throw RoundTripValidatorError.unableToDecodeData
     }
 
-    guard let parser = Parser(string: inputString) else {
-        throw RoundTripValidatorError.unableToCreateParser
+    guard let document = Document(string: inputString) else {
+        throw RoundTripValidatorError.unableToParseInput
     }
 
-    let document = try parser.parse().get()
-
-    guard let outputString = document.dump() else {
-        throw RoundTripValidatorError.couldNotDumpString
-    }
-
+    let outputString = document.dump()
     print(outputString)
 
     if inputString != outputString {

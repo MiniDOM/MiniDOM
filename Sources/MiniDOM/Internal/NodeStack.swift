@@ -32,18 +32,19 @@ class NodeStack {
     }
 
     var first: Node? {
-        return stack.first
+        return stack.peek()
     }
 
-    private var stack: ArraySlice<Node> = []
+    private var stack = Stack()
 
     func append(node: Node) throws {
-        if node is ParentNode {
-            stack.append(node)
+        if node.isParentNode {
+            stack.push(node)
         }
-        else if var parent = stack.popLast() as? ParentNode {
-            parent.append(child: node)
-            stack.append(parent)
+        else if var parent = stack.pop(), parent.isParentNode {
+            // We know this is a parent node (see above), so this will always result in an append operation
+            parent.appendIfParent(child: node)
+            stack.push(parent)
         }
         else {
             throw Error.invalidState
@@ -51,7 +52,7 @@ class NodeStack {
     }
 
     func append(string: String, nodeType: TextNode.Type) throws {
-        let node = stack.popLast()
+        let node = stack.pop()
 
         if var parent = node as? ParentNode {
             if var text = parent.children.last as? Text {
@@ -61,11 +62,11 @@ class NodeStack {
             else {
                 parent.children.append(nodeType.init(text: string))
             }
-            stack.append(parent)
+            stack.push(parent)
         }
         else if var text = node as? TextNode {
             text.append(string)
-            stack.append(text)
+            stack.push(text)
         }
         else {
             throw Error.invalidState
@@ -73,19 +74,63 @@ class NodeStack {
     }
 
     func popAndAppend() throws {
-        guard let child = stack.popLast() else {
+        guard let child = stack.pop() else {
             throw Error.invalidState
         }
 
-        if var parent = stack.popLast() as? ParentNode {
-            parent.append(child: child)
-            stack.append(parent)
+        if var parent = stack.pop(), parent.isParentNode {
+            // We know this is a parent node (see above), so this will always result in an append operation
+            parent.appendIfParent(child: child)
+            stack.push(parent)
         }
-        else if child is ParentNode {
-            stack.append(child)
+        else if child.isParentNode {
+            stack.push(child)
         }
         else {
             throw Error.invalidState
         }
+    }
+}
+
+private class Stack {
+
+    private class Box {
+        var node: Node
+        var next: Box?
+
+        init(node: Node, next: Box?) {
+            self.node = node
+            self.next = next
+        }
+    }
+
+    private var top: Box? = nil
+
+    private(set) var count: Int = 0
+
+    required init() { }
+
+    func push(_ node: Node) {
+        let box = Box(node: node, next: top)
+        top = box
+
+        count += 1
+    }
+
+    func pop() -> Node? {
+        if count == 0 {
+            return nil
+        }
+
+        let result = top
+
+        top = result?.next
+        count -= 1
+
+        return result?.node
+    }
+
+    func peek() -> Node? {
+        return top?.node
     }
 }

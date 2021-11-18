@@ -144,6 +144,20 @@ public protocol Node: Visitable {
      - SeeAlso: [`CDATASection.children`](CDATASection.html#//apple_ref/swift/Property/children)
      */
     var children: [Node] { get }
+
+    /**
+     Returns `true` if this node can have children (i.e., if this node is a `ParentNode`).
+     Returns `false` if this node cannot have children (i.e., if this node is a `LeafNode`).
+
+     This is an optimization to prevent having to do a runtime type check on `ParentNode`.
+     */
+    var isParentNode: Bool { get }
+
+    /**
+     If this node is a parent node, appends the specified node as a child. If this node is not a parent node, this
+     function does nothing.
+     */
+    mutating func appendIfParent(child: Node)
 }
 
 public extension Node {
@@ -236,6 +250,7 @@ public protocol LeafNode: Node {
 }
 
 public extension LeafNode {
+
     /**
      A leaf node does not have children. The value of this property is always
      an empty array.
@@ -243,6 +258,15 @@ public extension LeafNode {
     var children: [Node] {
         return []
     }
+
+    /**
+     A leaf node does not have children. The value of this property is always `false`.
+     */
+    var isParentNode: Bool {
+        return false
+    }
+
+    mutating func appendIfParent(child: Node) { }
 }
 
 // MARK: - Parent Protocol
@@ -262,6 +286,17 @@ public extension ParentNode {
      - parameter child: The node to append
      */
     mutating func append(child: Node) {
+        children.append(child)
+    }
+
+    /**
+     A parent node can have children. The value of this property is always `true`.
+     */
+    var isParentNode: Bool {
+        return true
+    }
+
+    mutating func appendIfParent(child: Node) {
         children.append(child)
     }
 }
