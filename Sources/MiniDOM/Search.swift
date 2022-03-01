@@ -88,7 +88,7 @@ public extension Document {
 
      - returns: An array of elements with the specified tag name.
      */
-    final func elements(withTagName name: String) -> [Element] {
+    func elements(withTagName name: String) -> [Element] {
         return elements(where: { $0.tagName == name })
     }
 
@@ -102,7 +102,7 @@ public extension Document {
 
      - returns: An array of the elements that `predicate` allowed.
      */
-    final func elements(where predicate: @escaping (Element) -> Bool) -> [Element] {
+    func elements(where predicate: @escaping (Element) -> Bool) -> [Element] {
         let visitor = ElementSearch(predicate: predicate)
         accept(visitor)
         return visitor.elements
@@ -117,7 +117,7 @@ public extension Document {
 
      - returns: The first element that matched `predicate`.
      */
-    final func element(where predicate: @escaping (Element) -> Bool) -> Element? {
+    func element(where predicate: @escaping (Element) -> Bool) -> Element? {
         return pathToElement(where: predicate)?.last
     }
 
@@ -136,7 +136,7 @@ public extension Document {
      - returns: The an array of `Element` nodes, which is the traversal path taken to find the
      first `Element` matching `predicate`. The `last` element is the matching `Element` itself.
      */
-    final func pathToElement(where predicate: @escaping (Element) -> Bool, filter: ((Element) -> Bool)? = nil) -> [Element]? {
+    func pathToElement(where predicate: @escaping (Element) -> Bool, filter: ((Element) -> Bool)? = nil) -> [Element]? {
         let visitor = ElementPathSearch(predicate: predicate, filter: filter)
         acceptLazy(visitor)
         return visitor.elements.isEmpty ? nil : visitor.elements

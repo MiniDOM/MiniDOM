@@ -2,7 +2,7 @@
 //  Log.swift
 //  MiniDOM
 //
-//  Copyright 2017-2020 Anodized Software, Inc.
+//  Copyright 2017-2021 Anodized Software, Inc.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a
 //  copy of this software and associated documentation files (the "Software"),
@@ -39,44 +39,44 @@ struct Log {
     let level: Level
 
     @discardableResult
-    func verbose(_ message: String, file: String = #file, line: UInt = #line, function: String = #function) -> Bool {
+    func verbose(_ message: @autoclosure () -> String, file: String = #file, line: UInt = #line, function: String = #function) -> Bool {
         return log(.verbose, message, file: file, line: line, function: function)
     }
 
     @discardableResult
-    func debug(_ message: String, file: String = #file, line: UInt = #line, function: String = #function) -> Bool {
+    func debug(_ message: @autoclosure () -> String, file: String = #file, line: UInt = #line, function: String = #function) -> Bool {
         return log(.debug, message, file: file, line: line, function: function)
     }
 
     @discardableResult
-    func info(_ message: String, file: String = #file, line: UInt = #line, function: String = #function) -> Bool {
+    func info(_ message: @autoclosure () -> String, file: String = #file, line: UInt = #line, function: String = #function) -> Bool {
         return log(.info, message, file: file, line: line, function: function)
     }
 
     @discardableResult
-    func warn(_ message: String, file: String = #file, line: UInt = #line, function: String = #function) -> Bool {
+    func warn(_ message: @autoclosure () -> String, file: String = #file, line: UInt = #line, function: String = #function) -> Bool {
         return log(.warn, message, file: file, line: line, function: function)
     }
 
     @discardableResult
-    func error(_ message: String, file: String = #file, line: UInt = #line, function: String = #function) -> Bool {
+    func error(_ message: @autoclosure () -> String, file: String = #file, line: UInt = #line, function: String = #function) -> Bool {
         return log(.error, message, file: file, line: line, function: function)
     }
 
     @discardableResult
-    func error(_ error: Error, file: String = #file, line: UInt = #line, function: String = #function) -> Bool {
-        return self.error(error.localizedDescription, file: file, line: line, function: function)
+    func error(_ error: @autoclosure () -> Error, file: String = #file, line: UInt = #line, function: String = #function) -> Bool {
+        return self.error(error().localizedDescription, file: file, line: line, function: function)
     }
 
     @discardableResult
-    func log(_ level: Level, _ message: String, file: String = #file, line: UInt = #line, function: String = #function) -> Bool {
+    func log(_ level: Level, _ message: () -> String, file: String = #file, line: UInt = #line, function: String = #function) -> Bool {
         guard level.rawValue >= self.level.rawValue else {
             return false
         }
 
         let filename = (file as NSString).lastPathComponent
         let level = String(describing: level).uppercased()
-        print("[\(level)] (\(filename):\(line) \(function)) \(message)")
+        print("[\(level)] (\(filename):\(line) \(function)) \(message())")
         return true
     }
 }

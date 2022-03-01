@@ -60,11 +60,11 @@ class ParserPlistTests: XCTestCase {
             "</plist>",
         ].joined(separator: "\n")
 
-        document = loadXML(string: source)
+        document = Document(string: source)
     }
 
     func testRootElement() {
-        let documentElement = document.documentElement
+        let documentElement = document.rootElement
 
         XCTAssertNotNil(documentElement)
         XCTAssertEqual(documentElement?.nodeName, "plist")
@@ -74,7 +74,7 @@ class ParserPlistTests: XCTestCase {
     }
 
     func testSingleDictElementUnderRoot() {
-        let documentElement = document.documentElement
+        let documentElement = document.rootElement
 
         XCTAssertEqual(documentElement?.childElements.count, 1)
 
@@ -104,7 +104,7 @@ class ParserPlistTests: XCTestCase {
             "string",
         ]
 
-        let dict = document.documentElement?.firstChildElement
+        let dict = document.rootElement?.firstChildElement
         let actualElementNames: [String] = dict?.childElements.map { $0.nodeName } ?? []
         XCTAssertEqual(expectedElementNames, actualElementNames)
 

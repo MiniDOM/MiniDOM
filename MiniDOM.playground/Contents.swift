@@ -11,8 +11,7 @@ import MiniDOM
  We have an XML document saved in the resources section of this playground. It contains a snapshot of the EFF Updates RSS feed. We'll begin by parsing the document.
  */
 let url = Bundle.main.url(forResource: "eff-updates", withExtension: "rss")!
-let parser = Parser(contentsOf: url)
-let document = parser?.parse().document
+let document = Document(url: url)
 
 /*:
  The document's structure is something like this:

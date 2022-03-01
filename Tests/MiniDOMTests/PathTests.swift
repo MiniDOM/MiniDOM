@@ -61,7 +61,7 @@ class PathTests1: XCTestCase {
             "</a>"
         ].joined(separator: "\n")
 
-        document = loadXML(string: source)
+        document = Document(string: source)
     }
 
     func testFindBNodes() {
@@ -105,7 +105,7 @@ class PathTests2: XCTestCase {
             "</a>",
         ].joined(separator: "\n")
 
-        document = loadXML(string: source)
+        document = Document(string: source)
     }
 
     func testFindZElements() {

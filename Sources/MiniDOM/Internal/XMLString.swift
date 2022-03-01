@@ -1,8 +1,8 @@
 //
-//  TextNodeTests.swift
+//  XMLString.swift
 //  MiniDOM
 //
-//  Copyright 2017-2020 Anodized Software, Inc.
+//  Copyright 2017-2021 Anodized Software, Inc.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a
 //  copy of this software and associated documentation files (the "Software"),
@@ -24,40 +24,30 @@
 //
 
 import Foundation
-import MiniDOM
-import XCTest
+import libxml2
 
-class TextNodeTests: XCTestCase {
+protocol XMLString {
 
-    var source: String!
+    var value: String { get }
+}
 
-    var document: Document!
+extension UnsafePointer: XMLString where Pointee == xmlChar {
 
-    override func setUp() {
-        super.setUp()
-
-        source = [
-            "<feed>",
-            "<item>",
-            "<title>California Bill To Ban “Fake News” Would Be Disastrous for Political Speech</title>",
-            "</item>",
-            "<item>",
-            "<title>Small ISPs Oppose Congress&#039;s Move to Abolish Privacy Protections</title>",
-            "</item>",
-            "</feed>"
-        ].joined(separator: "\n")
-
-        document = Document(string: source)
+    var value: String {
+        return String(cString: self)
     }
+}
 
-    func testFirstTitle() {
-        let title = document.elements(withTagName: "title").first
-        XCTAssertNotNil(title)
+extension UnsafeMutablePointer: XMLString where Pointee == xmlChar {
 
-        let titleTextNodes = title?.children(ofType: Text.self)
-        XCTAssertNotNil(titleTextNodes)
-        XCTAssertEqual(titleTextNodes?.count, 1)
-        XCTAssertEqual(titleTextNodes?.compactMap({ $0.nodeValue }) ?? [],
-                       ["California Bill To Ban “Fake News” Would Be Disastrous for Political Speech"])
+    var value: String {
+        return String(cString: self)
+    }
+}
+
+extension String: XMLString {
+
+    var value: String {
+        return self
     }
 }

@@ -1,8 +1,8 @@
 //
-//  RSSTests.swift
-//  MiniDOM
+//  main.swift
+//  PerformanceTest
 //
-//  Copyright 2017-2020 Anodized Software, Inc.
+//  Copyright 2017-2021 Anodized Software, Inc.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a
 //  copy of this software and associated documentation files (the "Software"),
@@ -24,30 +24,5 @@
 //
 
 import Foundation
-import MiniDOM
-import XCTest
 
-class RSSTests: XCTestCase {
-    var document: Document!
-
-    override func setUp() {
-        super.setUp()
-        document = Document(string: yahooTestsSource)
-    }
-
-    func testCdataInTitle() {
-        let titleNode = document.evaluate(path: ["rss", "channel", "title", "#cdata-section"]).first
-        XCTAssertNotNil(titleNode)
-        XCTAssertEqual(titleNode?.nodeType, .cdataSection)
-
-        let titleCdata = titleNode as? CDATASection
-        XCTAssertNotNil(titleCdata)
-        XCTAssertEqual(titleCdata?.text, "Yahoo! News Search Results for market")
-    }
-
-    func testFindItemsInChannel() {
-        let channel = document.evaluate(path: ["rss", "channel"]).first
-        let items = channel?.childElements(withName: "item")
-        XCTAssertEqual(items?.count, 10)
-    }
-}
+PerformanceTest.main()

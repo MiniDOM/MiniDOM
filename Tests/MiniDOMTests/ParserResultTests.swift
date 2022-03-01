@@ -33,7 +33,6 @@ class ParserResultTests: XCTestCase {
         let result: ParserResult = .success(doc)
         XCTAssertNil(result.error)
         XCTAssertNotNil(result.document)
-        XCTAssertTrue(doc === result.document)
     }
 
     func testFailure() {

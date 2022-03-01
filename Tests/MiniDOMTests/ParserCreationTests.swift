@@ -49,47 +49,24 @@ class ParserCreationTests: XCTestCase {
         "</html>"
     ].joined(separator: "\n")
 
-    func validateResults(from parser: Parser?) {
-        XCTAssertNotNil(parser)
-
-        let result = parser?.parse()
-        XCTAssertNotNil(result)
-        XCTAssertNil(result?.error)
-
-        let document = result?.document
-        XCTAssertNotNil(document)
-    }
-
     func testParseString() {
-        let parser = Parser(string: source)
-        validateResults(from: parser)
+        let stringDoc = Document(string: source)
+        XCTAssertNotNil(stringDoc)
     }
 
-    func testParseFromURLAndInputStream() {
+    func testParseFromURL() {
         let fileName = String(format: "%@_%@", ProcessInfo.processInfo.globallyUniqueString, "test-data.xml")
         let fileURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName)
 
         XCTAssertNoThrow(try self.source.write(to: fileURL, atomically: true, encoding: .utf8))
 
-        let urlParser = Parser(contentsOf: fileURL)
-        validateResults(from: urlParser)
-
-        guard let inputStream = InputStream(url: fileURL) else {
-            XCTFail("Cannot create input stream")
-            return
-        }
-
-        let inputStreamParser = Parser(stream: inputStream)
-        validateResults(from: inputStreamParser)
+        let urlDoc = Document(contentsOf: fileURL)
+        XCTAssertNotNil(urlDoc)
     }
 
     func testCreateWithNilData() {
-        let parser = Parser(data: nil)
-        XCTAssertNil(parser)
+        let nilDoc = Document(data: nil)
+        XCTAssertNil(nilDoc)
     }
 
-    func testCreateWithNilParser() {
-        let parser = Parser(parser: nil)
-        XCTAssertNil(parser)
-    }
 }

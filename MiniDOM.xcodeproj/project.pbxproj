@@ -20,7 +20,6 @@
 		C54FA8CC1E759BBE009EEA73 /* MiniDOM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C54FA8C21E759BBE009EEA73 /* MiniDOM.framework */; };
 		C54FA8EA1E763CE6009EEA73 /* MiniDOM.h in Headers */ = {isa = PBXBuildFile; fileRef = C54FA8E61E763CE6009EEA73 /* MiniDOM.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C54FA8EB1E763CE6009EEA73 /* MiniDOM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54FA8E71E763CE6009EEA73 /* MiniDOM.swift */; };
-		C54FA8EC1E763CE6009EEA73 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54FA8E81E763CE6009EEA73 /* Parser.swift */; };
 		C56856EA1E88BDF40058EF81 /* ParserNamespaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56856E91E88BDF40058EF81 /* ParserNamespaceTests.swift */; };
 		C5796E9F1E8EE3C500FEEBC9 /* NodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5796E9E1E8EE3C500FEEBC9 /* NodeTests.swift */; };
 		C5C88DD21E7C28C700CEDDA8 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C88DD11E7C28C700CEDDA8 /* Log.swift */; };
@@ -31,7 +30,6 @@
 		C5D2BCFA1E77562D001FF7E8 /* String+Whitespace.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D2BCF91E77562D001FF7E8 /* String+Whitespace.swift */; };
 		C5D2BD051E779465001FF7E8 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D2BD031E7793E3001FF7E8 /* Path.swift */; };
 		C5E9AF771E8DF7B300DEDD15 /* TextNodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E9AF761E8DF7B300DEDD15 /* TextNodeTests.swift */; };
-		C5E9AF791E8DFE8C00DEDD15 /* NormalizeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E9AF781E8DFE8C00DEDD15 /* NormalizeTests.swift */; };
 		C5EA38521E78E29E0000D01B /* NodeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EA38511E78E29E0000D01B /* NodeList.swift */; };
 		C5EB9CE41E7CC85700198F5F /* PathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB9CE31E7CC85700198F5F /* PathTests.swift */; };
 		C5EB9CE61E7CC94600198F5F /* StringWhitespaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB9CE51E7CC94600198F5F /* StringWhitespaceTests.swift */; };
@@ -41,7 +39,12 @@
 		C5EB9CEE1E7CF12D00198F5F /* ParserResultTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB9CED1E7CF12D00198F5F /* ParserResultTests.swift */; };
 		C5EB9CF01E7CF46800198F5F /* MiniDOMErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB9CEF1E7CF46800198F5F /* MiniDOMErrorTests.swift */; };
 		C5EB9CF21E7CF5B900198F5F /* VisitorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB9CF11E7CF5B900198F5F /* VisitorTests.swift */; };
+		D4228B612731866200E56785 /* ElementStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4228B602731866200E56785 /* ElementStream.swift */; };
 		D42EB191270725980030794B /* ParserStreamTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42EB190270725980030794B /* ParserStreamTests.swift */; };
+		D42EB19C2715F4EE0030794B /* SAXParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42EB19B2715F4EE0030794B /* SAXParser.swift */; };
+		D46AEDF62727F942002F9E07 /* libxml+MiniDOM.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46AEDF52727F942002F9E07 /* libxml+MiniDOM.swift */; };
+		D48CEBEE2716174B0005EFB1 /* NodeStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D48CEBED2716174B0005EFB1 /* NodeStack.swift */; };
+		D48CEBF327179F1D0005EFB1 /* XMLString.swift in Sources */ = {isa = PBXBuildFile; fileRef = D48CEBF227179F1D0005EFB1 /* XMLString.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,7 +73,6 @@
 		C54FA8E51E763CE6009EEA73 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C54FA8E61E763CE6009EEA73 /* MiniDOM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MiniDOM.h; sourceTree = "<group>"; };
 		C54FA8E71E763CE6009EEA73 /* MiniDOM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniDOM.swift; sourceTree = "<group>"; };
-		C54FA8E81E763CE6009EEA73 /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		C54FA8EF1E763CEE009EEA73 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C54FA8F41E763D42009EEA73 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		C56856E91E88BDF40058EF81 /* ParserNamespaceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParserNamespaceTests.swift; sourceTree = "<group>"; };
@@ -86,7 +88,6 @@
 		C5D2BCFD1E775BAB001FF7E8 /* RSSTestsSource.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = RSSTestsSource.xml; sourceTree = "<group>"; };
 		C5D2BD031E7793E3001FF7E8 /* Path.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
 		C5E9AF761E8DF7B300DEDD15 /* TextNodeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextNodeTests.swift; sourceTree = "<group>"; };
-		C5E9AF781E8DFE8C00DEDD15 /* NormalizeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NormalizeTests.swift; sourceTree = "<group>"; };
 		C5EA38511E78E29E0000D01B /* NodeList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeList.swift; sourceTree = "<group>"; };
 		C5EB9CE31E7CC85700198F5F /* PathTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PathTests.swift; sourceTree = "<group>"; };
 		C5EB9CE51E7CC94600198F5F /* StringWhitespaceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringWhitespaceTests.swift; sourceTree = "<group>"; };
@@ -97,7 +98,12 @@
 		C5EB9CEF1E7CF46800198F5F /* MiniDOMErrorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniDOMErrorTests.swift; sourceTree = "<group>"; };
 		C5EB9CF11E7CF5B900198F5F /* VisitorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisitorTests.swift; sourceTree = "<group>"; };
 		C5F16D291E908AAA00706AAD /* MiniDOM.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MiniDOM.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		D4228B602731866200E56785 /* ElementStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementStream.swift; sourceTree = "<group>"; };
 		D42EB190270725980030794B /* ParserStreamTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserStreamTests.swift; sourceTree = "<group>"; };
+		D42EB19B2715F4EE0030794B /* SAXParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SAXParser.swift; sourceTree = "<group>"; };
+		D46AEDF52727F942002F9E07 /* libxml+MiniDOM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "libxml+MiniDOM.swift"; sourceTree = "<group>"; };
+		D48CEBED2716174B0005EFB1 /* NodeStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeStack.swift; sourceTree = "<group>"; };
+		D48CEBF227179F1D0005EFB1 /* XMLString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLString.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,7 +169,6 @@
 				C5EB9CEB1E7CEE0B00198F5F /* LogTests.swift */,
 				C5EB9CEF1E7CF46800198F5F /* MiniDOMErrorTests.swift */,
 				C5796E9E1E8EE3C500FEEBC9 /* NodeTests.swift */,
-				C5E9AF781E8DFE8C00DEDD15 /* NormalizeTests.swift */,
 				C532F9B91E82128E00FEAD1A /* ParserCreationTests.swift */,
 				C56856E91E88BDF40058EF81 /* ParserNamespaceTests.swift */,
 				C5C88DDA1E7C89BD00CEDDA8 /* ParserPlistTests.swift */,
@@ -198,22 +203,34 @@
 		C5F20A122447E87A00A351A6 /* MiniDOM */ = {
 			isa = PBXGroup;
 			children = (
+				D48CEBEF271617560005EFB1 /* Internal */,
 				C5202D2C1E7647D200C2B35C /* Formatter.swift */,
 				C54FA8E51E763CE6009EEA73 /* Info.plist */,
-				C5C88DD11E7C28C700CEDDA8 /* Log.swift */,
+				D46AEDF52727F942002F9E07 /* libxml+MiniDOM.swift */,
 				C54FA8E61E763CE6009EEA73 /* MiniDOM.h */,
 				C54FA8E71E763CE6009EEA73 /* MiniDOM.swift */,
 				C5190AF3224FCE4100679E6A /* MiniDOMError.swift */,
 				C5EA38511E78E29E0000D01B /* NodeList.swift */,
-				C54FA8E81E763CE6009EEA73 /* Parser.swift */,
 				C5190AF1224FCD1300679E6A /* ParserResult.swift */,
 				C5D2BD031E7793E3001FF7E8 /* Path.swift */,
 				C5202D311E76548400C2B35C /* Search.swift */,
+				D42EB19B2715F4EE0030794B /* SAXParser.swift */,
 				C54E911C2704BB4400901FFB /* String+EntityEscaping.swift */,
 				C5D2BCF91E77562D001FF7E8 /* String+Whitespace.swift */,
 				C5202D2A1E76460800C2B35C /* Visitor.swift */,
 			);
 			path = MiniDOM;
+			sourceTree = "<group>";
+		};
+		D48CEBEF271617560005EFB1 /* Internal */ = {
+			isa = PBXGroup;
+			children = (
+				D4228B602731866200E56785 /* ElementStream.swift */,
+				C5C88DD11E7C28C700CEDDA8 /* Log.swift */,
+				D48CEBED2716174B0005EFB1 /* NodeStack.swift */,
+				D48CEBF227179F1D0005EFB1 /* XMLString.swift */,
+			);
+			path = Internal;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -329,18 +346,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C54FA8EC1E763CE6009EEA73 /* Parser.swift in Sources */,
+				D48CEBEE2716174B0005EFB1 /* NodeStack.swift in Sources */,
 				C5D2BD051E779465001FF7E8 /* Path.swift in Sources */,
 				C5190AF4224FCE4100679E6A /* MiniDOMError.swift in Sources */,
 				C5190AF2224FCD1300679E6A /* ParserResult.swift in Sources */,
+				D4228B612731866200E56785 /* ElementStream.swift in Sources */,
 				C5202D2B1E76460800C2B35C /* Visitor.swift in Sources */,
 				C5EA38521E78E29E0000D01B /* NodeList.swift in Sources */,
 				C5202D321E76548400C2B35C /* Search.swift in Sources */,
 				C5D2BCFA1E77562D001FF7E8 /* String+Whitespace.swift in Sources */,
 				C5202D2D1E7647D200C2B35C /* Formatter.swift in Sources */,
 				C54FA8EB1E763CE6009EEA73 /* MiniDOM.swift in Sources */,
+				D42EB19C2715F4EE0030794B /* SAXParser.swift in Sources */,
 				C5C88DD21E7C28C700CEDDA8 /* Log.swift in Sources */,
 				C54E911D2704BB4400901FFB /* String+EntityEscaping.swift in Sources */,
+				D48CEBF327179F1D0005EFB1 /* XMLString.swift in Sources */,
+				D46AEDF62727F942002F9E07 /* libxml+MiniDOM.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -362,7 +383,6 @@
 				C532F9C01E82333900FEAD1A /* ContentsTestsSource.swift in Sources */,
 				C5C88DDB1E7C89BD00CEDDA8 /* ParserPlistTests.swift in Sources */,
 				C5EB9CE61E7CC94600198F5F /* StringWhitespaceTests.swift in Sources */,
-				C5E9AF791E8DFE8C00DEDD15 /* NormalizeTests.swift in Sources */,
 				C5E9AF771E8DF7B300DEDD15 /* TextNodeTests.swift in Sources */,
 				C532F9BD1E82325900FEAD1A /* RSSTestsSource.swift in Sources */,
 				C5C88DD41E7C861E00CEDDA8 /* FormatterTests.swift in Sources */,
